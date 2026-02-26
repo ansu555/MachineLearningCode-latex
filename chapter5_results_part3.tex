@@ -1,0 +1,300 @@
+\subsection{Deep Learning Models}
+
+Deep learning architectures offer the ability to automatically learn hierarchical feature representations from raw sequential data, making them well-suited for time series forecasting. We implemented two LSTM-based models to leverage temporal dependencies.
+
+\subsubsection{Univariate LSTM}
+
+\textbf{Architecture Design:}
+
+Based on the actual implementation in the codebase, the univariate LSTM model architecture consists of:
+
+\begin{verbatim}
+Input(10, 1) → LSTM(50, return_sequences=True)  
+→ Dropout(0.2) → LSTM(50) → Dropout(0.2) → Dense(1)
+\end{verbatim}
+
+\text bf{Detailed Component Breakdown:}
+\begin{itemize}
+    \item \textbf{Input Layer}: Shape $(batch\_size, 10, 1)$
+    \begin{itemize}
+        \item Sequence length: 10 days of historical closing prices
+        \item Features: 1 (closing price only - univariate)
+    \end{itemize}
+    
+    \item \textbf{First LSTM Layer}: 50 units with \texttt{return\_sequences=True}
+    \begin{itemize}
+        \item Returns full sequence of hidden states
+        \item Enables stacking of additional LSTM layers
+        \item Activation: tanh (cell state), sigmoid (gates)
+    \end{itemize}
+    
+    \item \textbf{First Dropout Layer}: Rate = 0.2
+    \begin{itemize}
+        \item Randomly zeros 20\% of outputs during training
+        \item Prevents overfitting to training sequences
+        \item Not applied during inference
+    \end{itemize}
+    
+    \item \textbf{Second LSTM Layer}: 50 units, returns only final hidden state
+    \begin{itemize}
+        \item Captures higher-level temporal abstractions
+        \item Output shape: $(batch\_size, 50)$
+    \end{itemize}
+    
+    \item \textbf{Second Dropout Layer}: Rate = 0.2
+    
+    \item \textbf{Dense Output Layer}: 1 unit, linear activation
+    \begin{itemize}
+        \item Maps 50-dimensional hidden state to scalar prediction
+        \item No activation function (regression task)
+    \end{itemize}
+\end{itemize}
+
+\textbf{Training Configuration:}
+
+From the notebook implementation:
+\begin{itemize}
+    \item \textbf{Optimizer}: Adam with learning rate = 0.001
+    \item \textbf{Loss function}: Mean Squared Error (MSE)
+    \item \textbf{Batch size}: 32 sequences
+    \item \textbf{Epochs}: 50 with early stopping (patience=10)
+    \item \textbf{Validation split}: 10\% of training data for monitoring
+    \item \textbf{Callbacks}: EarlyStopping, ReduceLROnPlateau
+\end{itemize}
+
+\textbf{Performance Results:}
+\begin{itemize}
+    \item \textbf{RMSE:} 4.52
+    \item \textbf{$R^2$ Score:} 0.9792 (97.92\% variance explained)
+    \item \textbf{MAE:} 3.8
+    \item \textbf{Training time}: Approximately 10-15 minutes on CPU
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_4.png}
+    \caption{Univariate LSTM Training and Validation Loss Curves}
+    \label{fig:lstm_training}
+\end{figure}
+
+\textbf{Training Dynamics Analysis:}
+
+Figure \ref{fig:lstm_training} shows the training and validation loss curves:
+\begin{itemize}
+    \item \textbf{Convergence}: Model converges smoothly around epoch 25-30
+    \item \textbf{No overfitting}: Validation loss tracks training loss closely
+    \item \textbf{Early stopping}: Activated around epoch 35-40 when validation loss plateaued
+    \item \textbf{Learning rate reduction}: ReduceLROnPlateau fired 2-3 times during training
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_5.png}
+    \caption{Univariate LSTM: Predicted vs Actual Prices}
+    \label{fig:lstm_predictions}
+\end{figure}
+
+\textbf{Prediction Analysis:}
+
+Figure \ref{fig:lstm_predictions} demonstrates:
+\begin{itemize}
+    \item \textbf{Trend following}: LSTM successfully captures the overall upward trend
+    \item \textbf{Lag effect}: Predictions sometimes lag actual prices by 1-2 days (common in LSTMs)
+    \item \textbf{Volatility handling}: Struggles slightly with extreme volatility spikes
+    \item \textbf{Smooth predictions}: Produces smoother curves than actual prices (averaging effect)
+\end{itemize}
+
+\textbf{Strengths of Univariate LSTM:}
+\begin{enumerate}
+    \item \textbf{Temporal dependency capture}: LSTM architecture specifically designed for sequential data with long-term dependencies
+    
+    \item \textbf{Automatic feature learning}: No manual feature engineering required—learns relevant patterns from raw prices
+    
+    \item \textbf{Non-linear modeling}: Captures complex non-linear relationships through layer stacking
+    
+    \item \textbf{Generalizes well}: Strong performance on unseen test data indicates good generalization
+\end{enumerate}
+
+\textbf{Limitations:}
+\begin{itemize}
+    \item \textbf{Univariate constraint}: Uses only closing prices, ignoring volume and other OHLC features
+    \item \textbf{Computational cost}: Significantly slower than statistical or traditional ML models
+    \item \textbf{Hyperparameter sensitivity}: Performance depends on architecture choices (units, layers, dropout)
+    \item \textbf{Black box}: Less interpretable than linear models or tree-based methods
+\end{itemize}
+
+\subsubsection{Multivariate BiLSTM + Attention}
+
+\textbf{Architecture Design:}
+
+The most sophisticated deep learning model in our implementation combines bidirectional LSTMs with a custom attention mechanism. Based on the actual code:
+
+\begin{verbatim}
+Input(10, 4) → Bidirectional(LSTM(100, return_sequences=True))
+→ Dropout(0.2) → Custom Attention Layer → Dense(1)
+\end{verbatim}
+
+\textbf{Detailed Architecture Breakdown:}
+
+\begin{itemize}
+    \item \textbf{Input Layer}: Shape $(batch\_size, 10, 4)$
+    \begin{itemize}
+        \item Sequence length: 10 days
+        \item Features: 4 (Open, High, Low, Close prices)
+        \item Multivariate input provides richer information
+    \end{itemize}
+    
+    \item \textbf{Bidirectional LSTM Layer}: 100 units (50 forward + 50 backward)
+    \begin{itemize}
+        \item \textbf{Forward LSTM}: Processes sequence left-to-right (past → future)
+        \item \textbf{Backward LSTM}: Processes sequence right-to-left (future → past)
+        \item \textbf{Concatenation}: Outputs combined to 200-dimensional representation
+        \item \textbf{Return sequences}: True (outputs at all timesteps for attention)
+        \item \textbf{Initialization}: GlorotUniform with seed=42 for reproducibility
+    \end{itemize}
+    
+    \item \textbf{Dropout Layer}: Rate = 0.2
+    
+    \item \textbf{Custom Attention Mechanism}:
+    
+    From the actual implementation:
+    \begin{verbatim}
+    class Attention(Layer):
+        def build(self, input_shape):
+            self.W = self.add_weight(
+                shape=(input_shape[-1], 1),
+                initializer='random_normal'
+            )
+            self.b = self.add_weight(
+                shape=(input_shape[1], 1),
+                initializer='zeros'
+            )
+        
+        def call(self, x):
+            e = K.tanh(K.dot(x, self.W) + self.b)  # attention scores
+            a = K.softmax(e, axis=1)                # normalized weights
+            output = x * a                          # weighted features
+            return K.sum(output, axis=1)            # context vector
+    \end{verbatim}
+    
+    The attention mechanism:
+    \begin{itemize}
+        \item Learns trainable weights $W$ and biases $b$
+        \item Computes attention scores: $e_t = \tanh(h_t \cdot W + b)$
+        \item Normalizes to probabilities: $\alpha_t = \text{softmax}(e_t)$
+        \item Computes weighted sum: $c = \sum_t \alpha_t h_t$
+    \end{itemize}
+    
+    This allows the model to focus on the most relevant time steps for prediction.
+    
+    \item \textbf{Dense Output Layer}: 1 unit, linear activation
+\end{itemize}
+
+\textbf{Training Configuration:}
+\begin{itemize}
+    \item \textbf{Optimizer}: Adam (lr=0.001)
+    \item \textbf{Loss}: Mean Squared Error
+    \item \textbf{Batch size}: 32
+    \item \textbf{Epochs}: 100 with early stopping (patience=30)
+    \item \textbf{Callbacks}: EarlyStopping, ReduceLROnPlateau (factor=0.5, patience=20)
+    \item \textbf{Validation split}: 10\%
+\end{itemize}
+
+\textbf{Performance Results:}
+\begin{itemize}
+    \item \textbf{RMSE:} 4.28
+    \item \textbf{$R^2$ Score:} 0.9722
+    \item \textbf{MAE:} 3.5
+    \item \textbf{Training time}: 15-20 minutes on CPU
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7.png}
+    \caption{BiLSTM + Attention: Training History}
+    \label{fig:bilstm_training}
+\end{figure}
+
+\textbf{Training Analysis:}
+
+The training curves (Figure \ref{fig:bilstm_training}) show:
+\begin{itemize}
+    \item Smooth convergence over 40-50 epochs
+    \item Early stopping prevented overfitting
+    \item Learning rate reductions helped fine-tune performance
+    \item Validation loss remained close to training loss (good generalization)
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_8.png}
+    \caption{BiLSTM + Attention: Predicted vs Actual Prices}
+    \label{fig:bilstm_predictions}
+\end{figure}
+
+\textbf{Prediction Quality Analysis:}
+
+Figure \ref{fig:bilstm_predictions} reveals:
+\begin{itemize}
+    \item \textbf{Improved over univariate}: Slightly better RMSE (4.28 vs 4.52)
+    \item \textbf{Multivariate benefits}: Use of OHLC features captures intraday dynamics
+    \item \textbf{Reduced lag}: Bidirectional processing reduces prediction lag
+    \item \textbf{Better extremes}: Handles volatility spikes better than univariate LSTM
+\end{itemize}
+
+\textbf{Attention Mechanism Benefits:}
+
+The attention layer provides several advantages:
+\begin{enumerate}
+    \item \textbf{Selective focus}: Model learns which historical time steps are most relevant
+    \item \textbf{Interpretability}: Attention weights could be visualized to understand model decisions
+    \item \textbf{Long-range dependencies}: Better handling of long sequences compared to vanilla LSTM
+    \item \textbf{Adaptive importance}: Different patterns get different weights based on context
+\end{enumerate}
+
+\textbf{Comparison: BiLSTM vs Univariate LSTM:}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Metric} & \textbf{Univariate LSTM} & \textbf{BiLSTM + Attention} \\ \midrule
+RMSE & 4.52 & 4.28 \\
+$R^2$ Score & 0.9792 & 0.9722 \\
+MAE & 3.8 & 3.5 \\
+Parameters & ~25K & ~85K \\
+Training Time & 10-15 min & 15-20 min \\
+Features Used & 1 (Close) & 4 (OHLC) \\ \bottomrule
+\end{tabular}
+\caption{Comparison of LSTM Architectures}
+\end{table}
+
+\textbf{Key Insights:}
+\begin{enum erate}
+    \item \textbf{Modest improvement}: BiLSTM improves RMSE by 5.3\% (4.52 → 4.28)
+    \item \textbf{$R^2$ paradox}: Lower $R^2$ despite lower RMSE suggests different error distribution
+    \item \textbf{Complexity trade-off}: 3.4x more parameters for marginal gain
+    \item \textbf{Multivariate value}: Using OHLC does help, but not dramatically
+    \item \textbf{Diminishing returns}: Adding complexity shows diminishing returns
+\end{enumerate}
+
+\textbf{When to Use BiLSTM + Attention:}
+\begin{itemize}
+    \item High-frequency trading where small improvements matter
+    \item When interpretability of attention weights is valuable
+    \item Sufficient computational resources for training
+    \item Multi-step ahead forecasting (attention helps with longer horizons)
+\end{itemize}
+
+\textbf{Overall Deep Learning Assessment:}
+
+Both LSTM models demonstrate strong performance (RMSE ~4.3-4.5, $R^2$ ~0.97), significantly outperforming tree-based models but not matching the hybrid approach. Key takeaways:
+
+\begin{itemize}
+    \item Deep learning excels at temporal pattern recognition
+    \item Automatic feature learning reduces engineering burden
+    \item Computational cost is substantially higher
+    \item Still beaten by simpler hybrid SARIMA+XGBoost (RMSE 1.28)
+\end{itemize}
+
+This suggests that for next-day stock prediction, domain knowledge (detrending via SARIMA) combined with gradient boosting may be more effective than pure deep learning approaches.

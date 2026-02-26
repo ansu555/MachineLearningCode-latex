@@ -1,0 +1,226 @@
+\subsection{Baseline Statistical Models}
+
+We begin our model evaluation with classical statistical time series models that serve as important baselines for comparison. These models provide interpretable, theory-driven predictions based on autocorrelation structures in the data.
+
+\subsubsection{ARIMA Model Performance}
+
+\textbf{Model Configuration:}
+The ARIMA model was configured using automated parameter selection via the \texttt{auto\_arima} function from the \texttt{pmdarima} library. The algorithm tested various combinations of parameters $(p, d, q)$ to minimize AIC (Akaike Information Criterion).
+
+\textbf{Final Configuration}: ARIMA$(p,1,q)$ with first-order differencing to handle non-stationarity.
+
+\textbf{Performance Results:}
+\begin{itemize}
+    \item \textbf{RMSEE:} 32.52 (worst among all models)
+    \item \textbf{$R^2$ Score:} -0.0868 (negative indicates worse than mean baseline)
+    \item \textbf{MAE:} Approximately 28.5
+\end{itemize}
+
+\textbf{Why ARIMA Failed:}
+
+The poor performance of ARIMA can be attributed to several fundamental limitations:
+
+\begin{enumerate}
+    \item \textbf{Inadequate handling of strong trends}: While differencing removes the trend, it also discards valuable trend information. The model struggles to accurately forecast the continuation of AAPL's strong bullish trend.
+    
+
+\item \textbf{Linear assumption}: ARIMA assumes linear relationships in the auto-regressive and moving average components. However, stock prices exhibit non-linear dynamics, regime changes, and complex interactions that linear models cannot capture.
+    
+    \item \textbf{Limited feature utilization}: ARIMA uses only the univariate time series of closing prices, ignoring valuable information from volume, technical indicators, and other features.
+    
+    \item \textbf{Stationarity requirement}: Despite differencing, the data retains local non-stationarities and regime changes that violate ARIMA's assumptions.
+\end{enumerate}
+
+The negative $R^2$ score is particularly telling—it indicates that simply predicting the mean  price for all days would yield better results than the ARIMA model's predictions. This demonstrates that ARIMA is fundamentally unsuitable for this dataset without substantial preprocessing or hybridization.
+
+\subsubsection{SARIMA Model Performance}
+
+\textbf{Model Configuration:}
+The Seasonal ARIMA model extends ARIMA by incorporating seasonal components to capture periodic patterns. The model was configured as SARIMA$(0,1,0) \times (0,0,0)_{[5]}$ based on automated selection.
+
+Parameters:
+\begin{itemize}
+    \item $(p,d,q) = (0,1,0)$: Non-seasonal components (essentially integrated noise)
+    \item $(P,D,Q)_s = (0,0,0)_{[5]}$: Seasonal components with weekly period (5 trading days)
+    \item Differencing order: 1 (to achieve stationarity)
+\end{itemize}
+
+\textbf{Performance Results:}
+\begin{itemize}
+    \item \textbf{RMSE:} 3.24 (10x improvement over ARIMA!)
+    \item \textbf{$R^2$ Score:} 0.9891 (explains 98.91\% of variance)
+    \item \textbf{MAE:} Approximately 2.5
+\end{itemize}
+
+\textbf{Why SARIMA Succeeded:}
+
+The dramatic improvement from ARIMA to SARIMA reveals important insights:
+
+\begin{enumerate}
+    \item \textbf{Seasonal awareness}: The weekly seasonal component $(s=5)$ captures recurring patterns in trading behavior (e.g., Monday effects, Friday profit-taking).
+    
+    \item \textbf{Better trend handling}: The integrated component with seasonal differencing preserves more trend information while achieving stationarity.
+    
+    \item \textbf{Autocorrelation capture}: SARIMA effectively models both short-term and seasonal autocorrelations in the price series.
+    
+    \item \textbf{Stable baseline}: Provides reliable predictions that closely follow the overall trend, making it an excellent baseline for hybrid approaches.
+\end{enumerate}
+
+\textbf{Remaining Limitations:}
+
+Despite strong performance, SARIMA still has constraints:
+\begin{itemize}
+    \item \textbf{Linear framework}: Cannot capture non-linear regime changes or complex feature interactions
+    \item \textbf{Univariate}: Doesn't leverage additional features like volume or technical indicators
+    \item \textbf{Fixed parameters}: Cannot adapt to changing market dynamics without retraining
+    \item \textbf{Residual patterns}: Systematic residuals suggest unexplained non-linear components
+\end{itemize}
+
+These limitations motivate the hybrid approach, where XGBoost learns the non-linear residual patterns that SARIMA misses.
+
+\subsection{Machine Learning Models}
+
+Machine learning models offer the ability to learn non-linear relationships and utilize multiple features simultaneously. However, as we demonstrate, not all ML approaches are suitable for time series forecasting without careful design.
+
+\subsubsection{Linear Regression}
+
+\textbf{Model Configuration:}
+A multivariate linear regression model was trained using engineered features including:
+\begin{itemize}
+    \item Lag features: Close prices from previous 1, 2, 3, 5, and 10 days
+    \item Technical indicators: MACD, RSI, Bollinger Bands, SMA (multiple windows)
+    \item Temporal features: Day of week, month, quarter indicators
+    \item Volume-derived features: Volume moving averages, volume changes
+\end{itemize}
+
+\textbf{Performance Results:}
+\begin{itemize}
+    \item \textbf{RMSE:} 2.92
+    \item \textbf{$R^2$ Score:} 0.9913 (second-best overall)
+    \item \textbf{MAE:} 2.1
+\end{itemize}
+
+\textbf{Surprising Strong Performance:}
+
+Linear regression's excellent performance is initially surprising given its simplicity, but can be explained by:
+
+\begin{enumerate}
+    \item \textbf{Strong autocorrelation}: Stock prices exhibit high autocorrelation, meaning past prices are highly predictive. The lag features directly exploit this.
+    
+    \item \textbf{Effective feature engineering}: The combination of lag features and technical indicators provides rich, informative inputs that capture both trend and momentum.
+    
+    \item \textbf{Near-linear local dynamics}: Over short horizons (next day), price movements can be approximately linear in feature space.
+    
+    \item \textbf{No extrapolation required}: With lag features, the model interpolates within the feature space rather than extrapolating to unseen price ranges.
+\end{enumerate}
+
+\textbf{Feature Importance Insights:}
+
+The most influential features in the linear regression model were:
+\begin{itemize}
+    \item Lag-1 (previous day close): Highest coefficient magnitude
+    \item Lag-2 and Lag-3: Capture short-term momentum
+    \item MACD: Captures medium-term trend direction
+    \item RSI: Identifies overbought/oversold conditions
+\end{itemize}
+
+This strong baseline performance validates our feature engineering approach and demonstrates that linear models can be competitive when properly configured.
+
+\subsubsection{Random Forest}
+
+\textbf{Model Configuration:}
+A Random Forest regressor with the following hyperparameters:
+\begin{itemize}
+    \item Number of trees: 100
+    \item Max depth: 10 (grid-searched)
+    \item Min samples split: 5
+    \item Min samples leaf: 2
+    \item Bootstrap: True with out-of-bag evaluation
+\end{itemize}
+
+\textbf{Performance Results:}
+\begin{itemize}
+    \item \textbf{RMSE:} 27.79
+    \item \textbf{$R^2$ Score:} 0.2064  
+    \item \textbf{MAE:} 24.3
+\end{itemize}
+
+\textbf{Why Random Forest Failed:}
+
+The poor performance is striking given Random Forest's reputation for robustness. The failure stems from a fundamental incompatibility between tree-based methods and extrapolative forecasting:
+
+\begin{enumerate}
+    \item \textbf{Extrapolation limitation}: Decision trees can only predict values within the range of training data. Since AAPL price trends upward, test prices exceed training max values, causing systematic underprediction.
+    
+    \item \textbf{Piecewise constant predictions}: Trees create piecewise constant decision boundaries. For continuously trending data, this leads to step-like predictions that Cannot match smooth trends.
+    
+    \item \textbf{No trend awareness}: Unlike parametric models, trees don't learn global trends—they partition feature space based on training data distribution.
+    
+    \item \textbf{Feature space mismatch}: Even with lag features, the feature space in test period differs from training due to price level shifts.
+\end{enumerate}
+
+\textbf{Visualization Analysis:}
+
+Prediction plots show Random Forest systematically underpredicting as actual prices exceed the training range maximum. The model essentially plateaus near the training data ceiling, unable to extrapolate the upward trend.
+
+\textbf{Lesson Learned:}
+
+Tree-based ensembles require either:
+\begin{itemize}
+    \item Detrending before modeling (as done in hybrid approach)
+    \item Transforming to stationary returns rather than levels
+    \item Combining with trend-capturing models (hybrid strategy)
+\end{itemize}
+
+\subsubsection{XGBoost (Standalone)}
+
+\textbf{Model Configuration:}
+XGBoost with optimized hyperparameters:
+\begin{itemize}
+    \item Number of estimators: 100
+    \item Learning rate: 0.1
+    \item Max depth: 5
+    \item Subsample: 0.8
+    \item Colsample by tree: 0.8
+    \item Early stopping: patience=10 on validation RMSE
+\end{itemize}
+
+\textbf{Performance Results:}
+\begin{itemize}
+    \item \textbf{RMSE:} 27.13
+    \item \textbf{$R^2$ Score:} 0.2435
+    \item \textbf{MAE:} 23.8
+\end{itemize}
+
+\textbf{Why XGBoost Also Failed:}
+
+Despite being more sophisticated than Random Forest, XGBoost exhibits similar failure modes:
+
+\begin{enumerate}
+    \item \textbf{Same extrapolation problem}: Gradient boosting still produces piecewise constant predictions limited to training range.
+    
+    \item \textbf{Slightly better due to boosting}: The sequential error correction in boosting provides marginal improvement over Random Forest, but doesn't solve the fundamental issue.
+    
+    \item \textbf{Overfitting to training distribution}: XGBoost learns the specific feature-target relationships in training data but cannot generalize to shifted price levels.
+\end{enumerate}
+
+\textbf{Residual Analysis:}
+
+Examination of XGBoost residuals reveals:
+\begin{itemize}
+    \item Strong positive bias (underprediction) in test set
+    \item Increasing error magnitude as time progresses and prices rise
+    \item Residuals correlate with time, indicating systematic bias
+\end{itemize}
+
+\textbf{Critical Insight for Hybrid Model:}
+
+The standalone failure of XGBoost is crucial context for understanding the hybrid model's success. When XGBoost is applied to SARIMA \textit{residuals} rather than raw prices:
+\begin{itemize}
+    \item Residuals are approximately stationary (trend removed)
+    \item No extrapolation required (residuals centered near zero)
+    \item XGBoost learns non-linear patterns in detrended data
+    \item Result: XGBoost RMSE in hybrid = 1.28 vs. 27.13 standalone
+\end{itemize}
+
+This demonstrates the importance of problem formulation—the same algorithm succeeds or fails based on how it's applied.

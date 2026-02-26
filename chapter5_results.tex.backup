@@ -1,0 +1,69 @@
+\section{Results}
+
+\subsection{Experimental Setup}
+The experiments were conducted using historical stock price data for Apple Inc. (AAPL) spanning from 2010 to 2025. The dataset was split into training (80\%) and testing (20\%) sets using a time-based split to respect the temporal order of the data. The models were evaluated based on Root Mean Squared Error (RMSE) and R-squared ($R^2$) score.
+
+\subsection{Exploratory Data Analysis}
+Before modeling, we performed an exploratory data analysis to understand the underlying patterns in the stock price data. Figure \ref{fig:eda_close} shows the historical closing price of AAPL, revealing a clear long-term upward trend with significant volatility in recent years.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_0.png}
+    \caption{Historical Closing Price of AAPL (2010-2025)}
+    \label{fig:eda_close}
+\end{figure}
+
+\subsection{Model Performance Evaluation}
+We evaluated a diverse set of models ranging from traditional statistical methods to advanced deep learning and hybrid architectures.
+
+\subsubsection{Statistical Models}
+The ARIMA model performed poorly on this dataset, with an RMSE of 32.52 and a negative $R^2$ score (-0.0868), indicating that it failed to capture the underlying data structure, likely due to the non-stationary nature of the stock prices. However, the SARIMA model, which accounts for seasonality, showed a significant improvement with an RMSE of 3.24 and an $R^2$ of 0.9891.
+
+\subsubsection{Machine Learning Models}
+Among the machine learning models, Linear Regression surprisingly performed very well with an RMSE of 2.92 and $R^2$ of 0.9913. In contrast, ensemble methods like Random Forest and XGBoost (when used as standalone regressors) performed poorly, with RMSEs of 27.79 and 27.13 respectively. This suggests that the standalone tree-based models struggled to extrapolate the trend in the time-series data without proper detrending or feature engineering.
+
+\subsubsection{Deep Learning Models}
+Deep learning models demonstrated strong performance. The Univariate LSTM achieved an RMSE of 4.52 ($R^2$ 0.9792), while the Multivariate BiLSTM with Attention mechanism further improved the results with an RMSE of 4.28 ($R^2$ 0.9722). These models effectively captured the non-linear temporal dependencies in the data.
+
+\subsubsection{Hybrid Model Performance}
+The proposed Hybrid model, combining SARIMA for linear trend forecasting and XGBoost for residual error correction, outperformed all other models. It achieved the lowest RMSE of 1.28 and the highest $R^2$ score of 0.9983. Figure \ref{fig:hybrid_results} illustrates the prediction performance of the hybrid model.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9.png}
+    \caption{Hybrid Model (SARIMA + XGBoost) Prediction vs Actual}
+    \label{fig:hybrid_results}
+\end{figure}
+
+\subsection{Comparative Analysis}
+Table \ref{tab:model_comparison} summarizes the performance of all implemented models. The Hybrid model's superior performance validates our hypothesis that combining statistical and machine learning approaches can effectively handle both linear and non-linear components of stock price data.
+
+\begin{table}[htbp]
+\centering
+\caption{Performance Comparison of All Models}
+\label{tab:model_comparison}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Model} & \textbf{RMSE} & \textbf{$R^2$ Score} \\ \midrule
+Linear Regression & 2.9171 & 0.9913 \\
+Random Forest & 27.7901 & 0.2064 \\
+XGBoost & 27.1329 & 0.2435 \\
+Univariate LSTM & 4.5186 & 0.9792 \\
+Multivariate BiLSTM + Attention & 4.2792 & 0.9722 \\
+ARIMA & 32.5199 & -0.0868 \\
+SARIMA & 3.2446 & 0.9891 \\
+\textbf{Hybrid (SARIMA + XGBoost)} & \textbf{1.2847} & \textbf{0.9983} \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Figure \ref{fig:model_comparison} provides a visual comparison of the predicted prices against the actual prices for the next day prediction task.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_10.png}
+    \caption{Comparison of Predicted Prices by Different Models}
+    \label{fig:model_comparison}
+\end{figure}
+
+\subsection{Discussion}
+The results highlight the limitations of standalone models. While SARIMA captures the trend well, it misses the non-linear nuances. Conversely, LSTM models capture complex patterns but can be computationally expensive and sensitive to hyperparameters. The Hybrid SARIMA-XGBoost model effectively leverages the strengths of both: SARIMA models the global trend and seasonality, while XGBoost learns the complex residual errors that SARIMA misses. This decomposition strategy results in a highly accurate and robust forecasting system.

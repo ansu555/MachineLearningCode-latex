@@ -1,0 +1,213 @@
+\section{Results and Analysis}
+
+\subsection{Experimental Setup}
+
+The experiments were conducted using historical stock price data for Apple Inc. (AAPL) spanning from 2010 to 2025, providing approximately 15 years of trading data. This dataset was selected due to AAPL's significance as a major technology stock with high liquidity and extensive historical data availability. The comprehensive time period captures various market conditions including bull markets, corrections, and periods of high volatility.
+
+\subsubsection{Data Characteristics}
+
+The dataset consists of daily OHLCV (Open, High, Low, Close, Volume) data with the following characteristics:
+\begin{itemize}
+    \item \textbf{Total observations}: Approximately 3,773 trading days
+    \item \textbf{Features}: 5 primary features (Open, High, Low, Close, Volume)
+    \item \textbf{Target variable}: Next day's closing price
+    \item \textbf{Temporal range}: January 2010 to November 2025
+    \item \textbf{Market conditions}: Predominantly bull market with several correction periods
+\end{itemize}
+
+\subsubsection{Train-Test Split Methodology}
+
+To preserve the temporal integrity of the time series and ensure realistic evaluation that mimics real-world trading scenarios, we employed a strict chronological split:
+
+\begin{itemize}
+    \item \textbf{Training set}: First 80\% of chronological data (approximately 3,018 days)
+    \item \textbf{Testing set}: Final 20\% for out-of-sample evaluation (approximately 755 days)
+    \item \textbf{No random shuffling}: Maintains temporal order to prevent data leakage
+    \item \textbf{Walk-forward validation}: Used during model development for hyperparameter tuning
+\end{itemize}
+
+This approach ensures that models are trained only on historical data and tested on genuinely unseen future data, providing a realistic assessment of prediction performance.
+
+\subsubsection{Evaluation Metrics}
+
+Model performance was assessed using multiple complementary metrics to capture different aspects of prediction quality:
+
+\textbf{1. Root Mean Squared Error (RMSE):}
+\begin{equation}
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
+\end{equation}
+
+RMSE is particularly useful as it:
+\begin{itemize}
+    \item Expresses error in the same units as the target variable (dollars)
+    \item Penalizes larger errors more heavily due to squaring
+    \item Provides interpretable results (e.g., RMSE of 1.28 means average error of \$1.28)
+\end{itemize}
+
+\textbf{2. R-squared ($R^2$) Score:}
+\begin{equation}
+R^2 = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
+\end{equation}
+
+$R^2$ indicates the proportion of variance in the dependent variable explained by the model:
+\begin{itemize}
+    \item Values range from $-\infty$ to 1.0
+    \item $R^2 = 1.0$: Perfect predictions
+    \item $R^2 = 0$: Model performs as well as predicting the mean
+    \item $R^2 < 0$: Model performs worse than predicting the mean
+\end{itemize}
+
+\textbf{3. Mean Absolute Error (MAE):}
+\begin{equation}
+\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
+\end{equation}
+
+MAE provides a linear penalty for errors and is less sensitive to outliers compared to RMSE.
+
+\textbf{4. Directional Accuracy:}
+\begin{equation}
+\text{DA} = \frac{1}{n} \sum_{i=1}^{n} \mathbb{1}_{\text{sign}(y_i - y_{i-1}) = \text{sign}(\hat{y}_i - y_{i-1})}
+\end{equation}
+
+Directional accuracy measures the percentage of times the model correctly predicts the direction of price movement (up or down), which is critical for trading applications.
+
+\subsection{Exploratory Data Analysis}
+
+Before applying predictive models, we conducted comprehensive exploratory data analysis to understand the underlying characteristics, patterns, and statistical properties of AAPL stock price data.
+
+\subsubsection{Historical Price Trends}
+
+Figure \ref{fig:eda_close} presents the historical closing price of AAPL from 2010 to 2025, revealing several critical patterns:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_0.png}
+    \caption{Historical Closing Price of AAPL (2010-2025)}
+    \label{fig:eda_close}
+\end{figure}
+
+\textbf{Key Observations:}
+\begin{itemize}
+    \item \textbf{Strong upward trend}: Clear long-term bullish trend with price increasing from approximately \$30 in 2010 to over \$200 by 2025
+    \item \textbf{Accelerating growth}: Rate of price increase intensifies after 2019
+    \item \textbf{Non-stationarity}: Mean and variance clearly change over time, violating stationarity assumptions
+    \item \textbf{Volatility clustering}: Periods of high volatility (rapid price swings) tend to cluster together
+    \item \textbf{Recent volatility}: Increased price fluctuations in 2020-2025 period, likely due to market uncertainty and rapid growth
+\end{itemize}
+
+This strong trending behavior has important implications for model selection. Traditional statistical models assuming stationarity (like basic ARIMA) will struggle without proper differencing or detrending. Tree-based ensemble methods may also face challenges as they cannot extrapolate beyond training data ranges.
+
+\subsubsection{Trading Volume Patterns}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_1.png}
+    \caption{Historical Trading Volume Analysis}
+    \label{fig:eda_volume}
+\end{figure}
+
+Analysis of trading volume (Figure \ref{fig:eda_volume}) reveals:
+\begin{itemize}
+    \item Volume spikes during significant market events and earnings announcements
+    \item General increase in average trading volume over time as AAPL market cap grew
+    \item Correlation between extreme volume and price volatility
+    \item Volume patterns can signal regime changes or market turning points
+\end{itemize}
+
+\subsubsection{Price Distribution and Statistical Properties}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_2.png}
+    \caption{Distribution of Closing Prices}
+    \label{fig:price_dist}
+\end{figure}
+
+The distribution of closing prices (Figure \ref{fig:price_dist}) shows:
+\begin{itemize}
+    \item \textbf{Right-skewed distribution}: Concentration of prices in lower range with long right tail
+    \item \textbf{Non-normal distribution}: Violates normality assumptions of many classical statistical tests
+    \item \textbf{Multiple modes}: Suggests different market regimes or price levels where stock stabilized
+\end{itemize}
+
+\subsubsection{Feature Correlation Analysis}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_3.png}
+    \caption{Correlation Heatmap of Price Features}
+    \label{fig:corr_basic}
+\end{figure}
+
+The correlation matrix (Figure \ref{fig:corr_basic}) reveals strong positive correlations among OHLC prices:
+\begin{itemize}
+    \item \textbf{Near-perfect correlation}: Open, High, Low, Close prices are highly correlated (>0.99)
+    \item \textbf{Volume independence}: Volume shows weak correlation with price levels
+    \item \textbf{Multicollinearity}: Strong correlations suggest redundancy in raw price features
+    \item \textbf{Feature engineering implication}: Derived features (returns, technical indicators) may provide more independent information
+\end{itemize}
+
+\subsubsection{Return Analysis}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_4.png}
+    \caption{Daily Return Distribution}
+    \label{fig:returns_dist}
+\end{figure}
+
+Daily returns exhibit classic financial time series characteristics:
+\begin{itemize}
+    \item \textbf{Approximately normal}: Returns are more normally distributed than prices
+    \item \textbf{Fat tails}: More extreme events than predicted by normal distribution (leptokurtic)
+    \item \textbf{Centered near zero}: Mean daily return slightly positive due to long-term upward trend
+    \item \textbf{Heteroskedasticity}: Variance of returns changes over time
+\end{itemize}
+
+\subsubsection{Volatility Clustering}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_6.png}
+    \caption{Rolling Volatility Analysis (30-day window)}
+    \label{fig:volatility}
+\end{figure}
+
+Rolling volatility analysis (Figure \ref{fig:volatility}) demonstrates:
+\begin{itemize}
+    \item \textbf{Time-varying volatility}: Confirms heteroskedastic nature of stock returns
+    \item \textbf{Volatility clustering}: High volatility periods beget more high volatility (ARCH effects)
+    \item \textbf{Regime changes}: Distinct periods of low and high volatility
+    \item \textbf{Predictive value}: Past volatility may help predict future volatility
+\end{itemize}
+
+This volatility clustering justifies the use of sophisticated models that can capture time-varying variance patterns.
+
+\subsubsection{Comprehensive Feature Correlation Matrix}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_7.png}
+    \caption{Extended Correlation Matrix Including Engineered Features}
+    \label{fig:corr_extended}
+\end{figure}
+
+After feature engineering (adding lag features, technical indicators, and temporal features), the extended correlation matrix (Figure \ref{fig:corr_extended}) shows:
+\begin{itemize}
+    \item \textbf{Lag feature correlation}: Strong correlation between current price and recent lags (1-5 days)
+    \item \textbf{Technical indicator relationships}: MACD, RSI, and Bollinger Bands capture different aspects of price dynamics
+    \item \textbf{Reduced redundancy}: Engineered features provide more diverse information than raw OHLC
+\end{itemize}
+
+\subsubsection{Summary of EDA Findings}
+
+The exploratory analysis reveals that AAPL stock price data exhibits:
+\begin{enumerate}
+    \item \textbf{Strong non-stationarity}: Requiring differencing or detrending for statistical models
+    \item \textbf{Temporal dependencies}: Significant autocorrelation justifies time series models
+    \item \textbf{Volatility clustering}: GARCH-like effects warrant models capturing heteroskedasticity
+    \item \textbf{Non-linear patterns}: Complex relationships suggest need for flexible modeling approaches
+    \item \textbf{Feature redundancy}: Feature engineering critical to extract independent signals
+\end{enumerate}
+
+These characteristics motivated our hybrid modeling strategy combining statistical (SARIMA) and machine learning (XGBoost) approaches to handle both linear trends and non-linear residual patterns.

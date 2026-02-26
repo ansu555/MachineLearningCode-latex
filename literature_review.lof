@@ -1,0 +1,8 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Complete System Architecture for Hybrid Stock Prediction}}{21}{figure.1}%
+\contentsline {figure}{\numberline {2}{\ignorespaces BiLSTM with Attention Mechanism Architecture}}{29}{figure.2}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Hybrid SARIMA-XGBoost Workflow}}{31}{figure.3}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Historical Closing Price of AAPL (2010-2025)}}{36}{figure.4}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Feature Correlation Heatmap}}{37}{figure.5}%
+\contentsline {figure}{\numberline {6}{\ignorespaces BiLSTM + Attention Training History}}{39}{figure.6}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Hybrid Model (SARIMA + XGBoost) Predictions vs Actual Prices}}{40}{figure.7}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Comparison of All Model Predictions}}{42}{figure.8}%

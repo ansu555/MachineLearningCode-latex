@@ -1,0 +1,122 @@
+[
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 38,
+    "content": "\u2705 Linear Regression - RMSE: 2.9171, R\u00b2: 0.9913"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 38,
+    "content": "\u2705 Random Forest - RMSE: 27.4889, R\u00b2: 0.2235"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 38,
+    "content": "\u2705 XGBoost - RMSE: 27.1738, R\u00b2: 0.2412"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 41,
+    "content": "RMSE: 2.9171, R\u00b2 Score: 0.9913"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 41,
+    "content": "RMSE: 27.7901, R\u00b2 Score: 0.2064"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 41,
+    "content": "RMSE: 27.1329, R\u00b2 Score: 0.2435"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 59,
+    "content": "LSTM RMSE: 4.518590605793682"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 59,
+    "content": "LSTM R^2 Score: 0.979203348029245"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 84,
+    "content": "Attention + Multi variate BiLSTM RMSE: 4.2792"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 84,
+    "content": "Attention + Multi variate BiLSTM R\u00b2 Score: 0.9722"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 100,
+    "content": "ARIMA RMSE: 32.45479061368909"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 100,
+    "content": "ARIMA R^2 Score: -0.08618926749007749"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 122,
+    "content": "RMSE: 3.2446349805484873"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 122,
+    "content": "R\u00b2 Score: 0.9891437564898999"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 147,
+    "content": "RMSE: 1.2846954905983345"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 147,
+    "content": "R\u00b2 Score: 0.99829804417518"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 156,
+    "content": "Linear Regression - RMSE: 2.9171, R\u00b2 Score: 0.9913"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 156,
+    "content": "Random Forest - RMSE: 27.7901, R\u00b2 Score: 0.2064"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 156,
+    "content": "XGBoost - RMSE: 27.1329, R\u00b2 Score: 0.2435"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 157,
+    "content": "Univariate_LSTM - RMSE: 4.5186, R\u00b2 Score: 0.9792"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 157,
+    "content": "Multivariate_LSTM - RMSE: 4.2792, R\u00b2 Score: 0.9722"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 157,
+    "content": "ARIMA - RMSE: 32.5199, R\u00b2 Score: -0.0868"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 157,
+    "content": "SARIMA - RMSE: 3.2446, R\u00b2 Score: 0.9891"
+  },
+  {
+    "notebook": "Stock_Price_Prediction_Forecasting(Next_Day's_Price)",
+    "cell": 157,
+    "content": "Hybrid(SARIMA + XGBoost) - RMSE: 1.2847, R\u00b2 Score: 0.9983"
+  }
+]
