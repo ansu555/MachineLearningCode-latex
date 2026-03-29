@@ -1,15 +1,46 @@
 \begin{thebibliography}{1}
 
 \bibitem{supermarket2025}
-A.~Author and B.~Others, ``Machine learning approach to consumer behavior in supermarket analytics,'' {\em Journal of Retailing and Consumer Services}, 2025.
+A.~Author and B.~Others, ``Machine learning approach to consumer behavior in
+  supermarket analytics,'' {\em Journal of Retailing and Consumer Services},
+  2025.
 \newblock Source: 1-s2.0-S2772662225000566-main.pdf.
 
 \bibitem{machinefailure2024}
-D.~Yadav {\em et~al.}, ``Predicting machine failures using machine learning and deep learning algorithms,'' {\em Sustainable Manufacturing and Service Economics}, vol.~3, p.~100029, 2024.
+D.~Yadav {\em et~al.}, ``Predicting machine failures using machine learning and
+  deep learning algorithms,'' {\em Sustainable Manufacturing and Service
+  Economics}, vol.~3, p.~100029, 2024.
 \newblock Source: 1-s2.0-S2667344424000124-main.pdf.
 
+\bibitem{vader2014}
+C.~J. Hutto and E.~Gilbert, ``Vader: A parsimonious rule-based model for
+  sentiment analysis of social media text,'' in {\em Proceedings of the 8th
+  International AAAI Conference on Weblogs and Social Media (ICWSM)}, 2014.
+
+\bibitem{devlin2019}
+J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``Bert: Pre-training of deep
+  bidirectional transformers for language understanding,'' in {\em Proceedings
+  of NAACL-HLT}, pp.~4171--4186, 2019.
+
+\bibitem{araci2019}
+D.~Araci, ``Finbert: Financial sentiment analysis with pre-trained language
+  models,'' {\em arXiv preprint arXiv:1908.10063}, 2019.
+
+\bibitem{malo2014}
+P.~Malo, A.~Sinha, P.~Korhonen, J.~Wallenius, and P.~Takala, ``Good debt or bad
+  debt: Detecting semantic orientations in economic texts,'' {\em Journal of
+  the American Society for Information Science and Technology}, vol.~65, no.~4,
+  pp.~782--796, 2014.
+
+\bibitem{liu2019}
+Y.~Liu, M.~Ott, N.~Goyal, J.~Du, M.~Joshi, D.~Chen, O.~Levy, M.~Lewis,
+  L.~Zettlemoyer, and V.~Stoyanov, ``Roberta: A robustly optimized bert
+  pretraining approach,'' {\em arXiv preprint arXiv:1907.11692}, 2019.
+
 \bibitem{eda2023}
-J.~Llanes-Jurado {\em et~al.}, ``Automatic artifact recognition and correction for electrodermal activity based on lstm-cnn models,'' {\em Expert Systems With Applications}, vol.~230, p.~120581, 2023.
+J.~Llanes-Jurado {\em et~al.}, ``Automatic artifact recognition and correction
+  for electrodermal activity based on lstm-cnn models,'' {\em Expert Systems
+  With Applications}, vol.~230, p.~120581, 2023.
 \newblock Source: 1-s2.0-S0957417423010837-main.pdf.
 
 \end{thebibliography}

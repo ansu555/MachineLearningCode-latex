@@ -286,10 +286,10 @@ Sister Nivedita University, Newtown, Kolkata
     \vspace{1cm}
 \end{center}
 
-\noindent The prediction of stock market prices is a challenging task due to the non-linear, volatile, and dynamic nature of financial time series data. Traditional statistical models like ARIMA have limitations in capturing non-linear patterns, while deep learning models like LSTM excel at sequential data but may struggle with noise. This literature review comprehensively explores the evolution of stock prediction methodologies, with a specific focus on \textbf{Hybrid Models} that combine the strengths of multiple approaches (e.g., ARIMA-LSTM, CNN-LSTM).
+\noindent The prediction of stock market prices is a challenging task due to the non-linear, volatile, and sentiment-driven nature of financial time series data. Traditional statistical models like ARIMA have limitations in capturing non-linear patterns, while deep learning models like LSTM excel at sequential data but may struggle with noise. Price-only models, regardless of architectural sophistication, are structurally blind to exogenous information shocks---such as earnings surprises, macroeconomic announcements, and shifts in public sentiment---until those shocks are already reflected in historical prices. This literature review comprehensively explores the evolution of stock prediction methodologies, with a specific focus on \textbf{Hybrid Models} that combine the strengths of multiple approaches (e.g., ARIMA-LSTM, CNN-LSTM), and extends the analysis to \textbf{Sentiment-Aware Hybrid Architectures} that integrate financial news sentiment into the prediction pipeline.
 
 \vspace{0.5cm}
-\noindent We analyze various hybrid architectures, comparing their mechanisms, strengths, and limitations. The review highlights how hybrid models consistently outperform standalone models by effectively handling both linear and non-linear components, as well as incorporating diverse data sources such as technical indicators and macroeconomic variables. Furthermore, this document identifies critical research gaps in current methodologies, particularly regarding the integration of multimodal data (text and images), the lack of adaptive learning mechanisms for regime shifts, and the absence of robust risk-aware prediction frameworks. These identified gaps lay the foundation for future research and the development of more robust and accurate stock prediction systems.
+\noindent We analyze various hybrid architectures, comparing their mechanisms, strengths, and limitations. The review highlights how hybrid models consistently outperform standalone models by effectively handling both linear and non-linear components, as well as incorporating diverse data sources such as technical indicators and macroeconomic variables. Building on this foundation, we propose a sentiment-augmented extension of the SARIMA-XGBoost hybrid model that integrates a domain-adapted sentiment analysis pipeline featuring dual-head sarcasm correction, principled temporal alignment of news publication timestamps to trading days, and confidence-weighted sentiment aggregation. The system addresses critical gaps identified in modern sentiment analysis literature---including sarcasm and irony detection, tokenization drift in financial language, domain sensitivity, and uncertainty quantification---and feeds structured sentiment features into the XGBoost residual learning stage, enabling the model to capture linear trends, non-linear residual patterns, and sentiment-driven price dynamics within a unified three-component decomposition $y_t = L_t + N_t + E_t + \epsilon_t$. Furthermore, this document identifies research gaps in current methodologies, particularly regarding multimodal data integration, the lack of adaptive learning mechanisms for regime shifts, and the absence of robust risk-aware prediction frameworks. These identified gaps and the proposed sentiment-aware architecture lay the foundation for more robust and accurate stock prediction systems.
 
 \newpage
 
@@ -305,18 +305,40 @@ The stock market is a part of the financial system. The stock market shows how t
 
 Traditional statistical models have been used for decades to forecast stock prices. Traditional statistical models often have trouble with market shifts, regime changes and non‑linear patterns in the data. The rise of machine learning and deep learning gives researchers tools to study the patterns. Machine learning and deep learning can handle patterns that traditional statistical models miss. I have seen that modern computational techniques can learn from large amounts of data. Modern computational techniques can find relationships that're hard to see with analysis or with classical statistical methods. When modern computational techniques look at years of data modern computational techniques can spot connections that no one would notice by just looking at the numbers or by using traditional statistical models.
 
+However, even the most sophisticated price-based models---whether statistical, machine learning, or deep learning---share a fundamental structural limitation: they operate entirely on historical OHLCV (Open, High, Low, Close, Volume) features and derived technical indicators. These models have no mechanism to respond to sudden exogenous information shocks, such as a negative earnings surprise, a CEO resignation, or a macroeconomic policy change, until those shocks are already reflected in the price history. Financial markets are fundamentally information-processing systems where news, earnings announcements, analyst opinions, and public sentiment all contribute to price discovery. A model that can extract and quantify the sentiment embedded in financial news, and integrate it into its prediction pipeline, effectively gains advance information that price-only models lack.
+
+Integrating sentiment analysis into financial prediction is not straightforward. Modern sentiment models suffer from several well-documented gaps: financial language contains domain-specific jargon, hedged expressions, and sarcasm that general-purpose sentiment models misinterpret; news publication timestamps do not directly align with trading day boundaries, creating temporal mismatch problems; most sentiment pipelines produce deterministic point estimates with no uncertainty quantification; and models trained on general corpora experience tokenization drift when applied to financial text. This work is therefore motivated by the convergence of two research problems: the need for sentiment-aware trading models, and the need for robust, domain-aware sentiment analysis that addresses the gaps documented in existing literature.
+
 \subsection{Objectives}
 This literature review aims to:
 \begin{itemize}
     \item Examine the evolution of stock prediction methodologies from traditional statistical approaches to modern hybrid deep learning models.
     \item Analyze the specific contributions of ARIMA, LSTM, BiLSTM, and hybrid architectures in the context of financial forecasting.
-    \item Identify the limitations and research gaps in existing systems.
+    \item Identify the limitations and research gaps in existing systems, with particular attention to gaps in modern sentiment analysis methods including sarcasm detection, tokenization drift, domain sensitivity, temporal alignment, and uncertainty quantification.
     \item Establish the foundation for developing an improved hybrid prediction model.
+    \item Design and implement a domain-adapted financial sentiment analysis pipeline that addresses the identified gaps, and integrate confidence-weighted, sarcasm-corrected sentiment features into the existing SARIMA-XGBoost hybrid prediction framework.
+    \item Develop a principled mathematical formulation for sentiment scoring and its incorporation into the residual learning stage of the hybrid model.
+    \item Evaluate the sentiment-augmented model against the baseline hybrid model and analyze the contribution of individual sentiment features through feature importance and ablation studies.
 \end{itemize}
 
 \subsection{Scope and Organization}
-The review consists of three distinct sections, which follow each other in order. The second chapter of this review provides an extensive review of traditional methods and deep learning approaches, and advanced hybrid architectures. The third chapter identifies essential problems and missing information that prove the need for improved hybrid forecasting systems to forecast stock market performance.
+The review consists of three distinct sections, which follow each other in order. The second chapter of this review provides an extensive review of traditional methods and deep learning approaches, and advanced hybrid architectures, including sentiment-based methods and their integration into trading systems. The third chapter identifies essential problems and missing information that prove the need for improved hybrid forecasting systems to forecast stock market performance. The fourth chapter presents the complete methodology, including the sentiment analysis pipeline and its integration into the hybrid model. The fifth chapter presents the results, ablation studies, and a comprehensive discussion of findings and future directions.
 
+\subsection{Contributions}
+
+The contributions of this work are summarized as follows:
+
+\begin{enumerate}
+    \item \textbf{Sentiment-Aware Hybrid Architecture.} We propose a novel three-stage prediction architecture that combines SARIMA for linear trend extraction, domain-adapted sentiment feature engineering, and XGBoost for joint non-linear residual and sentiment modeling. The architecture extends the standard two-component decomposition $y_t = L_t + N_t + \epsilon_t$ to a three-component decomposition $y_t = L_t + N_t + E_t + \epsilon_t$, where $E_t$ represents the sentiment-driven component of price dynamics. To the best of our knowledge, this is one of the few works to explicitly address the temporal alignment problem in sentiment-trading integration within a hybrid statistical-ML framework.
+
+    \item \textbf{Dual-Head Sarcasm-Corrected Sentiment Scoring.} We introduce a sarcasm-aware sentiment scoring function that combines a primary FinBERT sentiment head with a secondary sarcasm detection head sharing the same transformer backbone. The final sentiment score $s_i^{\text{final}} = (1 - 2\lambda_i) \cdot s_i^{\text{raw}}$ is a confidence-weighted mixture that corrects for sarcastic financial commentary, which standard sentiment models incorrectly classify. This directly addresses one of the most significant gaps documented in modern sentiment analysis literature.
+
+    \item \textbf{Principled Temporal Alignment.} We define a formal temporal assignment function $\phi(\tau_i) = \min\{t \in \mathcal{T} : \text{MarketOpen}(t) > \tau_i\}$ that maps news publication timestamps to the correct trading day, accounting for after-hours publication, weekends, and market holiday effects. This ensures sentiment signals are assigned to the trading day on which they are first actionable, preventing information leakage in the training set.
+
+    \item \textbf{Uncertainty-Quantified Sentiment Features.} Rather than using raw sentiment scores as features, we derive an 8-dimensional structured sentiment feature vector $\mathbf{S}_t = [S_t, \Delta S_t, \sigma_{S,t}, N_t, D_t, S_{t-1}, S_{t-2}, S_{t-3}]$ comprising confidence-weighted aggregated sentiment, sentiment momentum, rolling sentiment volatility, normalized news volume, sentiment-price divergence, and lagged sentiment values. This provides the downstream XGBoost model with richer and more reliable sentiment signals than raw point estimates.
+
+    \item \textbf{Empirical Gap Analysis Validation.} We empirically validate the gaps identified in existing sentiment literature---particularly around domain sensitivity and tokenization drift---by comparing FinBERT against a general-purpose BERT model on financial news classification and demonstrating measurable performance differences. The ablation study design isolates the contribution of individual sentiment components, providing evidence-based guidance for future sentiment-trading integration work.
+\end{enumerate}
 
 \newpage
 
@@ -326,7 +348,7 @@ The review consists of three distinct sections, which follow each other in order
 Stock price prediction has evolved through technological progress during the last fifty years because computational intelligence combined with financial market analysis. The combination of statistical modeling with machine learning algorithms and deep learning architectures allows developers to create advanced forecasting systems at unprecedented levels. The traditional methods based on linear assumptions and stationary conditions failed to detect the intricate financial market patterns. The current data-driven learning system detects patterns automatically through its own processes without needing human-made feature development.
 
 
-The review investigates current stock price prediction methods which include statistical approaches and machine learning methods and deep learning systems and hybrid prediction systems. The research follows the development of stock price prediction from initial random walk theories to present-day transformer-based and multimodal prediction systems.
+The review investigates current stock price prediction methods which include statistical approaches and machine learning methods and deep learning systems and hybrid prediction systems. In addition, the review covers sentiment analysis techniques---from lexicon-based methods to domain-adapted transformers such as FinBERT---and examines how sentiment signals have been integrated into trading systems, along with the critical gaps that remain in this integration. The research follows the development of stock price prediction from initial random walk theories to present-day transformer-based, sentiment-aware, and multimodal prediction systems.
 
 \subsection{Historical Approaches}
 
@@ -458,6 +480,24 @@ Transformers analyze all time points simultaneously, as opposed to LSTMs that pr
 \textbf{Graph Neural Networks (GNN):}
 GNNs model the relationship between stocks, the effect of companies in the same industry or supply chain on each other. GNNs can spread information throughout the network structure to learn patterns across the sector and have correlation dynamics since they represent stocks as nodes, and relationships as edges.
 
+\subsubsection{Sentiment-Based Methods}
+
+Sentiment analysis has emerged as a complementary approach to purely price-based prediction, motivated by the recognition that financial markets are fundamentally information-processing systems. Sentiment methods attempt to quantify the polarity and intensity of opinions expressed in financial text---including news articles, earnings call transcripts, analyst reports, and social media posts---and use these quantified signals as predictive features.
+
+\textbf{Lexicon-Based Methods:}
+The earliest approaches to financial sentiment analysis relied on manually constructed sentiment lexicons. VADER (Valence Aware Dictionary and sEntiment Reasoner) \cite{vader2014} uses a rule-based system with a human-validated sentiment dictionary to produce compound polarity scores for text. SentimentWordNet extends WordNet with positivity, negativity, and objectivity scores for each synset. These lexicon-based methods are computationally efficient and fully interpretable, but they suffer from critical limitations in financial contexts: they cannot handle context-dependent polarity shifts (e.g., ``high'' is positive for revenue but negative for debt), domain-specific jargon, negation scope, or complex linguistic constructions such as hedging and sarcasm.
+
+\textbf{Transformer-Based Models (BERT):}
+The introduction of BERT (Bidirectional Encoder Representations from Transformers) \cite{devlin2019} marked a paradigm shift in sentiment analysis. BERT's pre-training on large general corpora via masked language modeling and next-sentence prediction produces deep contextualized representations that capture semantic nuance far beyond lexicon matching. Fine-tuned BERT models achieve state-of-the-art performance on general sentiment benchmarks. However, general-purpose BERT models trained on Wikipedia and BookCorpus perform poorly on financial text because financial language has a fundamentally different vocabulary, semantic structure, and pragmatic register compared to general English.
+
+\textbf{Domain-Adapted Models (FinBERT):}
+FinBERT \cite{araci2019} addresses the domain sensitivity gap by further pre-training BERT on financial corpora including financial news, earnings call transcripts, and analyst reports. This domain adaptation significantly improves sentiment classification accuracy on financial text by exposing the model to domain-specific vocabulary and semantic patterns. FinBERT produces three-class sentiment predictions (positive, negative, neutral) and has become the de facto standard for transformer-based financial sentiment analysis. The Financial Phrasebank dataset \cite{malo2014} provides a widely used benchmark of 4,840 sentences annotated by financial domain experts for training and evaluation.
+
+\textbf{Other Specialized Models:}
+RoBERTa \cite{liu2019} improves upon BERT through optimized pre-training with dynamic masking, larger batches, and longer training. While not financial-domain-specific, RoBERTa's stronger baseline performance makes it a competitive starting point for domain-adapted financial models. Ensemble approaches that combine lexicon-based scores with transformer-based predictions have also been explored, leveraging the complementary strengths of rule-based interpretability and neural contextual understanding.
+
+Despite the progress in sentiment modeling, several critical gaps remain---including sarcasm detection, tokenization drift in financial language, temporal alignment with trading days, and uncertainty quantification---which are discussed in detail in Section~\ref{sec:sentiment_gaps}.
+
 \subsection{Hybrid Architectures}
 
 The hybrid model came about after it was realized that financial markets cannot be viewed under one lens. Stock prices are the result of the linear behavior, non-linear behavior, market noise, market shocks, and sentiment-based behavior. The complexity of the market cannot be fully captured using either traditional statistical tools or pure deep learning ones.
@@ -541,6 +581,22 @@ Hybridization at the feature level is not necessarily paired-off with architectu
 \end{itemize}
 
 The system is taught to learn relationships, which cannot be detected solely by price, to the given richer feature set in the model. It is particularly helpful in the emerging markets where the stock movement is more affected by macroeconomic announcements compared to the developed ones.
+
+\subsubsection{Price + Sentiment Hybrid Models}
+
+A growing body of work integrates sentiment signals from financial text into price prediction models, creating hybrid systems that combine numerical and textual information. These systems recognize that price-only models, regardless of architectural sophistication, are structurally blind to exogenous information shocks until those shocks are already reflected in historical prices.
+
+\textbf{LSTM + Sentiment Models:}
+Early sentiment-trading integration work combined LSTM networks with sentiment features derived from news headlines or social media posts. In these approaches, sentiment scores---typically produced by VADER \cite{vader2014} or a fine-tuned BERT model \cite{devlin2019}---are concatenated with OHLCV features and fed into an LSTM network. While these systems demonstrate improvements over price-only LSTMs, particularly in directional accuracy, they suffer from the limitations of their constituent components: LSTM's sequential processing bottleneck, naive sentiment scoring without sarcasm correction, and simple timestamp matching without principled temporal alignment.
+
+\textbf{FinBERT + Gradient Boosting Integration:}
+More recent work combines domain-adapted sentiment from FinBERT \cite{araci2019} with gradient boosting models such as XGBoost. The advantage of this approach is that XGBoost naturally handles mixed feature types (continuous price features alongside continuous or categorical sentiment features) and provides built-in feature importance rankings that reveal the relative contribution of sentiment signals versus price-based features. However, most existing implementations use raw sentiment scores without uncertainty quantification, ignore the temporal alignment problem between news publication times and trading day boundaries, and do not address sarcasm or irony in financial text.
+
+\textbf{End-to-End Multimodal Architectures:}
+The most recent approaches use end-to-end deep learning architectures that jointly encode text (via BERT or GPT-based models) and price series (via LSTM or Transformer encoders), fusing the representations through attention-based layers before producing a final prediction. While architecturally elegant, these models are computationally expensive, difficult to interpret, and often require large amounts of paired text-price training data that may not be available for all stocks or markets. The opacity of end-to-end approaches also makes it difficult to diagnose whether sentiment signals are genuinely contributing to prediction quality.
+
+\textbf{Common Deficiencies in Sentiment-Trading Hybrids:}
+Despite the growing interest, existing sentiment-trading hybrid models share several deficiencies: (1)~sarcasm detection is rarely addressed, despite its prevalence in financial commentary; (2)~temporal alignment between news publication timestamps and trading day boundaries is handled naively, often introducing data leakage; (3)~sentiment features are typically raw point estimates without confidence weighting or uncertainty quantification; (4)~the frequency mismatch between irregularly arriving news and regularly spaced price data is not formally resolved; and (5)~evaluation focuses on price accuracy metrics rather than risk-adjusted trading performance metrics such as the Sharpe ratio.
 
 \subsection{Comparative Analysis of Hybrid Models}
 
@@ -655,6 +711,29 @@ Deep learning models, particularly complex hybrid architectures, demand signific
 
 Financial markets are non-stationary---patterns that work in one market regime may fail in another. Models trained on historical bull markets often perform poorly during bear markets or crisis periods. The COVID-19 pandemic illustrated this dramatically, as many prediction systems trained on pre-2020 data failed catastrophically when market dynamics shifted.
 
+\subsubsection{Sentiment Analysis and Integration Gaps}
+\label{sec:sentiment_gaps}
+
+Beyond the limitations of purely price-based systems, the application of sentiment analysis to financial prediction introduces its own set of well-documented gaps:
+
+\textbf{Sarcasm and Irony Detection:}
+Financial commentary---particularly in analyst reports, financial blogs, and social media---frequently employs sarcasm and irony. Standard sentiment models classify sarcastic positive statements as genuinely positive, inverting the true polarity. For example, the headline ``Oh great, another revenue miss'' would be classified as positive by a naive model, directly misleading the downstream prediction system. Dual-head architectures combining a primary sentiment head with a secondary sarcasm detection head have been proposed in the NLP literature but are not yet standard practice in financial sentiment pipelines \cite{araci2019}.
+
+\textbf{Tokenization Drift:}
+Pre-trained transformer models use tokenizers trained on general text corpora. When applied to financial text, these tokenizers fragment domain-specific tokens---ticker symbols (\$AAPL), financial ratios (P/E, EV/EBITDA), regulatory language (Form 10-K, material adverse change)---into meaningless subword units. This \emph{tokenization drift} degrades the model's ability to represent financial entities accurately and requires custom vocabulary extensions or domain-specific tokenizer fine-tuning to resolve.
+
+\textbf{Domain Sensitivity:}
+General-purpose language models trained on Wikipedia and BookCorpus assign different semantic distributions to words than financial contexts require. For instance, ``volatility'' carries negative sentiment in general text but is a neutral technical descriptor in finance, while ``aggressive'' describes a negative behavior in general text but a positive growth strategy in business contexts. Domain-adapted models such as FinBERT \cite{araci2019} mitigate this gap but do not fully eliminate it, particularly for rapidly evolving financial terminology and novel financial instruments.
+
+\textbf{Temporal Alignment:}
+News articles are published at irregular timestamps---often after market hours, on weekends, or during trading sessions. Naively aligning news timestamps with the same calendar date introduces data leakage: a news article published at 11\,PM EST on Friday should influence Monday's trading, not Friday's. Most existing systems use naive timestamp matching without accounting for market calendar effects, leading to artificially inflated training performance that does not generalize to real-time deployment.
+
+\textbf{Uncertainty Quantification:}
+Standard neural sentiment models output deterministic point estimates with no associated confidence measure. In a trading context, a sentiment score of $+0.7$ with 95\% model confidence is fundamentally different from a score of $+0.7$ with 55\% confidence. Ignoring prediction uncertainty leads to overconfident trading signals and inappropriate position sizing in downstream trading strategies.
+
+\textbf{Aspect-Based Sentiment Analysis (ABSA):}
+A single news article may simultaneously carry positive sentiment about revenue growth and negative sentiment about regulatory risk. Standard sentiment models produce a single document-level score that collapses these distinct aspect-level signals into a single number, losing actionable information. Aspect-Based Sentiment Analysis with dependency parsing can extract aspect-sentiment pairs, but its integration into trading systems remains underdeveloped.
+
 \subsection{Comparative Study / Gap Analysis}
 
 \subsubsection{Method Comparison: Statistical vs. Machine Learning vs. Deep Learning}
@@ -724,6 +803,52 @@ The majority of hybrid models are concerned only with the direction of the price
     \item \textbf{Evaluation Metric Bias}: Most research optimizes for accuracy-based metrics (MAE, RMSE, directional accuracy) rather than risk-adjusted metrics (Sharpe ratio, information ratio, maximum drawdown). This creates a mismatch between research objectives and practical trading requirements.
 \end{itemize}
 
+\textbf{4. Sentiment-Trading Integration Deficiencies}
+
+Beyond the gaps internal to sentiment models (Section~\ref{sec:sentiment_gaps}), there are additional deficiencies specific to the integration of sentiment analysis into trading pipelines:
+\begin{itemize}
+    \item \textbf{Frequency Mismatch}: Price data arrives at regular daily (or intraday) intervals, while news arrives asynchronously and at irregular frequencies. Robust temporal aggregation strategies---such as confidence-weighted daily averaging with formal trading-day assignment---are required but rarely implemented in existing work.
+    
+    \item \textbf{Feature Redundancy}: Naively concatenating raw sentiment scores with technical indicators risks introducing correlated features that degrade model performance through multicollinearity. Systematic feature selection with Variance Inflation Factor (VIF $> 10$ removal) is rarely applied in sentiment-trading systems.
+    
+    \item \textbf{Regime Sensitivity}: The relationship between sentiment and price movement is not stationary. In a strongly trending bull market, negative sentiment may have less impact than in a volatile or bearish regime. Current models assume a fixed sentiment-price relationship, ignoring regime-dependent dynamics that require adaptive weighting.
+    
+    \item \textbf{Risk-Aware Evaluation}: Most sentiment-trading systems optimize for accuracy-based metrics (MAE, RMSE, directional accuracy) rather than risk-adjusted trading metrics (Sharpe ratio, maximum drawdown, Value-at-Risk). This creates a fundamental gap between research objectives and practical trading requirements.
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\caption{Formal Summary of Identified Research Gaps in Stock Prediction and Sentiment Analysis}
+\label{tab:gap_summary}
+\small
+\begin{tabular}{@{}p{2.8cm}p{3.8cm}p{3.2cm}p{3.5cm}@{}}
+\toprule
+\textbf{Gap Category} & \textbf{Specific Gap} & \textbf{Current Status} & \textbf{Impact on Prediction} \\ \midrule
+
+Sentiment Models & Sarcasm and irony detection & Dual-head proposed, not yet standard & Polarity inversion errors \\
+\addlinespace
+Sentiment Models & Tokenization drift in financial text & Domain vocabulary extension needed & Degraded entity representation \\
+\addlinespace
+Sentiment Models & No uncertainty quantification & Deterministic outputs only & Overconfident trading signals \\
+\addlinespace
+Sentiment Models & Document-level scoring only (no ABSA) & Aspect extraction underdeveloped & Lost aspect-level signals \\
+\addlinespace
+Integration & Temporal alignment & Naive timestamp matching & Data leakage in training \\
+\addlinespace
+Integration & Frequency mismatch & No formal aggregation strategy & Inconsistent feature vectors \\
+\addlinespace
+Integration & Feature redundancy & No systematic VIF control & Multicollinearity and overfitting \\
+\addlinespace
+Modeling & Static training paradigm & No adaptive / online learning & Degraded post-shift performance \\
+\addlinespace
+Modeling & Regime-blind sentiment weighting & Fixed sentiment--price relationship & Misweighted signals across regimes \\
+\addlinespace
+Evaluation & Accuracy-focused metrics only & RMSE/MAE optimization & Gap between research and practice \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
 \textbf{Summary of Critical Gaps:}
 \begin{itemize}
     \item Statistical models (ARIMA, GARCH) are well-understood but limited in capability
@@ -732,6 +857,8 @@ The majority of hybrid models are concerned only with the direction of the price
     \item True multimodal integration across heterogeneous data sources remains under-developed
     \item Adaptive learning mechanisms for handling concept drift are largely absent
     \item Risk-aware prediction with uncertainty quantification is critically missing
+    \item Sentiment models suffer from sarcasm blindness, tokenization drift, domain sensitivity, and lack of confidence estimation
+    \item Sentiment-trading integration is hampered by temporal misalignment, frequency mismatch, feature redundancy, and regime-insensitive weighting
 \end{itemize}
 
 \subsection{Summary of Literature Review}
@@ -748,20 +875,28 @@ The majority of hybrid models are concerned only with the direction of the price
     \item \textbf{Hybrid Models Show Promise}: Combining complementary strengths---ARIMA's linearity with LSTM's non-linearity, CNN's feature extraction with LSTM's sequence modeling---consistently yields better performance than single-method approaches.
     
     \item \textbf{Significant Gaps Remain}: Issues of non-stationarity, regime changes, proper feature representation, computational efficiency, and multimodal integration remain largely unsolved.
+
+    \item \textbf{Sentiment Analysis Extends the Frontier}: Sentiment analysis methods have evolved from lexicon-based approaches (VADER) to domain-adapted transformers (FinBERT \cite{araci2019}), enabling quantification of the informational environment that drives market behavior. When integrated into hybrid models, sentiment features provide complementary signals that price-only models structurally cannot capture---particularly around earnings surprises, macroeconomic announcements, and shifts in public opinion.
+
+    \item \textbf{Critical Gaps in Sentiment Integration Persist}: Despite the promise of sentiment-aware models, the literature reveals six major gaps in sentiment analysis (sarcasm detection, tokenization drift, domain sensitivity, temporal alignment, uncertainty quantification, and aspect-based analysis) and four integration-level deficiencies (frequency mismatch, feature redundancy, regime sensitivity, and risk-aware evaluation). These gaps represent the most significant obstacles to deploying robust sentiment-augmented trading systems, as summarized in Table~\ref{tab:gap_summary}.
 \end{enumerate}
 
 \subsubsection{Conclusion}
 
-The literature will have a definite advancement to the concepts of hybrid, multimodal, and attention-based stock prediction architecture. Nevertheless, there are still gaps in research, especially in:
+The literature demonstrates definitive advancement in hybrid, multimodal, and attention-based stock prediction architectures, while simultaneously revealing that sentiment-aware models represent a critical and under-explored frontier. Nevertheless, there are still substantial gaps in research, especially in:
 \begin{itemize}
     \item Developing standardized hybrid architectures that optimally combine statistical rigor with deep learning flexibility
     \item Creating adaptive systems that recognize and adjust to market regime changes
     \item Properly leveraging 1D-CNN for local feature extraction as suggested by \cite{eda2023}
     \item Integrating diverse data modalities (numerical, textual, graph-based) in a principled manner
     \item Balancing model complexity with interpretability for practical deployment
+    \item Addressing sarcasm, tokenization drift, and domain sensitivity in financial sentiment pipelines to produce reliable sentiment signals
+    \item Designing principled temporal alignment mechanisms that map news publication timestamps to actionable trading days without information leakage
+    \item Incorporating uncertainty quantification into sentiment features so that downstream models can distinguish confident signals from noisy ones
+    \item Moving evaluation beyond accuracy-based metrics toward risk-adjusted trading metrics that reflect practical deployment requirements
 \end{itemize}
 
-These loopholes inspire the necessity of better hybrid models that will resolve the mentioned weaknesses and expand upon the advantages of the current models.
+These identified gaps---spanning both price-based and sentiment-based methodologies---motivate the development of a sentiment-aware hybrid model that addresses the most critical deficiencies documented in this review, particularly around sarcasm-corrected sentiment scoring, principled temporal alignment, and structured sentiment feature engineering.
 
 
 \newpage
@@ -778,9 +913,10 @@ Although decades of research have already been made and sophisticated machine le
     \item \textbf{Non-linearity}: Relationships between variables are complex and often change based on market regimes.
     \item \textbf{High noise-to-signal ratio}: Random fluctuations and speculative trading introduce substantial noise.
     \item \textbf{Extreme events}: Financial crises, pandemics, and geopolitical events create outliers that violate assumptions of most models.
+    \item \textbf{Exogenous information blindness}: Price-only models have no mechanism to incorporate the impact of news events, earnings announcements, or shifts in public sentiment until these signals have already been absorbed into historical price data, introducing an inherent reaction lag.
 \end{itemize}
 
-Current strategies cannot cover these problems at the same time. The conventional statistical approaches are capable of dealing with linearity and interpretability, but fail to deal with complicated non-linear processes. Deep learning models do not interpret but are able to capture non-linearity and have weaknesses in terms of regime change. Existing hybrid models are yet to be promising with inefficient architectural designs and inappropriate data representation strategies.
+Current strategies cannot cover these problems at the same time. The conventional statistical approaches are capable of dealing with linearity and interpretability, but fail to deal with complicated non-linear processes. Deep learning models do not interpret but are able to capture non-linearity and have weaknesses in terms of regime change. Existing hybrid models are yet to be promising with inefficient architectural designs and inappropriate data representation strategies. Furthermore, the vast majority of existing approaches---whether statistical, machine learning, or hybrid---operate exclusively on historical price and volume data, rendering them structurally blind to exogenous information shocks such as surprise earnings reports, regulatory actions, or macroeconomic announcements. A model that cannot process textual signals from financial news is fundamentally limited in its ability to anticipate, rather than merely react to, market-moving events.
 
 \subsection{Context and Background of the Problem}
 
@@ -823,6 +959,8 @@ This study aims at coming up with a better hybrid structure of predicting stock 
     \item Validating the model on major stock indices and individual stocks across different market conditions.
     \item Comparing performance against baseline models (pure ARIMA, pure LSTM, existing hybrids).
     \item Analyzing interpretability through attention mechanisms and feature importance.
+    \item Designing a domain-adapted sentiment analysis pipeline that processes financial news through sarcasm-corrected, confidence-weighted scoring with principled temporal alignment to trading day boundaries.
+    \item Integrating structured sentiment features into the hybrid SARIMA-XGBoost model and evaluating the augmented system against the price-only baseline across error-based and trading-relevant metrics.
 \end{itemize}
 
 \subsubsection{Objectives}
@@ -841,6 +979,12 @@ The specific objectives are:
     \item \textbf{Evaluate robustness} across different market conditions (bull markets, bear markets, high volatility periods) to ensure generalization.
     
     \item \textbf{Balance complexity with interpretability} through attention mechanisms and ablation studies that reveal component contributions.
+    
+    \item \textbf{Design a domain-adapted sentiment analysis pipeline} that addresses documented gaps in financial sentiment analysis, including sarcasm detection via a dual-head classification architecture, tokenization drift through vocabulary extension, and temporal alignment of asynchronous news timestamps to actionable trading days.
+    
+    \item \textbf{Engineer structured sentiment features}---including confidence-weighted daily sentiment, sentiment momentum, rolling sentiment volatility, news volume, and sentiment-price divergence---and integrate them into the hybrid model's feature space while controlling for multicollinearity through variance inflation factor (VIF) analysis.
+    
+    \item \textbf{Evaluate the sentiment-augmented hybrid model} against the price-only baseline using both conventional error metrics (RMSE, MAE) and trading-relevant metrics (directional accuracy, Sharpe ratio) to quantify the marginal value of sentiment information.
 \end{enumerate}
 
 \subsection{Anticipated Challenges}
@@ -874,6 +1018,24 @@ Financiers tend to hesitate to use black-box models in making high-stakes decisi
 
 Comparative fairy against the current methods needs proper designing of the experiment. Various papers work with various datasets, time frames, and assessment procedures that complicate their face to face comparison. It is significant to set reproducible benchmarks in order to validate contributions.
 
+\subsubsection{Sentiment Data Challenges}
+
+Integrating textual sentiment data into a quantitative prediction pipeline introduces several domain-specific challenges beyond those encountered in standard numerical time-series forecasting:
+
+\begin{itemize}
+    \item \textbf{Temporal alignment}: Financial news articles are published asynchronously---during trading hours, after market close, on weekends, and on holidays. Naively mapping publication timestamps to the same calendar date risks data leakage, where future-looking information contaminates the training signal. A principled alignment function must map each article to the next actionable trading day.
+    
+    \item \textbf{Sarcasm and irony detection}: Financial commentary, particularly on social media and in analyst blogs, frequently employs sarcasm (e.g., ``Oh great, another revenue miss''). Standard sentiment models classify such statements at face value, inverting the true polarity. Robust detection of sarcastic intent is necessary to avoid systematic sentiment misclassification.
+    
+    \item \textbf{Domain-specific language}: Financial text contains specialised terminology (e.g., ticker symbols, financial ratios such as P/E and EV/EBITDA, regulatory references) that general-purpose tokenizers fragment into meaningless subword units. This tokenization drift degrades the quality of sentiment representations and requires vocabulary extension or domain-specific fine-tuning.
+    
+    \item \textbf{Irregular news frequency}: Unlike price data, which arrives at regular daily intervals, news articles arrive sporadically. Some trading days may have dozens of relevant articles while others have none, necessitating robust aggregation strategies and explicit handling of missing-sentiment days (e.g., binary indicators for no-news periods).
+    
+    \item \textbf{Uncertainty quantification}: Most sentiment models produce deterministic point estimates with no confidence measure. In a trading context, distinguishing between high-confidence and low-confidence sentiment signals is essential to avoid overweighting unreliable scores in the downstream prediction model.
+    
+    \item \textbf{Regime-dependent sentiment--price coupling}: The relationship between news sentiment and subsequent price movement is not stationary. In a strong bull market, negative sentiment may have a muted impact on prices, whereas in a volatile or bearish regime the same signal may drive significant price dislocations. Models must account for this non-stationarity in the sentiment--price relationship.
+\end{itemize}
+
 \newpage
 
 \section{Problem Methodology}
@@ -899,17 +1061,22 @@ The stock prediction system is based on the alayered architecture and incorporat
     
     % Data Input Layer
     \node [cloud] (csv) {S\&P 500 Stock Data\\(CSV File)};
+    \node [cloud, right=7cm of csv] (news) {Financial News\\Data};
     
-    % Preprocessing Layer
+    % Price Preprocessing Path
     \node [block, below=1.5cm of csv] (load) {Data Loading \& Filtering};
-    \node [annotation, right=0.3cm of load] {Extract AAPL stock\\Filter by ticker};
+    \node [annotation, left=0.3cm of load] {Extract AAPL stock\\Filter by ticker};
     
     \node [block, below=1.5cm of load] (clean) {Data Cleaning};
-    \node [annotation, right=0.3cm of clean] {Missing values\\Outlier detection\\Normalization};
+    \node [annotation, left=0.3cm of clean] {Missing values\\Outlier detection\\Normalization};
+    
+    % Sentiment Pipeline Path
+    \node [block, below=1.5cm of news] (sentpipe) {Sentiment Analysis\\Pipeline};
+    \node [annotation, right=0.3cm of sentpipe] {FinBERT scoring\\Sarcasm correction\\Temporal alignment};
     
     % Feature Engineering Layer
     \node [block, below=1.5cm of clean] (features) {Feature Engineering};
-    \node [annotation, right=0.3cm of features] {Technical indicators\\Lag features (1,2,3)\\Temporal features};
+    \node [annotation, left=0.3cm of features] {Technical indicators\\Lag features (1,2,3)\\Temporal + sentiment features};
     
     % Model Layer (Horizontal arrangement)
     \node [modelblock, below=2cm of features, xshift=-9cm] (sarima) {SARIMA\\Model};
@@ -918,15 +1085,17 @@ The stock prediction system is based on the alayered architecture and incorporat
     \node [modelblock, right=0.8cm of xgb] (bilstm) {BiLSTM+\\Attention};
     
     % Hybrid Ensemble Layer
-    \node [block, below=2cm of xgb] (hybrid) {Hybrid Ensemble\\(SARIMA + XGBoost)};
+    \node [block, below=2cm of xgb] (hybrid) {Hybrid Ensemble\\(SARIMA + XGBoost\\+ Sentiment)};
     
     % Output Layer
     \node [cloud, below=1.5cm of hybrid] (output) {Stock Price\\Predictions};
     
     % Connections - Vertical flow
     \path [line] (csv) -- (load);
+    \path [line] (news) -- (sentpipe);
     \path [line] (load) -- (clean);
     \path [line] (clean) -- (features);
+    \path [line] (sentpipe) |- (features);
     
     % Connections - Features to models
     \path [line] (features) -- ++(0,-1.2) -| (sarima);
@@ -946,22 +1115,23 @@ The stock prediction system is based on the alayered architecture and incorporat
     \path [line] (hybrid) -- (output);
     
     \end{tikzpicture}
-    \caption{Complete System Architecture for Hybrid Stock Prediction}
+    \caption{Complete System Architecture for Sentiment-Augmented Hybrid Stock Prediction}
     \label{fig:system_architecture}
 \end{figure}
 
-The architecture consists of six primary components:
+The architecture consists of seven primary components:
 
 \begin{enumerate}
-    \item \textbf{Data Source}: Historical S\&P 500 stock data from Yahoo Finance API
+    \item \textbf{Data Source}: Historical S\&P 500 stock data from Yahoo Finance API and financial news articles from multiple sources
     \item \textbf{Data Collection \& Preprocessing}: Data cleaning, missing value handling, and train-test splitting
     \item \textbf{Feature Engineering}: Creation of technical indicators, temporal features, and lag variables
+    \item \textbf{Sentiment Analysis Pipeline}: Domain-adapted FinBERT sentiment scoring with dual-head sarcasm correction, temporal alignment, and confidence-weighted aggregation
     \item \textbf{Model Development}: Implementation of multiple prediction models (SARIMA, Prophet, XGBoost, BiLSTM+Attention)
-    \item \textbf{Hybrid Ensemble}: Combination of SARIMA for trend capture and XGBoost for residual learning
+    \item \textbf{Hybrid Ensemble}: Combination of SARIMA for trend capture and XGBoost for sentiment-augmented residual learning
     \item \textbf{Prediction Output}: Price forecasts with model comparison and evaluation metrics
 \end{enumerate}
 
-Such a multi-model strategy enables us to use the advantages of each methodology and counterbalance the weakness of the other.
+Such a multi-model strategy enables us to use the advantages of each methodology and counterbalance the weakness of the other. The integration of a dedicated sentiment analysis pipeline provides the system with information about exogenous market-moving events that price-only features cannot capture.
 
 \subsection{Data Collection and Preprocessing}
 
@@ -1010,6 +1180,20 @@ In order to achieve a numerically stable model convergence we use Min-Max scalin
 \begin{equation}
 x_{\text{scaled}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
 \end{equation}
+
+\subsubsection{News Data Collection}
+
+Financial news articles are collected from publicly available sources to serve as input for the sentiment analysis pipeline. Sources include Yahoo Finance News, Reuters financial RSS feeds, and the Financial Modeling Prep news API. For each article, we collect the following data fields:
+
+\begin{itemize}
+    \item \textbf{Headline}: Title of the article
+    \item \textbf{Body}: Full article text where available; headline-only for paywalled sources
+    \item \textbf{Publication Timestamp}: Exact datetime of publication in UTC
+    \item \textbf{Source}: Publisher identifier (e.g., Reuters, Bloomberg, Yahoo Finance)
+    \item \textbf{Ticker Mention}: Binary indicator of whether the article explicitly mentions the target stock ticker (e.g., AAPL)
+\end{itemize}
+
+The news corpus spans the same temporal range as the price data (2010--2025). Article volume varies considerably over time: high-profile earnings announcements or market-moving events may generate dozens of articles per day, while quiet trading periods may produce none. This variation is explicitly captured through normalized news volume features in the sentiment pipeline. Articles are stored with their original UTC timestamps to enable the principled temporal alignment procedure described in Section~\ref{sec:sentiment_pipeline}.
 
 \subsubsection{Train-Test Split}
 
@@ -1104,13 +1288,124 @@ Such characteristics enable machine learning reasons to explicitly express tempo
 
 \subsubsection{Feature Selection and Dimensionality}
 
-Once we have feature engineered, we have about 25-30 features in our data. In order to avoid multicollinearity and overfitting:
+Once we have feature engineered, we have about 25--30 price-derived features in our data. With the addition of 8 sentiment features (described in Section~\ref{sec:sentiment_features}), the total feature space expands to approximately $d_p + 8 \approx 33$--$38$ dimensions. In order to avoid multicollinearity and overfitting:
 
 \begin{itemize}
-    \item \textbf{Correlation Analysis}: Remove features with correlation $> 0.95$
-    \item \textbf{Feature Importance}: Use XGBoost feature importance to identify top predictive features
+    \item \textbf{Correlation Analysis}: Remove features with pairwise correlation $> 0.95$
+    \item \textbf{Feature Importance}: Use XGBoost feature importance (ranked by gain) to identify top predictive features
     \item \textbf{Domain Filtering}: Retain features with established financial theory support
+    \item \textbf{Variance Inflation Factor (VIF)}: Remove features with VIF $> 10$ to control multicollinearity in the expanded feature space
 \end{itemize}
+
+\subsubsection{Sentiment Analysis Pipeline}
+\label{sec:sentiment_pipeline}
+
+The sentiment analysis pipeline transforms raw financial news articles into structured, quantitative sentiment signals suitable for integration into the prediction model. The pipeline addresses the critical gaps identified in the literature review---sarcasm detection, tokenization drift, domain sensitivity, temporal alignment, and uncertainty quantification---through a four-stage process.
+
+\textbf{Stage 1: Text Preprocessing with Vocabulary Extension}
+
+Before sentiment scoring, each article undergoes domain-aware preprocessing. The standard FinBERT tokenizer is extended with a custom financial vocabulary containing common ticker symbols, financial ratios, and regulatory terms to address the tokenization drift gap. Given the original FinBERT vocabulary $V_{\text{FinBERT}}$, the extended vocabulary is:
+\begin{equation}
+V_{\text{ext}} = V_{\text{FinBERT}} \cup V_{\text{fin}}
+\end{equation}
+
+where $V_{\text{fin}}$ is a curated set of financial domain tokens including ticker symbols, financial ratios (P/E, EV/EBITDA), and regulatory terminology (Form 10-K, material adverse change). Ticker symbols in the format \$TICKER are normalized to a canonical form TICKER\_REF to prevent subword fragmentation. URLs, HTML entities, and boilerplate disclosure text are removed, while numerical values are retained as they carry information about financial magnitudes.
+
+Long articles are segmented into individual sentences, and each sentence is scored independently before aggregation at the document level. This preserves local sentiment nuance that document-level scoring would otherwise lose.
+
+\textbf{Stage 2: Dual-Head Sentiment Scoring}
+
+The core of the pipeline is a dual-head classification model built on the FinBERT transformer backbone. The model has two output heads sharing the same encoder:
+\begin{itemize}
+    \item \textbf{Head 1 (Sentiment Head)}: A three-class classifier (Positive, Negative, Neutral) producing a probability distribution $P_{\text{sent}}(c \mid a_i)$ for article $a_i$.
+    \item \textbf{Head 2 (Sarcasm Head)}: A binary classifier producing the probability of sarcasm $P_{\text{sarc}}(a_i)$.
+\end{itemize}
+
+The raw sentiment score is converted to a continuous scale:
+\begin{equation}
+s_i^{\text{raw}} = P_{\text{sent}}(\text{Positive} \mid a_i) - P_{\text{sent}}(\text{Negative} \mid a_i) \in [-1, 1]
+\end{equation}
+
+The sarcasm-corrected sentiment score inverts the raw score in proportion to the estimated probability of sarcasm:
+\begin{equation}
+s_i^{\text{final}} = (1 - 2\lambda_i) \cdot s_i^{\text{raw}}
+\end{equation}
+
+where $\lambda_i = P_{\text{sarc}}(a_i) \in [0, 1]$. When $\lambda_i = 0$ (no sarcasm), the raw score is preserved; when $\lambda_i = 1$ (definite sarcasm), the sentiment polarity is fully inverted. The confidence of the prediction is defined as:
+\begin{equation}
+c_i = \max_{k \in \{\text{Pos}, \text{Neg}, \text{Neu}\}} P_{\text{sent}}(k \mid a_i) \in \left[\tfrac{1}{3}, 1\right]
+\end{equation}
+
+\textbf{Stage 3: Temporal Alignment}
+
+Let $\tau_i$ denote the UTC publication timestamp of article $a_i$. The trading-day assignment function $\phi(\tau_i)$ maps each article to the appropriate trading day:
+\begin{equation}
+\phi(\tau_i) = \min\{t \in \mathcal{T} : \text{MarketOpen}(t) > \tau_i\}
+\end{equation}
+
+where $\mathcal{T}$ is the set of valid NYSE trading days. This formal assignment ensures:
+\begin{itemize}
+    \item Articles published during or after market hours on day $t$ are assigned to the next trading day $t+1$.
+    \item Articles published after market close on Friday are assigned to Monday (or the next valid trading day if Monday is a holiday).
+    \item No future information leaks into the training set.
+\end{itemize}
+
+\textbf{Stage 4: Daily Sentiment Aggregation}
+
+For trading day $t$, let $\mathcal{A}_t = \{a_i : \phi(\tau_i) = t\}$ be the set of articles assigned to that day. The confidence-weighted daily sentiment score is:
+\begin{equation}
+S_t = \frac{\sum_{a_i \in \mathcal{A}_t} c_i \cdot s_i^{\text{final}}}{\sum_{a_i \in \mathcal{A}_t} c_i}
+\end{equation}
+
+If $\mathcal{A}_t = \emptyset$ (no news on trading day $t$), then $S_t = 0$ (neutral). The daily news volume, normalized over the dataset, is:
+\begin{equation}
+N_t = \frac{|\mathcal{A}_t| - \mu_N}{\sigma_N}
+\end{equation}
+
+where $\mu_N$ and $\sigma_N$ are the mean and standard deviation of daily article counts over the training period.
+
+\subsubsection{Sentiment Feature Engineering}
+\label{sec:sentiment_features}
+
+From the raw daily sentiment signal $S_t$ and the news volume $N_t$ produced by the sentiment pipeline, we derive a structured set of eight features that capture different aspects of the sentiment dynamics.
+
+\textbf{1. Daily Aggregated Sentiment ($S_t$):}
+The confidence-weighted, sarcasm-corrected daily sentiment score as defined in Section~\ref{sec:sentiment_pipeline}.
+
+\textbf{2. Sentiment Momentum ($\Delta S_t$):}
+\begin{equation}
+\Delta S_t = S_t - S_{t-1}
+\end{equation}
+Captures sudden shifts in news sentiment that may precede price movements.
+
+\textbf{3. Rolling Sentiment Volatility ($\sigma_{S,t}$):}
+\begin{equation}
+\sigma_{S,t} = \sqrt{\frac{1}{k} \sum_{j=0}^{k-1} \left(S_{t-j} - \bar{S}_{t,k}\right)^2}
+\end{equation}
+where $k = 5$ (one trading week) and $\bar{S}_{t,k} = \frac{1}{k}\sum_{j=0}^{k-1} S_{t-j}$. High sentiment volatility indicates an unstable news environment and may signal increased price volatility.
+
+\textbf{4. Normalized News Volume ($N_t$):}
+Z-score normalized daily article count, capturing the intensity of news coverage. Abnormally high news volume often accompanies significant price-moving events.
+
+\textbf{5. Sentiment-Price Divergence ($D_t$):}
+\begin{equation}
+D_t = S_{t-1} - \text{sign}\left(\text{Close}_{t-1} - \text{Close}_{t-2}\right)
+\end{equation}
+Measures the alignment between the prior day's sentiment and price movement. A large positive divergence (positive sentiment but negative return) may signal a mean-reversion opportunity.
+
+\textbf{6--8. Lagged Sentiment Features ($S_{t-1}, S_{t-2}, S_{t-3}$):}
+\begin{equation}
+S_{t-k} \quad \text{for } k \in \{1, 2, 3\}
+\end{equation}
+Capture the delayed reaction of prices to news sentiment over a three-day horizon.
+
+\vspace{0.5cm}
+\noindent The full sentiment feature vector for day $t$ is:
+\begin{equation}
+\mathbf{S}_t = \left[S_t,\; \Delta S_t,\; \sigma_{S,t},\; N_t,\; D_t,\; S_{t-1},\; S_{t-2},\; S_{t-3}\right] \in \mathbb{R}^8
+\end{equation}
+
+This structured representation provides the downstream XGBoost model with richer and more reliable sentiment signals than raw point estimates, addressing the uncertainty quantification gap identified in the literature review.
 
 \subsection{Model Development}
 
@@ -1538,6 +1833,65 @@ Through specialization of each component we reduce the linear and non-linear err
     \item \textbf{Generalization}: Reduces overfitting risk compared to single complex model
 \end{itemize}
 
+\textbf{Sentiment-Augmented Extension:}
+
+The baseline hybrid decomposes financial time series into linear and non-linear components. However, this two-component formulation is structurally blind to exogenous information shocks---such as earnings surprises, macroeconomic announcements, and shifts in public sentiment---that drive price movements independently of historical patterns. We extend the decomposition to a three-component model:
+\begin{equation}
+y_t = L_t + N_t + E_t + \epsilon_t
+\end{equation}
+
+where $E_t$ represents the sentiment-driven component of price dynamics that is not captured by either the linear trend ($L_t$) or the non-linear residual patterns ($N_t$).
+
+\textbf{Extended Feature Vector:}
+
+The XGBoost residual learner in Stage 2 now operates on an extended feature vector that concatenates price-derived and sentiment features:
+\begin{equation}
+\mathbf{X}_t^{\text{ext}} = \left[\mathbf{X}_t^{\text{price}},\; \mathbf{S}_t\right] \in \mathbb{R}^{d_p + 8}
+\end{equation}
+
+where $\mathbf{X}_t^{\text{price}} \in \mathbb{R}^{d_p}$ contains all price-derived features (lag features, technical indicators, temporal features) with $d_p \approx 25$--$30$, and $\mathbf{S}_t \in \mathbb{R}^8$ is the structured sentiment feature vector defined in Section~\ref{sec:sentiment_features}.
+
+\textbf{Sentiment-Augmented Residual Modeling:}
+
+XGBoost learns to predict the SARIMA residual using the extended feature vector:
+\begin{equation}
+\hat{r}_t = f\left(\mathbf{X}_t^{\text{ext}}\right) = \sum_{k=1}^{K} f_k\left(\mathbf{X}_t^{\text{ext}}\right), \quad f_k \in \mathcal{F}
+\end{equation}
+
+The sentiment-augmented hybrid prediction is:
+\begin{equation}
+\hat{y}_t^{\text{Hybrid+Sent}} = \hat{y}_t^{\text{SARIMA}} + f\left(\mathbf{X}_t^{\text{ext}}\right)
+\end{equation}
+
+Under the three-component decomposition, SARIMA captures $L_t$ and XGBoost (now with sentiment features) captures both $N_t$ and $E_t$:
+\begin{equation}
+\hat{y}_t^{\text{Hybrid+Sent}} \approx L_t + N_t + E_t
+\end{equation}
+
+The total prediction error decomposes as:
+\begin{align}
+\text{Error}_t &= y_t - \hat{y}_t^{\text{Hybrid+Sent}} \nonumber \\
+&= (L_t - \hat{L}_t) + (N_t + E_t - \hat{N}_t - \hat{E}_t) + \epsilon_t
+\end{align}
+
+By providing XGBoost with sentiment features, we reduce the $(E_t - \hat{E}_t)$ term---the portion of the residual attributable to sentiment-driven price movements---leading to lower overall prediction error compared to the baseline hybrid.
+
+\textbf{Sarcasm Detector Training:}
+
+The dual-head sarcasm detection model (described in Section~\ref{sec:sentiment_pipeline}) is trained with a weighted combination of the sentiment and sarcasm classification losses:
+\begin{equation}
+\mathcal{L}_{\text{total}} = \alpha \cdot \mathcal{L}_{\text{sentiment}} + (1 - \alpha) \cdot \mathcal{L}_{\text{sarcasm}}
+\end{equation}
+
+where $\alpha = 0.7$ prioritizes the primary sentiment classification task. The shared FinBERT backbone is initially frozen during the first training phase, then unfrozen for joint fine-tuning of both heads. The sarcasm detection head is trained on a financial sarcasm dataset constructed from expert-annotated financial headlines augmented with negative examples (non-sarcastic headlines).
+
+\textbf{Handling Missing Sentiment Days:}
+
+On trading days with no news articles ($\mathcal{A}_t = \emptyset$), $S_t$ is set to 0 (neutral) and $N_t$ is set to the normalized value corresponding to zero articles. A binary indicator feature $I_t^{\text{no\_news}} \in \{0, 1\}$ is added to the feature vector to allow XGBoost to distinguish genuinely neutral sentiment from absent sentiment:
+\begin{equation}
+\mathbf{X}_t^{\text{ext}} = \left[\mathbf{X}_t^{\text{price}},\; \mathbf{S}_t,\; I_t^{\text{no\_news}}\right]
+\end{equation}
+
 \subsection{Evaluation Metrics}
 
 We use several evaluation measures to fully evaluate the performance of the models and to measure the various components of prediction quality.
@@ -1581,6 +1935,14 @@ $R^2$ measures the percentage of variance that a model has explained, the closer
 
 DA is used to assess the frequency of the model giving correct predictions of the price direction (up/down) which can often be very useful in trading as compared to absolute price accuracy.
 
+\subsubsection{Trading Performance Metrics}
+
+\textbf{Sharpe Ratio:}
+\begin{equation}
+\text{SR} = \frac{\mathbb{E}[R_p - R_f]}{\sigma_p}
+\end{equation}
+
+where $R_p$ is the portfolio (strategy) return, $R_f$ is the risk-free rate, and $\sigma_p$ is the standard deviation of excess returns. The Sharpe Ratio measures the risk-adjusted return of a trading strategy derived from the model's predictions. A higher Sharpe Ratio indicates better risk-adjusted performance, bridging the gap between statistical prediction accuracy and practical trading viability.
 
 \subsubsection{Model Comparison}
 
@@ -1608,15 +1970,16 @@ In order to be reproducible, we have used fixed random seeds of all stochastic o
 The chapter provided a complete approach to predicting hybrid stock prices which included:
 
 \begin{enumerate}
-    \item \textbf{System Architecture}: Multi-model pipeline from data collection to prediction
-    \item \textbf{Data Processing}: Collection, cleaning, and train-test splitting strategies
-    \item \textbf{Feature Engineering}: Technical indicators, temporal features, and lag variables
-    \item \textbf{Model Development}: Five complementary approaches (SARIMA, Prophet, XGBoost, BiLSTM+Attention, Hybrid)
-    \item \textbf{Evaluation}: Comprehensive metrics for regression and directional accuracy
+    \item \textbf{System Architecture}: Multi-model pipeline from data collection to prediction, incorporating both price and news data inputs
+    \item \textbf{Data Processing}: Collection of OHLCV price data and financial news articles, cleaning, and train-test splitting strategies
+    \item \textbf{Feature Engineering}: Technical indicators, temporal features, lag variables, and structured sentiment features
+    \item \textbf{Sentiment Analysis Pipeline}: Domain-adapted FinBERT sentiment scoring with dual-head sarcasm correction, principled temporal alignment, confidence-weighted aggregation, and an 8-dimensional structured sentiment feature vector
+    \item \textbf{Model Development}: Five complementary approaches (SARIMA, Prophet, XGBoost, BiLSTM+Attention, Hybrid) with the hybrid model extended to incorporate sentiment features through a three-component decomposition $y_t = L_t + N_t + E_t + \epsilon_t$
+    \item \textbf{Evaluation}: Comprehensive metrics for regression accuracy, directional accuracy, and risk-adjusted trading performance (Sharpe Ratio)
     \item \textbf{Implementation}: Practical details for reproducibility
 \end{enumerate}
 
-The approach is an amalgamation of theoretical and practical application of the strengths of statistical paradigm, machine learning, and deep learning. The duality of financial time series is specifically resolved in the hybrid architecture, which breaks down predictions into linear and non-linear parts, which are addressed by specialized models.
+The approach is an amalgamation of theoretical and practical application of the strengths of statistical paradigm, machine learning, deep learning, and natural language processing. The three-component decomposition of financial time series is specifically resolved in the sentiment-augmented hybrid architecture, which breaks down predictions into linear trends ($L_t$), non-linear residual patterns ($N_t$), and sentiment-driven dynamics ($E_t$), each addressed by specialized components.
 
 \newpage
 \clearpage
