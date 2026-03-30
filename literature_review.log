@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.11.7)  29 MAR 2026 21:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.11.7)  30 MAR 2026 02:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -951,7 +951,7 @@ Package hyperref Info: Link coloring OFF on input line 63.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<pdfs/extract_text copy.png, id=457, 381.425pt x 117.43875pt>
+<pdfs/extract_text copy.png, id=473, 381.425pt x 117.43875pt>
 File: pdfs/extract_text copy.png Graphic file (type png)
 <use pdfs/extract_text copy.png>
 Package pdftex.def Info: pdfs/extract_text copy.png  used on input line 73.
@@ -1717,9 +1717,20 @@ with LSTM's se-quence modeling---
 [28]
 
 [29]
-Overfull \hbox (6.61732pt too wide) in paragraph at lines 1121--1122
+Overfull \hbox (315.79945pt too wide) in paragraph at lines 1117--1118
+ [][] 
+ []
+
+
+Overfull \hbox (6.61732pt too wide) in paragraph at lines 1129--1130
 []\OT1/cmr/bx/n/12 Model De-vel-op-ment\OT1/cmr/m/n/12 : Im-ple-men-ta-tion of 
 mul-ti-ple pre-dic-tion mod-els (SARIMA, Prophet,
+ []
+
+
+Overfull \hbox (15.42693pt too wide) in paragraph at lines 1130--1131
+[]\OT1/cmr/bx/n/12 Hybrid En-sem-ble\OT1/cmr/m/n/12 : Com-bi-na-tion of SARIMA 
+for trend cap-ture and XG-Boost for sentiment-
  []
 
 
@@ -1743,13 +1754,22 @@ mul-ti-ple pre-dic-tion mod-els (SARIMA, Prophet,
 [38]
 
 [39]
-
-[40]
-Overfull \hbox (23.71696pt too wide) in paragraph at lines 1623--1624
- [][] 
+Overfull \hbox (22.05836pt too wide) in paragraph at lines 1445--1446
+[]\OT1/cmr/bx/n/12 Derive Fea-tures\OT1/cmr/m/n/12 : Us-ing the ag-gre-gated $\
+OML/cmm/m/it/12 S[]$ \OT1/cmr/m/n/12 and the his-tor-i-cal sen-ti-ment val-ues 
+$\OML/cmm/m/it/12 S[]; S[]; S[]$\OT1/cmr/m/n/12 ,
  []
 
 
+Overfull \hbox (41.73035pt too wide) in paragraph at lines 1445--1446
+\OT1/cmr/m/n/12 com-pute the full 8-dimensional sen-ti-ment fea-ture vec-tor $\
+OT1/cmr/bx/n/12 S[] \OT1/cmr/m/n/12 = [\OML/cmm/m/it/12 S[]; \OT1/cmr/m/n/12 ^^
+A\OML/cmm/m/it/12 S[]; ^^[[]; N[]; D[]; S[]; S[]; S[]\OT1/cmr/m/n/12 ]$. 
+ []
+
+
+
+[40]
 
 [41]
 
@@ -1759,8 +1779,29 @@ Overfull \hbox (23.71696pt too wide) in paragraph at lines 1623--1624
 
 [44]
 
-[45] (./chapter5_results.tex
-<images/results/Stock_Price_Prediction_Data_Visualization_img_0.png, id=1008, 7
+[45]
+
+[46]
+Overfull \hbox (23.71696pt too wide) in paragraph at lines 1840--1841
+ [][] 
+ []
+
+
+
+[47]
+
+[48]
+
+[49]
+
+[50]
+
+[51]
+
+[52]
+
+[53] (./chapter5_results.tex
+<images/results/Stock_Price_Prediction_Data_Visualization_img_0.png, id=1106, 7
 26.3135pt x 395.3169pt>
 File: images/results/Stock_Price_Prediction_Data_Visualization_img_0.png Graphi
 c file (type png)
@@ -1768,7 +1809,7 @@ c file (type png)
 Package pdftex.def Info: images/results/Stock_Price_Prediction_Data_Visualizati
 on_img_0.png  used on input line 26.
 (pdftex.def)             Requested size: 386.95897pt x 210.6208pt.
-<images/results/Stock_Price_Prediction_Data_Visualization_img_3.png, id=1010, 7
+<images/results/Stock_Price_Prediction_Data_Visualization_img_3.png, id=1108, 7
 26.3135pt x 395.3169pt>
 File: images/results/Stock_Price_Prediction_Data_Visualization_img_3.png Graphi
 c file (type png)
@@ -1782,7 +1823,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[46
+[54
 
  <./images/results/Stock_Price_Prediction_Data_Visualization_img_0.png>]
 Overfull \hbox (5.98471pt too wide) in paragraph at lines 50--51
@@ -1794,9 +1835,9 @@ cmr/m/n/12 0)[]$ with sea-sonal pe-riod = 5 trad-ing days. Achieved
 
 
 
-[47 <./images/results/Stock_Price_Prediction_Data_Visualization_img_3.png>]
+[55 <./images/results/Stock_Price_Prediction_Data_Visualization_img_3.png>]
 <images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7.png,
- id=1023, 859.2903pt x 426.393pt>
+ id=1121, 859.2903pt x 426.393pt>
 File: images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7
 .png Graphic file (type png)
 <use images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7.
@@ -1810,12 +1851,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[48]
+[56]
 
-[49 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
+[57 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
 7.png>]
 <images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9.png,
- id=1038, 1003.8303pt x 426.393pt>
+ id=1137, 1003.8303pt x 426.393pt>
 File: images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9
 .png Graphic file (type png)
 <use images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9.
@@ -1825,7 +1866,7 @@ _Day's_Price)_img_9.png  used on input line 152.
 (pdftex.def)             Requested size: 411.14528pt x 174.64008pt.
 
 
-[50 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
+[58 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
 9.png>]
 Overfull \hbox (78.5246pt too wide) in paragraph at lines 200--201
 []\OT1/cmr/bx/n/12 +Full Sen-ti-ment Fea-tures: \OT1/cmr/m/n/12 Add all eight s
@@ -1836,9 +1877,9 @@ S[]; \OT1/cmr/m/n/12 ^^A\OML/cmm/m/it/12 S[]; ^^[[]; N[]; D[]; S[]; S[]; S[]\OT
 
 
 
-[51]
+[59]
 <images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_10.png
-, id=1059, 1076.1003pt x 1148.3703pt>
+, id=1156, 1076.1003pt x 1148.3703pt>
 File: images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_1
 0.png Graphic file (type png)
 <use images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_10
@@ -1852,11 +1893,11 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[52]
+[60]
 
-[53]
+[61]
 
-[54 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
+[62 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
 10.png>]
 LaTeX Font Info:    Trying to load font information for OML+cmr on input line 3
 40.
@@ -1869,17 +1910,17 @@ LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 340.
 
 
-[55]
+[63]
 
-[56]
+[64]
 
-[57]
+[65]
 
-[58])
+[66])
 
-[59] (./literature_review.bbl)
+[67] (./literature_review.bbl)
 
-[60
+[68
 
 ] (./literature_review.aux)
  ***********
@@ -1887,13 +1928,13 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `literature_review.out' has not changed.
-(rerunfilecheck)             Checksum: 7893F38C3BAFBB29DF8DC6CC1580EB00;21916.
+(rerunfilecheck)             Checksum: 6F816CBF1CB067D3B08237D12165D13C;22731.
  ) 
 Here is how much of TeX's memory you used:
- 25101 strings out of 473190
- 494861 string characters out of 5704335
- 892372 words of memory out of 5000000
- 47597 multiletter control sequences out of 15000+600000
+ 25197 strings out of 473190
+ 496230 string characters out of 5704335
+ 890632 words of memory out of 5000000
+ 47646 multiletter control sequences out of 15000+600000
  573123 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,20n,87p,1623b,842s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1903,32 +1944,34 @@ t/fonts/type1/public/amsfonts/cm/cmbx12.pfb></opt/homebrew/Cellar/texlive/20250
 308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></opt/homebre
 w/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cme
 x10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive
-/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></opt/hom
-ebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi8.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/homebrew/Cellar/texliv
-e/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></opt/ho
-mebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr6.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texliv
-e/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></opt/ho
-mebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy8.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmti10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></opt/homebrew/Cellar/tex
-live/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></op
+ublic/amsfonts/cmextra/cmex8.pfb></opt/homebrew/Cellar/texlive/20250308_2/share
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></opt/homebrew/Cellar/tex
+live/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></op
 t/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfon
-ts/symbols/msbm10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist
-/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/2025030
-8_2/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on literature_review.pdf (71 pages, 1109799 bytes).
+ts/cm/cmmi6.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi8.pfb></opt/homebrew/Cellar/texlive/20250308_2/sh
+are/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/t
+exlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></o
+pt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr17.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr6.pfb></opt/homebrew/Cellar/texlive/20250308_2/sh
+are/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/te
+xlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></o
+pt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy6.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20250308_2/s
+hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></opt/homebrew/Cellar
+/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+</opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmtt12.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/
+fonts/type1/public/amsfonts/symbols/msbm10.pfb></opt/homebrew/Cellar/texlive/20
+250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebr
+ew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sftt1
+200.pfb>
+Output written on literature_review.pdf (79 pages, 1151572 bytes).
 PDF statistics:
- 1269 PDF objects out of 1440 (max. 8388607)
- 1128 compressed objects within 12 object streams
- 319 named destinations out of 1000 (max. 500000)
- 939 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1382 PDF objects out of 1440 (max. 8388607)
+ 1230 compressed objects within 13 object streams
+ 366 named destinations out of 1000 (max. 500000)
+ 971 words of extra memory for PDF output out of 10000 (max. 10000000)
 

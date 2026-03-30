@@ -1300,7 +1300,75 @@ Once we have feature engineered, we have about 25--30 price-derived features in 
 \subsubsection{Sentiment Analysis Pipeline}
 \label{sec:sentiment_pipeline}
 
-The sentiment analysis pipeline transforms raw financial news articles into structured, quantitative sentiment signals suitable for integration into the prediction model. The pipeline addresses the critical gaps identified in the literature review---sarcasm detection, tokenization drift, domain sensitivity, temporal alignment, and uncertainty quantification---through a four-stage process.
+The sentiment analysis pipeline transforms raw financial news articles into structured, quantitative sentiment signals suitable for integration into the prediction model. The pipeline addresses the critical gaps identified in the literature review---sarcasm detection, tokenization drift, domain sensitivity, temporal alignment, and uncertainty quantification---through a four-stage process. Figure~\ref{fig:sentiment_pipeline} illustrates the complete end-to-end data flow from raw news articles to the final sentiment feature vector.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.2cm,
+        process/.style={rectangle, draw, fill=white, text width=14em, text centered, rounded corners, minimum height=2.5em, line width=0.8pt},
+        data/.style={rectangle, draw, fill=white, text width=12em, text centered, minimum height=2.2em, line width=0.8pt},
+        arrow/.style={draw, -latex', line width=0.8pt},
+        note/.style={text width=11em, scale=0.7, align=left}
+    ]
+    
+    \node [data] (input) {Raw Financial News\\Articles $\{a_i\}$};
+    
+    \node [process, below=of input] (preproc) {Stage 1: Text Preprocessing\\Vocabulary Extension};
+    \node [note, right=0.5cm of preproc] {Tokenize with $V_{\text{ext}}$\\Normalize tickers\\Segment sentences};
+    
+    \node [process, below=of preproc] (finbert) {Stage 2: FinBERT Dual-Head\\Sentiment + Sarcasm Scoring};
+    \node [note, right=0.5cm of finbert] {$s_i^{\text{raw}}$: sentiment score\\$\lambda_i$: sarcasm probability\\$c_i$: confidence\\$s_i^{\text{final}} = (1-2\lambda_i) \cdot s_i^{\text{raw}}$};
+    
+    \node [process, below=of finbert] (temporal) {Stage 3: Temporal Alignment\\$\phi(\tau_i) \to$ Trading Day};
+    \node [note, right=0.5cm of temporal] {Map publication time\\to next actionable\\trading day in $\mathcal{T}$};
+    
+    \node [process, below=of temporal] (aggregate) {Stage 4: Daily Aggregation\\Confidence-Weighted};
+    \node [note, right=0.5cm of aggregate] {$S_t = \frac{\sum c_i \cdot s_i^{\text{final}}}{\sum c_i}$\\Normalized volume $N_t$};
+    
+    \node [data, below=of aggregate] (features) {Sentiment Feature Vector\\$\mathbf{S}_t \in \mathbb{R}^8$};
+    
+    \node [process, below=of features] (xgboost) {Concatenate with Price Features\\$\to$ XGBoost Residual Learner};
+    
+    \path [arrow] (input) -- (preproc);
+    \path [arrow] (preproc) -- (finbert);
+    \path [arrow] (finbert) -- (temporal);
+    \path [arrow] (temporal) -- (aggregate);
+    \path [arrow] (aggregate) -- (features);
+    \path [arrow] (features) -- (xgboost);
+    
+    \end{tikzpicture}
+    \caption{Sentiment Analysis Pipeline: End-to-End Data Flow from Raw News to XGBoost Integration}
+    \label{fig:sentiment_pipeline}
+\end{figure}
+
+\textbf{Base Model: FinBERT}
+
+The sentiment scoring component is built on FinBERT, a domain-adapted variant of BERT (Bidirectional Encoder Representations from Transformers). BERT is a transformer-based neural network that uses multi-head self-attention to learn contextualized word representations. Unlike static word embeddings that assign a fixed vector to each word regardless of context, BERT produces context-dependent representations: the word ``crash'' receives a different embedding in ``stock market crash'' than in ``application crash.''
+
+FinBERT inherits BERT's 12-layer, 768-dimensional transformer encoder architecture (approximately 110 million parameters) and is further pre-trained on a large corpus of financial communications including financial news articles, earnings call transcripts, and analyst reports. This domain-specific pre-training allows FinBERT to correctly interpret financial expressions that general-purpose BERT misclassifies---for example, FinBERT understands that ``the company beat earnings expectations'' carries positive sentiment, whereas general BERT may be uncertain about the polarity of ``beat'' in a financial context.
+
+The sentiment classification head maps the \texttt{[CLS]} token embedding---a 768-dimensional vector that summarizes the entire input sequence---to a three-class probability distribution (Positive, Negative, Neutral) via a fully connected layer and softmax activation. In our dual-head architecture, a second fully connected layer branches from the same \texttt{[CLS]} embedding to produce a binary sarcasm probability via sigmoid activation. Both heads share the same transformer backbone, so financial language understanding learned by the sentiment head also benefits sarcasm detection.
+
+\textbf{Training Data and Fine-Tuning Procedure}
+
+The dual-head model is fine-tuned on two labeled datasets:
+\begin{enumerate}
+    \item \textbf{Sentiment Labels}: The Financial Phrasebank dataset provides approximately 4,840 English financial news sentences labeled by 16 financial experts as Positive, Negative, or Neutral. We use the subset with $\geq 75\%$ annotator agreement to ensure label quality.
+    \item \textbf{Sarcasm Labels}: A curated financial sarcasm dataset containing approximately 3,000 labeled examples, constructed by collecting financial headlines with confirmed sarcastic intent (marked by expert annotators) and augmenting with non-sarcastic financial headlines as negative examples.
+\end{enumerate}
+
+Fine-tuning proceeds in two phases to prevent catastrophic forgetting of the pre-trained representations:
+\begin{enumerate}
+    \item \textbf{Phase 1 --- Frozen Backbone}: The FinBERT transformer weights are frozen. Only the two classification heads (sentiment and sarcasm) are trained for 5 epochs with a learning rate of $2 \times 10^{-4}$. This allows the heads to initialize without corrupting the pre-trained language representations.
+    \item \textbf{Phase 2 --- Joint Fine-Tuning}: All model weights (backbone + both heads) are unfrozen, and the entire model is trained end-to-end for 3 additional epochs with a reduced learning rate of $2 \times 10^{-5}$. The combined training objective is:
+    \begin{equation}
+    \mathcal{L}_{\text{total}} = \alpha \cdot \mathcal{L}_{\text{sentiment}} + (1 - \alpha) \cdot \mathcal{L}_{\text{sarcasm}}
+    \end{equation}
+    where $\alpha = 0.7$ prioritizes the primary sentiment task, $\mathcal{L}_{\text{sentiment}}$ is categorical cross-entropy over three classes, and $\mathcal{L}_{\text{sarcasm}}$ is binary cross-entropy. Training uses the AdamW optimizer with a batch size of 32 and linear learning rate warmup over the first 10\% of training steps.
+\end{enumerate}
+
+The four processing stages of the pipeline are described below.
 
 \textbf{Stage 1: Text Preprocessing with Vocabulary Extension}
 
@@ -1363,6 +1431,22 @@ N_t = \frac{|\mathcal{A}_t| - \mu_N}{\sigma_N}
 \end{equation}
 
 where $\mu_N$ and $\sigma_N$ are the mean and standard deviation of daily article counts over the training period.
+
+\textbf{End-to-End Daily Processing Loop}
+
+The complete pipeline operates as a daily batch process executed after market close. For each trading day $t$, the system performs the following sequence:
+
+\begin{enumerate}
+    \item \textbf{Collect}: Retrieve all news articles $\{a_i\}$ published since the last processing run from the configured news sources (Yahoo Finance, Reuters RSS, Financial Modeling Prep API).
+    \item \textbf{Preprocess}: For each article $a_i$, apply vocabulary-extended tokenization, ticker normalization, boilerplate removal, and sentence segmentation (Stage~1).
+    \item \textbf{Score}: Pass each preprocessed sentence through the dual-head FinBERT model. The sentiment head produces the raw score $s_i^{\text{raw}}$ and confidence $c_i$; the sarcasm head produces $\lambda_i$. Compute the sarcasm-corrected score $s_i^{\text{final}} = (1 - 2\lambda_i) \cdot s_i^{\text{raw}}$ (Stage~2). For multi-sentence articles, aggregate sentence-level scores to a single document-level score weighted by sentence confidence.
+    \item \textbf{Align}: Apply the temporal assignment function $\phi(\tau_i)$ to each article's UTC timestamp to determine the correct target trading day. Articles published after today's market close are assigned to the next trading day (Stage~3).
+    \item \textbf{Aggregate}: For the target trading day $t$, compute the confidence-weighted daily sentiment $S_t$ and the normalized news volume $N_t$ from all articles in $\mathcal{A}_t$. If $\mathcal{A}_t = \emptyset$, set $S_t = 0$ and flag $I_t^{\text{no\_news}} = 1$ (Stage~4).
+    \item \textbf{Derive Features}: Using the aggregated $S_t$ and the historical sentiment values $S_{t-1}, S_{t-2}, S_{t-3}$, compute the full 8-dimensional sentiment feature vector $\mathbf{S}_t = [S_t, \Delta S_t, \sigma_{S,t}, N_t, D_t, S_{t-1}, S_{t-2}, S_{t-3}]$.
+    \item \textbf{Integrate}: Concatenate $\mathbf{S}_t$ with the price-derived feature vector $\mathbf{X}_t^{\text{price}}$ to form $\mathbf{X}_t^{\text{ext}}$, which is passed to the XGBoost residual learner alongside the SARIMA baseline prediction.
+\end{enumerate}
+
+This daily loop ensures strict temporal causality: sentiment features for trading day $t$ are computed exclusively from articles published before day $t$'s market open, preventing any form of information leakage. The entire processing cycle (collection, scoring, feature computation) takes approximately 2--5 minutes on standard CPU hardware depending on news volume, making it feasible as an overnight batch process.
 
 \subsubsection{Sentiment Feature Engineering}
 \label{sec:sentiment_features}
@@ -1878,12 +1962,7 @@ By providing XGBoost with sentiment features, we reduce the $(E_t - \hat{E}_t)$ 
 
 \textbf{Sarcasm Detector Training:}
 
-The dual-head sarcasm detection model (described in Section~\ref{sec:sentiment_pipeline}) is trained with a weighted combination of the sentiment and sarcasm classification losses:
-\begin{equation}
-\mathcal{L}_{\text{total}} = \alpha \cdot \mathcal{L}_{\text{sentiment}} + (1 - \alpha) \cdot \mathcal{L}_{\text{sarcasm}}
-\end{equation}
-
-where $\alpha = 0.7$ prioritizes the primary sentiment classification task. The shared FinBERT backbone is initially frozen during the first training phase, then unfrozen for joint fine-tuning of both heads. The sarcasm detection head is trained on a financial sarcasm dataset constructed from expert-annotated financial headlines augmented with negative examples (non-sarcastic headlines).
+The dual-head model's complete training procedure---including datasets, the two-phase fine-tuning schedule, and the combined loss function---is detailed in Section~\ref{sec:sentiment_pipeline}. In summary, the model is fine-tuned first with a frozen FinBERT backbone to initialize the classification heads, then end-to-end with the joint objective $\mathcal{L}_{\text{total}} = \alpha \cdot \mathcal{L}_{\text{sentiment}} + (1 - \alpha) \cdot \mathcal{L}_{\text{sarcasm}}$ where $\alpha = 0.7$. The sentiment head is supervised by the Financial Phrasebank (${\approx}\,4{,}840$ expert-labeled sentences) and the sarcasm head by a curated financial sarcasm corpus (${\approx}\,3{,}000$ labeled examples).
 
 \textbf{Handling Missing Sentiment Days:}
 
