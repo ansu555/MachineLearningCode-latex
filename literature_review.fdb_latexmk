@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex literature_review"] 1774818520.3817 "literature_review.aux" "literature_review.bbl" "literature_review" 1774818522.56873 0
-  "./references.bib" 1774799372.48947 5943 ff84b838f935d17e2290564c7bfd03d4 ""
+["bibtex literature_review"] 1774853029.97916 "literature_review.aux" "literature_review.bbl" "literature_review" 1774853115.89356 0
+  "./references.bib" 1774852028.20474 7623 2ce198a20b8f0f213bdf411bf82e1f15 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/bibtex/bst/base/ieeetr.bst" 1741388039 18361 1a00e58565e7f19bf2b3e1bfb82254ae ""
-  "literature_review.aux" 1774818522.27775 21572 66ecc685bfe277c65ba24203495fbdf6 "pdflatex"
+  "literature_review.aux" 1774853113.09356 16709 bf1cf40607af7ed39f3a611fc84af7b1 "pdflatex"
   (generated)
   "literature_review.bbl"
   "literature_review.blg"
   (rewritten before read)
-["pdflatex"] 1774818520.45256 "literature_review.tex" "literature_review.pdf" "literature_review" 1774818522.5689 0
+["pdflatex"] 1774853107.12225 "literature_review.tex" "literature_review.pdf" "literature_review" 1774853115.89456 0
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1741388039 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/fontname/texfonts.map" 1741388039 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map" 1741388039 5466553 2748998d7db8078826afa1f272036265 ""
@@ -213,19 +213,19 @@
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/xcolor/xcolor.sty" 1741388039 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/web2c/texmf.cnf" 1741388039 42151 79f67285bdd95beca4d137b380b4b9e5 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-var/web2c/pdftex/pdflatex.fmt" 1741388039 3346125 851abcc596872d7f7285a006ccee0040 ""
-  "chapter5_results.tex" 1774798645.17458 31021 8ef141d28602d6c5fd47e1d6ad15f8f4 ""
+  "chapter5_results.tex" 1774852102.65439 30739 9c210299bfe799d5b030495011c41960 ""
   "images/results/Stock_Price_Prediction_Data_Visualization_img_0.png" 1774782671.64888 42641 a0be5d2860a908d60619c317c8d36e8f ""
   "images/results/Stock_Price_Prediction_Data_Visualization_img_3.png" 1774782671.65547 59872 0e7723cc8485c10f961c0b9ec8414383 ""
   "images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_10.png" 1774782671.66592 382258 d9a4657bf8c8d1087e12938b36a9a4d5 ""
   "images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7.png" 1774782671.67032 133302 028e7364b33a2fca6152e9e5a6d5ca7c ""
   "images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9.png" 1774782671.67199 189999 6a8cc59cfcc831f2df873b76929af89c ""
-  "literature_review.aux" 1774818522.27775 21572 66ecc685bfe277c65ba24203495fbdf6 "pdflatex"
-  "literature_review.bbl" 1774818520.44937 1975 06c342bbcfc6770df266fd17b68aad8e "bibtex literature_review"
-  "literature_review.lof" 1774818522.28054 1076 94e171e754260b220a5d487e5d8f670b "pdflatex"
-  "literature_review.lot" 1774818522.28057 754 335e0b52b0cf019dabf5926f0f814c33 "pdflatex"
-  "literature_review.out" 1774818522.28001 22731 6f816cbf1cb067d3b08237d12165d13c "pdflatex"
-  "literature_review.tex" 1774818433.83547 143766 0fa385f97a1add7b62fbd4ef4de3029a ""
-  "literature_review.toc" 1774818522.28031 11407 815c65c43c3309996906a3e9548297f9 "pdflatex"
+  "literature_review.aux" 1774853113.09356 16709 bf1cf40607af7ed39f3a611fc84af7b1 "pdflatex"
+  "literature_review.bbl" 1774853030.13818 3417 ae9bd8c90c0cf7375a8cd61091290d6c "bibtex literature_review"
+  "literature_review.lof" 1774853113.1157 1092 286a1ef7ece555fed83843ce69076e08 "pdflatex"
+  "literature_review.lot" 1774853113.12013 385 3ba15a40c12550915f85eadccccc35ed "pdflatex"
+  "literature_review.out" 1774853113.10719 16357 d7b645ace8d948ad43e758aeaf594bbc "pdflatex"
+  "literature_review.tex" 1774853102.58876 85552 e93296aae20d08ade74c9cc9971c41f7 ""
+  "literature_review.toc" 1774853113.11546 8323 94a863cea972521c0696e5d03f051311 "pdflatex"
   "pdfs/extract_text copy.png" 1774782671.68414 29536 759c9a2e14deb491320aaff5c6c4babf ""
   (generated)
   "literature_review.aux"

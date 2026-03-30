@@ -1,116 +1,87 @@
 \contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Context of the Study}{1}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Objectives}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.2}Objectives}{1}{subsection.1.2}%
 \contentsline {subsection}{\numberline {1.3}Scope and Organization}{2}{subsection.1.3}%
 \contentsline {subsection}{\numberline {1.4}Contributions}{2}{subsection.1.4}%
-\contentsline {section}{\numberline {2}Literature Review}{4}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Introduction to Literature Survey}{4}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Historical Approaches}{4}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}Evolution of Stock Prediction Methods}{4}{subsubsection.2.2.1}%
-\contentsline {subsubsection}{\numberline {2.2.2}From Early Statistical Tools to Advanced Time-Series Models}{4}{subsubsection.2.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.3}From ARIMA/GARCH to Machine Learning Models}{5}{subsubsection.2.2.3}%
-\contentsline {subsubsection}{\numberline {2.2.4}From Machine Learning to Deep Learning}{5}{subsubsection.2.2.4}%
-\contentsline {subsubsection}{\numberline {2.2.5}From Deep Learning to Modern Transformer and Advanced Models}{5}{subsubsection.2.2.5}%
-\contentsline {subsection}{\numberline {2.3}Existing Systems / Related Work}{6}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}Traditional Statistical Methods}{6}{subsubsection.2.3.1}%
-\contentsline {subsubsection}{\numberline {2.3.2}Machine Learning Approaches}{7}{subsubsection.2.3.2}%
-\contentsline {subsubsection}{\numberline {2.3.3}Deep Learning-Based Approaches}{7}{subsubsection.2.3.3}%
-\contentsline {subsubsection}{\numberline {2.3.4}Advanced Neural Network Architectures}{8}{subsubsection.2.3.4}%
-\contentsline {subsubsection}{\numberline {2.3.5}Sentiment-Based Methods}{9}{subsubsection.2.3.5}%
-\contentsline {subsection}{\numberline {2.4}Hybrid Architectures}{10}{subsection.2.4}%
-\contentsline {subsubsection}{\numberline {2.4.1}ARIMA-LSTM Hybrid Models}{10}{subsubsection.2.4.1}%
-\contentsline {subsubsection}{\numberline {2.4.2}CNN-LSTM Hybrid Models}{10}{subsubsection.2.4.2}%
-\contentsline {subsubsection}{\numberline {2.4.3}Attention-Enhanced Hybrid Models}{11}{subsubsection.2.4.3}%
-\contentsline {subsubsection}{\numberline {2.4.4}Multimodal Hybrid Models}{12}{subsubsection.2.4.4}%
-\contentsline {subsubsection}{\numberline {2.4.5}Feature-Level Hybridization}{12}{subsubsection.2.4.5}%
-\contentsline {subsubsection}{\numberline {2.4.6}Price + Sentiment Hybrid Models}{12}{subsubsection.2.4.6}%
-\contentsline {subsection}{\numberline {2.5}Comparative Analysis of Hybrid Models}{13}{subsection.2.5}%
-\contentsline {subsubsection}{\numberline {2.5.1}Why Hybrid Models Represent the Future}{13}{subsubsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.6}Limitations of Existing Systems}{15}{subsection.2.6}%
-\contentsline {subsubsection}{\numberline {2.6.1}Statistical Model Constraints}{15}{subsubsection.2.6.1}%
-\contentsline {subsubsection}{\numberline {2.6.2}Machine Learning Limitations}{15}{subsubsection.2.6.2}%
-\contentsline {subsubsection}{\numberline {2.6.3}Feature Representation Challenges}{16}{subsubsection.2.6.3}%
-\contentsline {subsubsection}{\numberline {2.6.4}Computational and Real-Time Constraints}{16}{subsubsection.2.6.4}%
-\contentsline {subsubsection}{\numberline {2.6.5}Overfitting and Generalization Issues}{16}{subsubsection.2.6.5}%
-\contentsline {subsubsection}{\numberline {2.6.6}Sentiment Analysis and Integration Gaps}{16}{subsubsection.2.6.6}%
-\contentsline {subsection}{\numberline {2.7}Comparative Study / Gap Analysis}{17}{subsection.2.7}%
-\contentsline {subsubsection}{\numberline {2.7.1}Method Comparison: Statistical vs. Machine Learning vs. Deep Learning}{17}{subsubsection.2.7.1}%
-\contentsline {subsubsection}{\numberline {2.7.2}Performance Comparison from Literature}{18}{subsubsection.2.7.2}%
-\contentsline {subsubsection}{\numberline {2.7.3}Integration Gaps and Research Deficiencies}{18}{subsubsection.2.7.3}%
-\contentsline {subsection}{\numberline {2.8}Summary of Literature Review}{20}{subsection.2.8}%
-\contentsline {subsubsection}{\numberline {2.8.1}Key Findings}{20}{subsubsection.2.8.1}%
-\contentsline {subsubsection}{\numberline {2.8.2}Conclusion}{22}{subsubsection.2.8.2}%
-\contentsline {section}{\numberline {3}Problem Identification}{24}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Problem Statement}{24}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Context and Background of the Problem}{24}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Need and Importance of Solving the Problem}{25}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Economic Impact}{25}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Scientific Advancement}{25}{subsubsection.3.3.2}%
-\contentsline {subsubsection}{\numberline {3.3.3}Market Efficiency}{25}{subsubsection.3.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.4}Risk Management}{25}{subsubsection.3.3.4}%
-\contentsline {subsection}{\numberline {3.4}Scope and Project Objectives}{26}{subsection.3.4}%
-\contentsline {subsubsection}{\numberline {3.4.1}Scope}{26}{subsubsection.3.4.1}%
-\contentsline {subsubsection}{\numberline {3.4.2}Objectives}{26}{subsubsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.5}Anticipated Challenges}{27}{subsection.3.5}%
-\contentsline {subsubsection}{\numberline {3.5.1}Data Quality and Availability}{27}{subsubsection.3.5.1}%
-\contentsline {subsubsection}{\numberline {3.5.2}Non-stationarity and Regime Changes}{27}{subsubsection.3.5.2}%
-\contentsline {subsubsection}{\numberline {3.5.3}Overfitting vs. Generalization}{27}{subsubsection.3.5.3}%
-\contentsline {subsubsection}{\numberline {3.5.4}Computational Resources}{27}{subsubsection.3.5.4}%
-\contentsline {subsubsection}{\numberline {3.5.5}Evaluation Metrics}{28}{subsubsection.3.5.5}%
-\contentsline {subsubsection}{\numberline {3.5.6}Interpretability and Trust}{28}{subsubsection.3.5.6}%
-\contentsline {subsubsection}{\numberline {3.5.7}Benchmark Comparison}{28}{subsubsection.3.5.7}%
-\contentsline {subsubsection}{\numberline {3.5.8}Sentiment Data Challenges}{28}{subsubsection.3.5.8}%
-\contentsline {section}{\numberline {4}Problem Methodology}{30}{section.4}%
-\contentsline {subsection}{\numberline {4.1}System Architecture Overview}{30}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Data Collection and Preprocessing}{30}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Data Source and Characteristics}{30}{subsubsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2}Data Cleaning}{32}{subsubsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.3}News Data Collection}{33}{subsubsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.4}Train-Test Split}{33}{subsubsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.3}Feature Engineering}{33}{subsection.4.3}%
-\contentsline {subsubsection}{\numberline {4.3.1}Technical Indicators}{34}{subsubsection.4.3.1}%
-\contentsline {subsubsection}{\numberline {4.3.2}Temporal Features}{35}{subsubsection.4.3.2}%
-\contentsline {subsubsection}{\numberline {4.3.3}Lag Features}{35}{subsubsection.4.3.3}%
-\contentsline {subsubsection}{\numberline {4.3.4}Feature Selection and Dimensionality}{35}{subsubsection.4.3.4}%
-\contentsline {subsubsection}{\numberline {4.3.5}Sentiment Analysis Pipeline}{36}{subsubsection.4.3.5}%
-\contentsline {subsubsection}{\numberline {4.3.6}Sentiment Feature Engineering}{40}{subsubsection.4.3.6}%
-\contentsline {subsection}{\numberline {4.4}Model Development}{41}{subsection.4.4}%
-\contentsline {subsubsection}{\numberline {4.4.1}SARIMA Model}{41}{subsubsection.4.4.1}%
-\contentsline {subsubsection}{\numberline {4.4.2}Prophet Model}{42}{subsubsection.4.4.2}%
-\contentsline {subsubsection}{\numberline {4.4.3}XGBoost Model}{43}{subsubsection.4.4.3}%
-\contentsline {subsubsection}{\numberline {4.4.4}BiLSTM + Attention Model}{44}{subsubsection.4.4.4}%
-\contentsline {subsubsection}{\numberline {4.4.5}Hybrid SARIMA-XGBoost Model}{47}{subsubsection.4.4.5}%
-\contentsline {subsection}{\numberline {4.5}Evaluation Metrics}{50}{subsection.4.5}%
-\contentsline {subsubsection}{\numberline {4.5.1}Regression Metrics}{51}{subsubsection.4.5.1}%
-\contentsline {subsubsection}{\numberline {4.5.2}Directional Accuracy}{51}{subsubsection.4.5.2}%
-\contentsline {subsubsection}{\numberline {4.5.3}Trading Performance Metrics}{51}{subsubsection.4.5.3}%
-\contentsline {subsubsection}{\numberline {4.5.4}Model Comparison}{52}{subsubsection.4.5.4}%
-\contentsline {subsection}{\numberline {4.6}Implementation Details}{52}{subsection.4.6}%
-\contentsline {subsubsection}{\numberline {4.6.1}Development Environment}{52}{subsubsection.4.6.1}%
-\contentsline {subsubsection}{\numberline {4.6.2}Computational Resources}{52}{subsubsection.4.6.2}%
-\contentsline {subsubsection}{\numberline {4.6.3}Reproducibility}{52}{subsubsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.7}Summary}{52}{subsection.4.7}%
-\contentsline {section}{\numberline {5}Results and Analysis}{54}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Experimental Setup}{54}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Exploratory Data Analysis}{54}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Model Performance Evaluation}{55}{subsection.5.3}%
-\contentsline {subsubsection}{\numberline {5.3.1}Statistical Models}{55}{subsubsection.5.3.1}%
-\contentsline {subsubsection}{\numberline {5.3.2}Machine Learning Models}{55}{subsubsection.5.3.2}%
-\contentsline {subsubsection}{\numberline {5.3.3}Deep Learning Models}{56}{subsubsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.4}Hybrid Model: SARIMA + XGBoost}{56}{subsection.5.4}%
-\contentsline {subsubsection}{\numberline {5.4.1}Theoretical Foundation and Methodology}{56}{subsubsection.5.4.1}%
-\contentsline {subsubsection}{\numberline {5.4.2}Implementation Configuration}{57}{subsubsection.5.4.2}%
-\contentsline {subsubsection}{\numberline {5.4.3}Performance Results}{58}{subsubsection.5.4.3}%
-\contentsline {subsection}{\numberline {5.5}Sentiment-Augmented Model Results}{58}{subsection.5.5}%
-\contentsline {subsubsection}{\numberline {5.5.1}Expected Performance}{59}{subsubsection.5.5.1}%
-\contentsline {subsubsection}{\numberline {5.5.2}Ablation Study Design}{59}{subsubsection.5.5.2}%
-\contentsline {subsubsection}{\numberline {5.5.3}Feature Importance Analysis}{60}{subsubsection.5.5.3}%
-\contentsline {subsubsection}{\numberline {5.5.4}Walk-Forward Validation}{60}{subsubsection.5.5.4}%
-\contentsline {subsection}{\numberline {5.6}Comprehensive Comparison}{60}{subsection.5.6}%
-\contentsline {subsection}{\numberline {5.7}Discussion}{61}{subsection.5.7}%
-\contentsline {subsubsection}{\numberline {5.7.1}Key Findings and Implications}{61}{subsubsection.5.7.1}%
-\contentsline {subsubsection}{\numberline {5.7.2}Practical Implications}{63}{subsubsection.5.7.2}%
-\contentsline {subsubsection}{\numberline {5.7.3}Limitations and Caveats}{64}{subsubsection.5.7.3}%
-\contentsline {subsubsection}{\numberline {5.7.4}Literature Alignment}{65}{subsubsection.5.7.4}%
-\contentsline {subsubsection}{\numberline {5.7.5}Future Research Directions}{65}{subsubsection.5.7.5}%
-\contentsline {subsection}{\numberline {5.8}Conclusion}{66}{subsection.5.8}%
+\contentsline {section}{\numberline {2}Literature Review}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Introduction to Literature Survey}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Historical Approaches}{3}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Statistical Foundations}{3}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Transition to Machine Learning}{3}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Deep Learning Era}{3}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}From Sequence Models to Attention and Multimodal Systems}{3}{subsubsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.3}Existing Systems / Related Work}{4}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Traditional Statistical Methods}{4}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Machine Learning Approaches}{4}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Deep Learning-Based Approaches}{4}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}Sentiment-Based Methods}{4}{subsubsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.4}Hybrid Architectures}{4}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Rationale for Hybrid Design}{4}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Price-Only Hybrid Systems}{5}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}Price + Sentiment Hybrid Systems}{5}{subsubsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.5}Comparative Evidence from Literature}{5}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Limitations of Existing Systems}{6}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}General Modeling Limitations}{6}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Sentiment Analysis and Integration Gaps}{6}{subsubsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.7}Comparative Study / Gap Analysis}{6}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Summary of Literature Review}{6}{subsection.2.8}%
+\contentsline {section}{\numberline {3}Problem Identification}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Problem Statement}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Research Gap to be Solved}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Why Existing Methods Are Insufficient}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Research Objectives and Hypotheses}{7}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Expected Challenges}{8}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Methodology}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}System Architecture Overview}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Data Collection and Preprocessing}{10}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Data Source and Characteristics}{10}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Data Cleaning}{11}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}News Data Collection}{11}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Train-Test Split}{12}{subsubsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.3}Feature Engineering}{12}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Technical Indicators}{12}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Temporal Features}{13}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Lag Features}{14}{subsubsection.4.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.4}Feature Selection and Dimensionality}{14}{subsubsection.4.3.4}%
+\contentsline {subsubsection}{\numberline {4.3.5}Sentiment Analysis Pipeline}{14}{subsubsection.4.3.5}%
+\contentsline {subsubsection}{\numberline {4.3.6}Sentiment Feature Engineering}{19}{subsubsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.4}Model Development}{20}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}SARIMA Model}{20}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2}Prophet Model}{21}{subsubsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.3}XGBoost Model}{22}{subsubsection.4.4.3}%
+\contentsline {subsubsection}{\numberline {4.4.4}BiLSTM + Attention Model}{23}{subsubsection.4.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.5}Hybrid SARIMA-XGBoost Model}{26}{subsubsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.5}Evaluation Metrics}{29}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}Regression Metrics}{29}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Directional Accuracy}{30}{subsubsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.3}Trading Performance Metrics}{30}{subsubsection.4.5.3}%
+\contentsline {subsubsection}{\numberline {4.5.4}Model Comparison}{31}{subsubsection.4.5.4}%
+\contentsline {subsection}{\numberline {4.6}Implementation Details}{31}{subsection.4.6}%
+\contentsline {subsubsection}{\numberline {4.6.1}Development Environment}{31}{subsubsection.4.6.1}%
+\contentsline {subsubsection}{\numberline {4.6.2}Computational Resources}{31}{subsubsection.4.6.2}%
+\contentsline {subsubsection}{\numberline {4.6.3}Reproducibility}{31}{subsubsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.7}Summary}{31}{subsection.4.7}%
+\contentsline {section}{\numberline {5}Results and Analysis}{33}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Experimental Setup}{33}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Exploratory Data Analysis}{33}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Model Performance Evaluation}{34}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}Statistical Models}{34}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.2}Machine Learning Models}{34}{subsubsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.3}Deep Learning Models}{35}{subsubsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.4}Hybrid Model: SARIMA + XGBoost}{35}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}Theoretical Foundation and Methodology}{35}{subsubsection.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.2}Implementation Configuration}{36}{subsubsection.5.4.2}%
+\contentsline {subsubsection}{\numberline {5.4.3}Performance Results}{37}{subsubsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.5}Proposed Sentiment Extension (Planned Evaluation)}{37}{subsection.5.5}%
+\contentsline {subsubsection}{\numberline {5.5.1}Planned Evaluation Hypotheses}{38}{subsubsection.5.5.1}%
+\contentsline {subsubsection}{\numberline {5.5.2}Planned Ablation Study Design}{38}{subsubsection.5.5.2}%
+\contentsline {subsubsection}{\numberline {5.5.3}Planned Feature Importance Analysis}{39}{subsubsection.5.5.3}%
+\contentsline {subsubsection}{\numberline {5.5.4}Planned Walk-Forward Validation}{39}{subsubsection.5.5.4}%
+\contentsline {subsection}{\numberline {5.6}Comprehensive Comparison}{39}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Discussion}{40}{subsection.5.7}%
+\contentsline {subsubsection}{\numberline {5.7.1}Key Findings and Implications}{40}{subsubsection.5.7.1}%
+\contentsline {subsubsection}{\numberline {5.7.2}Practical Implications}{42}{subsubsection.5.7.2}%
+\contentsline {subsubsection}{\numberline {5.7.3}Limitations and Caveats}{43}{subsubsection.5.7.3}%
+\contentsline {subsubsection}{\numberline {5.7.4}Literature Alignment}{44}{subsubsection.5.7.4}%
+\contentsline {subsubsection}{\numberline {5.7.5}Future Research Directions}{44}{subsubsection.5.7.5}%
+\contentsline {subsection}{\numberline {5.8}Conclusion}{45}{subsection.5.8}%

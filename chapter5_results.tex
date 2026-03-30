@@ -33,11 +33,11 @@ Figure \ref{fig:eda_close} reveals: (1) strong non-stationarity with price incre
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.75\textwidth]{images/results/Stock_Price_Prediction_Data_Visualization_img_3.png}
-    \caption{Feature Correlation Heatmap}
+    \caption{AAPL Close Price with 30-day Rolling Average}
     \label{fig:correlation}
 \end{figure}
 
-Correlation analysis (Figure \ref{fig:correlation}) shows near-perfect correlation (>0.99) among OHLC prices, indicating severe multicollinearity. Volume exhibits weak correlation with price levels. This motivated extensive feature engineering with lag variables, technical indicators, and temporal features to extract diverse, independent signals.
+Figure \ref{fig:correlation} highlights long-run trend behavior with local deviations around the 30-day average, supporting the need for models that capture both baseline structure and short-term residual dynamics. Separate correlation checks on engineered OHLC-derived features still indicated high collinearity among raw price levels, motivating lag/indicator-based feature expansion and feature-selection controls.
 
 \subsection{Model Performance Evaluation}
 
@@ -156,22 +156,22 @@ This represents 56.2\% improvement over Linear Regression, 71.7\% over BiLSTM+At
 
 Figure \ref{fig:hybrid_results} demonstrates the hybrid model's exceptional fit, closely tracking actual prices across the entire test period with minimal lag.
 
-\subsection{Sentiment-Augmented Model Results}
+\subsection{Proposed Sentiment Extension (Planned Evaluation)}
 
-The SARIMA-XGBoost hybrid was extended with the sentiment analysis pipeline described in Chapter~4, producing confidence-weighted, sarcasm-corrected sentiment features that are integrated into the XGBoost residual learning stage. This section evaluates the sentiment-augmented model against the baseline hybrid.
+The SARIMA-XGBoost hybrid is designed to be extended with the sentiment pipeline described in Chapter~4, where confidence-weighted, sarcasm-corrected sentiment features are integrated into the residual learning stage. This section presents the planned evaluation protocol and hypotheses; it does not report completed sentiment-augmented experimental results.
 
-\subsubsection{Expected Performance}
+\subsubsection{Planned Evaluation Hypotheses}
 
-Table~\ref{tab:sentiment_performance} presents the targeted performance of the sentiment-augmented hybrid model relative to the price-only baseline.
+Table~\ref{tab:sentiment_performance} presents hypothesis-level targets for the sentiment-augmented model relative to the completed price-only baseline.
 
 \begin{table}[htbp]
 \centering
-\caption{Sentiment-Augmented Model Performance Targets vs.\ Baseline Hybrid}
+\caption{Planned Sentiment-Augmented Evaluation Targets vs.\ Baseline Hybrid}
 \label{tab:sentiment_performance}
 \small
 \begin{tabular}{@{}lrrr@{}}
 \toprule
-\textbf{Metric} & \textbf{Baseline Hybrid} & \textbf{Sent.-Augmented (Target)} & \textbf{Expected Improvement} \\
+\textbf{Metric} & \textbf{Baseline Hybrid (Observed)} & \textbf{Sent.-Augmented (Hypothesis)} & \textbf{Targeted Delta} \\
 \midrule
 RMSE & 1.28 & $< 1.10$ & $> 14\%$ \\
 $R^2$ & 0.9983 & $> 0.9988$ & $+0.05\%$ \\
@@ -183,12 +183,12 @@ Dir.\ Accuracy & 87\% & $> 90\%$ & $+3$--$4$ pp \\
 
 \raggedright
 \small
-\textit{Note}: pp = percentage points. Directional accuracy improvement is the most operationally meaningful metric, as sentiment signals primarily encode market direction.
+\textit{Note}: pp = percentage points. Values in the sentiment-augmented column are planned targets for future validation, not observed outcomes.
 \end{table}
 
-The most meaningful expected gain is in directional accuracy. Sentiment signals encode buy/sell pressure---market direction---rather than precise price levels. A 3--4 percentage point improvement in directional accuracy translates to meaningful improvement in trading strategy profitability, as even marginal improvements in direction prediction compound across many trading days.
+The most meaningful expected gain is directional accuracy. Sentiment signals are designed to encode buy/sell pressure---market direction---rather than exact price levels. The hypothesis is that a 3--4 percentage-point directional gain would materially improve trading relevance if confirmed in leakage-safe walk-forward testing.
 
-\subsubsection{Ablation Study Design}
+\subsubsection{Planned Ablation Study Design}
 
 To isolate the contribution of individual sentiment components, we design a systematic ablation study with six configurations, each evaluated on the identical test set:
 
@@ -203,7 +203,7 @@ To isolate the contribution of individual sentiment components, we design a syst
 
 Each configuration uses identical XGBoost hyperparameters (100 estimators, max depth~5, learning rate~0.1) to ensure that performance differences are attributable solely to the sentiment feature set.
 
-\subsubsection{Feature Importance Analysis}
+\subsubsection{Planned Feature Importance Analysis}
 
 XGBoost's built-in feature importance ranking (based on information gain) is used to rank all features in the extended model. We report the top~15 features by gain and analyse whether sentiment features rank among the most predictive. Specifically, we investigate the following hypotheses:
 
@@ -214,7 +214,7 @@ XGBoost's built-in feature importance ranking (based on information gain) is use
     \item Lagged sentiment features $S_{t-1}, S_{t-2}, S_{t-3}$ capture the delayed price reaction to news, with importance decreasing as lag increases.
 \end{itemize}
 
-\subsubsection{Walk-Forward Validation}
+\subsubsection{Planned Walk-Forward Validation}
 
 To simulate a realistic trading environment and ensure that evaluation metrics reflect true out-of-sample performance, we employ expanding-window walk-forward validation:
 
@@ -257,7 +257,7 @@ This produces $n_{\text{test}}$ out-of-sample predictions, each made without kno
 \quad SARIMA + XGBoost & 1.28 & 0.998 & 87\% & $\sim$5 min \\
 \midrule
 \multicolumn{5}{l}{\textit{Sentiment-Augmented Hybrid}} \\
-\quad \textbf{SARIMA + XGBoost + Sent.} & \textbf{$<$1.10}$^\dagger$ & \textbf{$>$0.999}$^\dagger$ & \textbf{$>$90\%}$^\dagger$ & \textbf{$\sim$7 min} \\
+\quad SARIMA + XGBoost + Sent. & $<$1.10$^\dagger$ & $>$0.999$^\dagger$ & $>$90\%$^\dagger$ & $\sim$7 min \\
 \bottomrule
 \end{tabular}
 \vspace{0.2cm}
@@ -335,7 +335,7 @@ Applying sentiment features directly to raw price prediction is less effective t
 
 \textbf{Trading Viability Assessment:}
 
-For AAPL trading at ~\$180-220, hybrid model's RMSE of \$1.28 represents ~0.6\% error. With 87\% directional accuracy, potential profitability exists if:
+For AAPL trading at ~\$180-220, the hybrid model's RMSE of \$1.28 represents ~0.6\% error. With 87\% directional accuracy, this suggests potential trading viability if:
 \begin{itemize}
     \item Transaction costs \textless \$1.28 per trade (achievable with modern brokers)
     \item Proper risk management (stop-losses, position sizing via Kelly criterion)
@@ -351,7 +351,7 @@ For AAPL trading at ~\$180-220, hybrid model's RMSE of \$1.28 represents ~0.6\% 
     \item More interpretable than black-box LSTM
 \end{itemize}
 
-\textbf{Scalability}: Methodology applies to portfolio-wide deployment---can model multiple stocks with the same framework.
+\textbf{Scalability}: The framework is designed to extend to multi-stock deployment, but this report validates only the single-stock (AAPL) setting.
 
 \textbf{Sentiment Integration Overhead:}
 
@@ -384,7 +384,7 @@ Hyperparameter sensitivity requires careful tuning and validation. Optimal retra
 
 \subsubsection{Literature Alignment}
 
-Results validate Chapter 2 predictions: hybrid models outperform single-method approaches (56\% improvement confirmed), temporal modeling proves critical (LSTM vs trees: 96\% higher $R^2$), and 1D processing of raw signals validated (aligned with \cite{eda2023}).
+Current findings support the Chapter~2 direction: hybrid modeling outperforms standalone methods in this dataset, and temporal structure is critical. The sentiment-augmented component remains a planned extension pending full experimental execution.
 
 \subsubsection{Future Research Directions}
 
@@ -406,14 +406,14 @@ Results validate Chapter 2 predictions: hybrid models outperform single-method a
 
 \subsection{Conclusion}
 
-This chapter presented a comprehensive evaluation of stock price prediction models spanning statistical methods, machine learning, deep learning, and hybrid approaches, culminating in a sentiment-augmented hybrid architecture. The evaluation yields five principal conclusions.
+This chapter presented a comprehensive evaluation of implemented stock price prediction models spanning statistical methods, machine learning, deep learning, and hybrid approaches, and then outlined a planned sentiment-augmented extension. The evaluation yields five principal conclusions.
 
-First, the baseline hybrid SARIMA-XGBoost model achieves state-of-the-art next-day prediction performance (RMSE:~1.28, $R^2$:~0.9983, directional accuracy:~87\%), outperforming all eight standalone alternatives including deep learning models with substantially greater complexity. The critical insight is that problem formulation---applying XGBoost to stationary residuals rather than raw trending prices---matters more than algorithm selection, producing a 95.3\% RMSE improvement from reformulation alone.
+First, the baseline hybrid SARIMA-XGBoost model achieves the strongest next-day performance among the evaluated implemented models (RMSE:~1.28, $R^2$:~0.9983, directional accuracy:~87\%). The critical insight is that problem formulation---applying XGBoost to stationary residuals rather than raw trending prices---matters more than algorithm selection, producing a 95.3\% RMSE improvement from reformulation alone.
 
-Second, the sentiment-augmented extension targets further improvements (RMSE~$< 1.10$, directional accuracy~$> 90\%$) by providing the XGBoost residual learner with eight structured sentiment features derived from a domain-adapted FinBERT pipeline with dual-head sarcasm correction, principled temporal alignment, and confidence-weighted aggregation. Under the extended decomposition $y_t = L_t + N_t + E_t + \epsilon_t$---where $L_t$ is the linear component captured by SARIMA, $N_t$ the non-linear residual captured by XGBoost, and $E_t$ the sentiment-driven component captured by the extended feature set---the architecture is theoretically positioned to reduce prediction error by modelling all three systematic components.
+Second, the sentiment-augmented extension is a planned next phase with target improvements (RMSE~$< 1.10$, directional accuracy~$> 90\%$). The proposed mechanism is to provide the residual learner with eight structured sentiment features from a domain-adapted FinBERT pipeline with sarcasm correction, temporal alignment, and confidence-weighted aggregation. Under the extended decomposition $y_t = L_t + N_t + E_t + \epsilon_t$, this design is hypothesized to reduce residual error by modeling sentiment-driven dynamics explicitly.
 
-Third, the ablation study design isolates the incremental contribution of each sentiment component---from raw sentiment through sarcasm correction, momentum features, and the full eight-dimensional feature vector---while the walk-forward validation protocol ensures that all reported metrics reflect genuine out-of-sample performance with no look-ahead bias.
+Third, the planned ablation study is designed to isolate the incremental contribution of each sentiment component---from raw sentiment through sarcasm correction, momentum features, and the full eight-dimensional feature vector---while walk-forward validation will be used to enforce leakage-safe out-of-sample evaluation.
 
-Fourth, the practical viability of the system is established: the full pipeline (price data retrieval, sentiment computation, SARIMA fitting, XGBoost training, and prediction) executes within approximately 7~minutes on standard CPU hardware, making it deployable as a daily overnight batch process compatible with institutional trading workflows.
+Fourth, practical deployment feasibility is strong for the implemented baseline pipeline. The full price-based workflow executes in minutes on standard CPU hardware; adding sentiment computation is expected to increase runtime but remains suitable for overnight batch operation.
 
 Fifth, feature engineering---both technical and sentiment-based---remains the dominant driver of performance in structured financial time series. Thoughtful signal design consistently outperforms raw architectural complexity, as evidenced by the simpler hybrid model outperforming BiLSTM+Attention by 71.7\% in RMSE. Significant work remains in uncertainty quantification, adaptive regime detection, multi-stock portfolio evaluation, and broader validation across market conditions and crisis periods before production deployment can be recommended.

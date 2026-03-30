@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.11.7)  30 MAR 2026 02:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.11.7)  30 MAR 2026 12:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -951,7 +951,7 @@ Package hyperref Info: Link coloring OFF on input line 63.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<pdfs/extract_text copy.png, id=473, 381.425pt x 117.43875pt>
+<pdfs/extract_text copy.png, id=356, 381.425pt x 117.43875pt>
 File: pdfs/extract_text copy.png Graphic file (type png)
 <use pdfs/extract_text copy.png>
 Package pdftex.def Info: pdfs/extract_text copy.png  used on input line 73.
@@ -1071,42 +1071,170 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.315     \item E
-                 xamine the evolution of stock prediction methodologies from...
-[1]
-
-[2{/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/enc/dvips/cm-
+l.318     \item D
+                 efine a clear methodological basis for a hybrid SARIMA-XGBo...
+[1{/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/enc/dvips/cm-
 super/cm-super-ts1.enc}]
-Overfull \hbox (5.7167pt too wide) in paragraph at lines 338--339
-\OT1/cmr/m/n/12 [\OML/cmm/m/it/12 S[]; \OT1/cmr/m/n/12 ^^A\OML/cmm/m/it/12 S[];
- ^^[[]; N[]; D[]; S[]; S[]; S[]\OT1/cmr/m/n/12 ]$ com-pris-ing confidence-weigh
-ted ag-gre-gated sen-ti-ment,
- []
 
-
+[2]
 
 [3]
 
 [4]
+Underfull \hbox (badness 10000) in paragraph at lines 391--391
+[]\OT1/cmr/bx/n/10.95 Market /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 391--391
+[]\OT1/cmr/bx/n/10.95 Main Lim-i-ta-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 392--392
+\OT1/cmr/m/n/10.95 di-rec-tion
+ []
+
+
+Underfull \hbox (badness 1472) in paragraph at lines 392--393
+[]\OT1/cmr/m/n/10.95 Sensitive to fea-
+ []
+
+
+Underfull \hbox (badness 1817) in paragraph at lines 394--394
+[]\OT1/cmr/m/n/10.95 Indian eq-ui-
+ []
+
+
+Overfull \hbox (31.11243pt too wide) in paragraph at lines 394--394
+\OT1/cmr/m/n/10.95 (ANN/SVM/RF/NB)| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 394--395
+[]\OT1/cmr/m/n/10.95 Preprocessing-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 396--396
+[]\OT1/cmr/m/n/10.95 S&P 500
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 396--396
+[]\OT1/cmr/m/n/10.95 Accuracy,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 396--397
+[]\OT1/cmr/m/n/10.95 Stability across
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 396--397
+\OT1/cmr/m/n/10.95 regimes re-mains
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 398--398
+[]\OT1/cmr/m/n/10.95 Sezer et al.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 398--398
+[]\OT1/cmr/m/n/10.95 Multi-study
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 398--398
+\OT1/cmr/m/n/10.95 re-view
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 398--398
+[]\OT1/cmr/m/n/10.95 Deep-learning
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 398--398
+[]\OT1/cmr/m/n/10.95 Cross-study
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 398--399
+[]\OT1/cmr/m/n/10.95 Strong pro-to-col
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--400
+[]\OT1/cmr/m/n/10.95 Cross-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--400
+[]\OT1/cmr/m/n/10.95 Accuracy-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--400
+\OT1/cmr/m/n/10.95 based mea-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--401
+[]\OT1/cmr/m/n/10.95 Limited risk-
+ []
+
+
+Underfull \hbox (badness 1173) in paragraph at lines 402--402
+[]\OT1/cmr/m/n/10.95 S&P 500 +
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 402--402
+[]\OT1/cmr/m/n/10.95 Event-driven
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 402--402
+[]\OT1/cmr/m/n/10.95 Direction +
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 402--402
+\OT1/cmr/m/n/10.95 sim-u-la-tion
+ []
+
+
+Underfull \hbox (badness 2707) in paragraph at lines 402--403
+[]\OT1/cmr/m/n/10.95 Event ex-trac-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 402--403
+\OT1/cmr/m/n/10.95 and align-ment
+ []
+
+
 
 [5]
 
 [6]
 
 [7]
-Overfull \hbox (14.33246pt too wide) in paragraph at lines 471--473
-[]\OT1/cmr/bx/n/12 Attention Mech-a-nisms and Trans-form-ers: \OT1/cmr/m/n/12 T
-rans-former ar-chi-tec-tures, in-tro-duced through
- []
-
-
 
 [8]
 
 [9]
-Overfull \hbox (3.7328pt too wide) in paragraph at lines 521--522
-\OT1/cmr/m/n/12 Another widely stud-ied di-rec-tion com-bines Con-vo-lu-tional 
-Neu-ral Net-works (CNNs) with LSTMs.
+Overfull \hbox (6.61732pt too wide) in paragraph at lines 565--566
+[]\OT1/cmr/bx/n/12 Model De-vel-op-ment\OT1/cmr/m/n/12 : Im-ple-men-ta-tion of 
+mul-ti-ple pre-dic-tion mod-els (SARIMA, Prophet,
+ []
+
+
+Overfull \hbox (15.42693pt too wide) in paragraph at lines 566--567
+[]\OT1/cmr/bx/n/12 Hybrid En-sem-ble\OT1/cmr/m/n/12 : Com-bi-na-tion of SARIMA 
+for trend cap-ture and XG-Boost for sentiment-
  []
 
 
@@ -1116,476 +1244,6 @@ Neu-ral Net-works (CNNs) with LSTMs.
 [11]
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 612--612
-[]\OT1/cmr/bx/n/10.95 Hybrid
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 612--612
-[]\OT1/cmr/bx/n/10.95 Components
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 612--612
-[]\OT1/cmr/bx/n/10.95 Best Use-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-[]\OT1/cmr/m/n/10.95 ARIMA +
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-[]\OT1/cmr/m/n/10.95 ARIMA (lin-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-\OT1/cmr/m/n/10.95 ear), LSTM
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-[]\OT1/cmr/m/n/10.95 Separates lin-ear
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-\OT1/cmr/m/n/10.95 and non-linear
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-\OT1/cmr/m/n/10.95 be-hav-ior; good
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-\OT1/cmr/m/n/10.95 sta-bil-ity; in-ter-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-\OT1/cmr/m/n/10.95 ing sud-den
- []
-
-
-Underfull \hbox (badness 2856) in paragraph at lines 614--614
-\OT1/cmr/m/n/10.95 mar-ket shifts;
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--614
-\OT1/cmr/m/n/10.95 lim-ited long-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--615
-[]\OT1/cmr/m/n/10.95 Medium-term
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--615
-\OT1/cmr/m/n/10.95 fore-cast-ing;
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--615
-\OT1/cmr/m/n/10.95 mar-kets with
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--615
-\OT1/cmr/m/n/10.95 clear trend
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 614--615
-\OT1/cmr/m/n/10.95 + sea-sonal
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--617
-[]\OT1/cmr/m/n/10.95 CNN (lo-cal
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--617
-\OT1/cmr/m/n/10.95 tion), LSTM
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--617
-\OT1/cmr/m/n/10.95 (se-quen-tial
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--617
-[]\OT1/cmr/m/n/10.95 Captures short-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--617
-\OT1/cmr/m/n/10.95 den-cies; strong
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--617
-[]\OT1/cmr/m/n/10.95 Sensitive to
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--617
-\OT1/cmr/m/n/10.95 noise; heavy
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--617
-\OT1/cmr/m/n/10.95 tun-ing re-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--618
-[]\OT1/cmr/m/n/10.95 High-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--618
-\OT1/cmr/m/n/10.95 frequency
- []
-
-
-Underfull \hbox (badness 3058) in paragraph at lines 620--620
-[]\OT1/cmr/m/n/10.95 CNN (fea-ture
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 620--620
-\OT1/cmr/m/n/10.95 ex-trac-tion),
- []
-
-
-Underfull \hbox (badness 4229) in paragraph at lines 620--620
-\OT1/cmr/m/n/10.95 GRU (sim-pli-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 620--620
-[]\OT1/cmr/m/n/10.95 Faster than
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 620--620
-\OT1/cmr/m/n/10.95 CNN-LSTM,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 620--620
-[]\OT1/cmr/m/n/10.95 Slightly less
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 620--620
-\OT1/cmr/m/n/10.95 ex-pres-sive
- []
-
-
-Underfull \hbox (badness 1910) in paragraph at lines 620--621
-[]\OT1/cmr/m/n/10.95 Fast in-fer-ence
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--623
-[]\OT1/cmr/m/n/10.95 Bi-LSTM +
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--623
-[]\OT1/cmr/m/n/10.95 Bi-LSTM
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--623
-\OT1/cmr/m/n/10.95 (bidi-rec-tional
- []
-
-
-Underfull \hbox (badness 1558) in paragraph at lines 623--623
-\OT1/cmr/m/n/10.95 mem-ory), At-
- []
-
-
-Underfull \hbox (badness 2134) in paragraph at lines 623--623
-\OT1/cmr/m/n/10.95 ten-tion (fo-cus
- []
-
-
-Underfull \hbox (badness 7907) in paragraph at lines 623--623
-\OT1/cmr/m/n/10.95 on im-por-tant
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--623
-\OT1/cmr/m/n/10.95 text; high-lights
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--623
-[]\OT1/cmr/m/n/10.95 Higher train-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--624
-[]\OT1/cmr/m/n/10.95 Medium-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--624
-\OT1/cmr/m/n/10.95 sequence
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--624
-\OT1/cmr/m/n/10.95 fore-cast-ing
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 623--624
-\OT1/cmr/m/n/10.95 with strong
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 626--626
-[]\OT1/cmr/m/n/10.95 LSTM +
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 626--626
-[]\OT1/cmr/m/n/10.95 LSTM (lo-cal
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 626--626
-\OT1/cmr/m/n/10.95 se-quence),
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 626--626
-\OT1/cmr/m/n/10.95 Trans-former
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 626--626
-\OT1/cmr/m/n/10.95 (long-range
- []
-
-
-Underfull \hbox (badness 1194) in paragraph at lines 626--626
-[]\OT1/cmr/m/n/10.95 Balances se-quen-
- []
-
-
-Underfull \hbox (badness 4673) in paragraph at lines 626--626
-\OT1/cmr/m/n/10.95 global at-ten-tion;
- []
-
-
-Overfull \hbox (9.47243pt too wide) in paragraph at lines 626--626
-[]\OT1/cmr/m/n/10.95 Computationally
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 626--627
-[]\OT1/cmr/m/n/10.95 Long-horizon
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 626--627
-\OT1/cmr/m/n/10.95 fore-cast-ing;
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 626--627
-\OT1/cmr/m/n/10.95 mar-kets with
- []
-
-
-Underfull \hbox (badness 6047) in paragraph at lines 626--627
-\OT1/cmr/m/n/10.95 ir-reg-u-lar pat-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
-[]\OT1/cmr/m/n/10.95 CNN (lo-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
-\OT1/cmr/m/n/10.95 cal), LSTM
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
-\OT1/cmr/m/n/10.95 (tem-po-ral),
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
-\OT1/cmr/m/n/10.95 Trans-former
- []
-
-
-Underfull \hbox (badness 3612) in paragraph at lines 629--629
-\OT1/cmr/m/n/10.95 (global at-ten-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
-\OT1/cmr/m/n/10.95 mar-ket scales
- []
-
-
-Underfull \hbox (badness 2042) in paragraph at lines 629--629
-\OT1/cmr/m/n/10.95 (mi-cro, medium,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
-[]\OT1/cmr/m/n/10.95 High com-
- []
-
-
-Underfull \hbox (badness 8038) in paragraph at lines 629--629
-\OT1/cmr/m/n/10.95 plex-ity; may
- []
-
-
-Underfull \hbox (badness 1152) in paragraph at lines 629--630
-[]\OT1/cmr/m/n/10.95 Most mod-ern,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 629--630
-\OT1/cmr/m/n/10.95 most ac-cu-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 629--630
-\OT1/cmr/m/n/10.95 rate general-
- []
-
-
-Overfull \hbox (23.76823pt too wide) in paragraph at lines 632--632
-[]\OT1/cmr/m/n/10.95 LSTM/Transformer
- []
-
-
-Underfull \hbox (badness 7814) in paragraph at lines 632--632
-\OT1/cmr/m/n/10.95 for nu-mer-i-cal
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 632--632
-\OT1/cmr/m/n/10.95 data, Text
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 632--632
-\OT1/cmr/m/n/10.95 en-coder for
- []
-
-
-Underfull \hbox (badness 2521) in paragraph at lines 632--632
-[]\OT1/cmr/m/n/10.95 Uses both tech-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 632--633
-[]\OT1/cmr/m/n/10.95 Event-driven
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 632--633
-\OT1/cmr/m/n/10.95 fore-cast-ing,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 632--633
-\OT1/cmr/m/n/10.95 earn-ings an-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-[]\OT1/cmr/m/n/10.95 Feature-Level
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-[]\OT1/cmr/m/n/10.95 Technical in-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-\OT1/cmr/m/n/10.95 di-ca-tors +
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-\OT1/cmr/m/n/10.95 macro data
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-\OT1/cmr/m/n/10.95 + volatil-ity
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-[]\OT1/cmr/m/n/10.95 Models broader
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-\OT1/cmr/m/n/10.95 mar-ket en-vi-ron-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-\OT1/cmr/m/n/10.95 ment; re-duces
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-\OT1/cmr/m/n/10.95 ful fea-ture
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
-\OT1/cmr/m/n/10.95 en-gi-neer-ing;
- []
-
-
-Underfull \hbox (badness 6252) in paragraph at lines 635--635
-\OT1/cmr/m/n/10.95 prone to re-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--636
-[]\OT1/cmr/m/n/10.95 Multi-factor
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--636
-\OT1/cmr/m/n/10.95 fore-cast-ing;
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 635--636
-\OT1/cmr/m/n/10.95 cross-market
- []
-
-
 
 [13]
 
@@ -1596,9 +1254,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 635--636
 [16]
 
 [17]
-Overfull \hbox (6.46114pt too wide) in paragraph at lines 760--761
-[]\OT1/cmr/bx/n/12 1D-CNN-LSTM vs. 2D-CNN \OT1/cmr/m/n/12 [[]8[]]: Raw sig-nal 
-pro-cess-ing with 1D-CNN-LSTM achieved
+Overfull \hbox (22.05836pt too wide) in paragraph at lines 881--882
+[]\OT1/cmr/bx/n/12 Derive Fea-tures\OT1/cmr/m/n/12 : Us-ing the ag-gre-gated $\
+OML/cmm/m/it/12 S[]$ \OT1/cmr/m/n/12 and the his-tor-i-cal sen-ti-ment val-ues 
+$\OML/cmm/m/it/12 S[]; S[]; S[]$\OT1/cmr/m/n/12 ,
+ []
+
+
+Overfull \hbox (41.73035pt too wide) in paragraph at lines 881--882
+\OT1/cmr/m/n/12 com-pute the full 8-dimensional sen-ti-ment fea-ture vec-tor $\
+OT1/cmr/bx/n/12 S[] \OT1/cmr/m/n/12 = [\OML/cmm/m/it/12 S[]; \OT1/cmr/m/n/12 ^^
+A\OML/cmm/m/it/12 S[]; ^^[[]; N[]; D[]; S[]; S[]; S[]\OT1/cmr/m/n/12 ]$. 
  []
 
 
@@ -1606,101 +1272,10 @@ pro-cess-ing with 1D-CNN-LSTM achieved
 [18]
 
 [19]
-Underfull \hbox (badness 10000) in paragraph at lines 828--828
-[]\OT1/cmr/m/n/10.95 Dual-head pro-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 828--828
-\OT1/cmr/m/n/10.95 posed, not yet
- []
-
-
-Underfull \hbox (badness 1783) in paragraph at lines 830--830
-[]\OT1/cmr/m/n/10.95 Tokenization drift in
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 830--830
-[]\OT1/cmr/m/n/10.95 Domain vo-cab-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 830--830
-\OT1/cmr/m/n/10.95 u-lary ex-ten-sion
- []
-
-
-Underfull \hbox (badness 2781) in paragraph at lines 832--833
-[]\OT1/cmr/m/n/10.95 Overconfident trad-
- []
-
-
-Underfull \hbox (badness 7814) in paragraph at lines 834--834
-[]\OT1/cmr/m/n/10.95 Document-level scor-
- []
-
-
-Underfull \hbox (badness 3713) in paragraph at lines 834--834
-[]\OT1/cmr/m/n/10.95 Aspect ex-trac-tion
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 836--836
-[]\OT1/cmr/m/n/10.95 Naive times-tamp
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 836--837
-[]\OT1/cmr/m/n/10.95 Data leak-age in
- []
-
-
-Underfull \hbox (badness 2653) in paragraph at lines 838--839
-[]\OT1/cmr/m/n/10.95 Inconsistent fea-ture
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 842--842
-[]\OT1/cmr/m/n/10.95 Static train-ing
- []
-
-
-Underfull \hbox (badness 2435) in paragraph at lines 842--843
-[]\OT1/cmr/m/n/10.95 Degraded post-shift
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 844--844
-[]\OT1/cmr/m/n/10.95 Regime-blind sen-ti-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 844--844
-[]\OT1/cmr/m/n/10.95 Fixed sentiment--
- []
-
-
-Underfull \hbox (badness 1824) in paragraph at lines 844--845
-[]\OT1/cmr/m/n/10.95 Misweighted sig-nals
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 846--847
-[]\OT1/cmr/m/n/10.95 Gap be-tween re-
- []
-
-
 
 [20]
 
 [21]
-Overfull \hbox (21.39651pt too wide) in paragraph at lines 875--876
-\OT1/cmr/m/n/12 ear-ity with LSTM's non-linearity, CNN's fea-ture ex-trac-tion 
-with LSTM's se-quence modeling---
- []
-
-
 
 [22]
 
@@ -1709,6 +1284,11 @@ with LSTM's se-quence modeling---
 [24]
 
 [25]
+Overfull \hbox (4.89046pt too wide) in paragraph at lines 1269--1270
+ [][] 
+ []
+
+
 
 [26]
 
@@ -1717,100 +1297,22 @@ with LSTM's se-quence modeling---
 [28]
 
 [29]
-Overfull \hbox (315.79945pt too wide) in paragraph at lines 1117--1118
- [][] 
- []
-
-
-Overfull \hbox (6.61732pt too wide) in paragraph at lines 1129--1130
-[]\OT1/cmr/bx/n/12 Model De-vel-op-ment\OT1/cmr/m/n/12 : Im-ple-men-ta-tion of 
-mul-ti-ple pre-dic-tion mod-els (SARIMA, Prophet,
- []
-
-
-Overfull \hbox (15.42693pt too wide) in paragraph at lines 1130--1131
-[]\OT1/cmr/bx/n/12 Hybrid En-sem-ble\OT1/cmr/m/n/12 : Com-bi-na-tion of SARIMA 
-for trend cap-ture and XG-Boost for sentiment-
- []
-
-
 
 [30]
 
 [31]
 
-[32]
-
-[33]
-
-[34]
-
-[35]
-
-[36]
-
-[37]
-
-[38]
-
-[39]
-Overfull \hbox (22.05836pt too wide) in paragraph at lines 1445--1446
-[]\OT1/cmr/bx/n/12 Derive Fea-tures\OT1/cmr/m/n/12 : Us-ing the ag-gre-gated $\
-OML/cmm/m/it/12 S[]$ \OT1/cmr/m/n/12 and the his-tor-i-cal sen-ti-ment val-ues 
-$\OML/cmm/m/it/12 S[]; S[]; S[]$\OT1/cmr/m/n/12 ,
- []
-
-
-Overfull \hbox (41.73035pt too wide) in paragraph at lines 1445--1446
-\OT1/cmr/m/n/12 com-pute the full 8-dimensional sen-ti-ment fea-ture vec-tor $\
-OT1/cmr/bx/n/12 S[] \OT1/cmr/m/n/12 = [\OML/cmm/m/it/12 S[]; \OT1/cmr/m/n/12 ^^
-A\OML/cmm/m/it/12 S[]; ^^[[]; N[]; D[]; S[]; S[]; S[]\OT1/cmr/m/n/12 ]$. 
- []
-
-
-
-[40]
-
-[41]
-
-[42]
-
-[43]
-
-[44]
-
-[45]
-
-[46]
-Overfull \hbox (23.71696pt too wide) in paragraph at lines 1840--1841
- [][] 
- []
-
-
-
-[47]
-
-[48]
-
-[49]
-
-[50]
-
-[51]
-
-[52]
-
-[53] (./chapter5_results.tex
-<images/results/Stock_Price_Prediction_Data_Visualization_img_0.png, id=1106, 7
-26.3135pt x 395.3169pt>
+[32] (./chapter5_results.tex
+<images/results/Stock_Price_Prediction_Data_Visualization_img_0.png, id=841, 72
+6.3135pt x 395.3169pt>
 File: images/results/Stock_Price_Prediction_Data_Visualization_img_0.png Graphi
 c file (type png)
 <use images/results/Stock_Price_Prediction_Data_Visualization_img_0.png>
 Package pdftex.def Info: images/results/Stock_Price_Prediction_Data_Visualizati
 on_img_0.png  used on input line 26.
 (pdftex.def)             Requested size: 386.95897pt x 210.6208pt.
-<images/results/Stock_Price_Prediction_Data_Visualization_img_3.png, id=1108, 7
-26.3135pt x 395.3169pt>
+<images/results/Stock_Price_Prediction_Data_Visualization_img_3.png, id=843, 72
+6.3135pt x 395.3169pt>
 File: images/results/Stock_Price_Prediction_Data_Visualization_img_3.png Graphi
 c file (type png)
 <use images/results/Stock_Price_Prediction_Data_Visualization_img_3.png>
@@ -1823,7 +1325,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[54
+[33
 
  <./images/results/Stock_Price_Prediction_Data_Visualization_img_0.png>]
 Overfull \hbox (5.98471pt too wide) in paragraph at lines 50--51
@@ -1835,9 +1337,9 @@ cmr/m/n/12 0)[]$ with sea-sonal pe-riod = 5 trad-ing days. Achieved
 
 
 
-[55 <./images/results/Stock_Price_Prediction_Data_Visualization_img_3.png>]
+[34 <./images/results/Stock_Price_Prediction_Data_Visualization_img_3.png>]
 <images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7.png,
- id=1121, 859.2903pt x 426.393pt>
+ id=856, 859.2903pt x 426.393pt>
 File: images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7
 .png Graphic file (type png)
 <use images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7.
@@ -1851,12 +1353,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[56]
+[35]
 
-[57 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
+[36 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
 7.png>]
 <images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9.png,
- id=1137, 1003.8303pt x 426.393pt>
+ id=871, 1003.8303pt x 426.393pt>
 File: images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9
 .png Graphic file (type png)
 <use images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9.
@@ -1865,8 +1367,13 @@ Package pdftex.def Info: images/results/Stock_Price_Prediction_Forecasting(Next
 _Day's_Price)_img_9.png  used on input line 152.
 (pdftex.def)             Requested size: 411.14528pt x 174.64008pt.
 
+Overfull \hbox (27.03482pt too wide) in paragraph at lines 172--183
+ [][] 
+ []
 
-[58 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
+
+
+[37 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
 9.png>]
 Overfull \hbox (78.5246pt too wide) in paragraph at lines 200--201
 []\OT1/cmr/bx/n/12 +Full Sen-ti-ment Fea-tures: \OT1/cmr/m/n/12 Add all eight s
@@ -1877,9 +1384,9 @@ S[]; \OT1/cmr/m/n/12 ^^A\OML/cmm/m/it/12 S[]; ^^[[]; N[]; D[]; S[]; S[]; S[]\OT
 
 
 
-[59]
+[38]
 <images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_10.png
-, id=1156, 1076.1003pt x 1148.3703pt>
+, id=891, 1076.1003pt x 1148.3703pt>
 File: images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_1
 0.png Graphic file (type png)
 <use images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_10
@@ -1893,11 +1400,11 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[60]
+[39]
 
-[61]
+[40]
 
-[62 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
+[41 <./images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_
 10.png>]
 LaTeX Font Info:    Trying to load font information for OML+cmr on input line 3
 40.
@@ -1910,34 +1417,36 @@ LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 340.
 
 
-[63]
+[42]
 
-[64]
+[43]
 
-[65]
+[44]
 
-[66])
+[45])
 
-[67] (./literature_review.bbl)
+[46] (./literature_review.bbl
 
-[68
+[47
 
-] (./literature_review.aux)
+])
+
+[48] (./literature_review.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `literature_review.out' has not changed.
-(rerunfilecheck)             Checksum: 6F816CBF1CB067D3B08237D12165D13C;22731.
+(rerunfilecheck)             Checksum: D7B645ACE8D948AD43E758AEAF594BBC;16357.
  ) 
 Here is how much of TeX's memory you used:
- 25197 strings out of 473190
- 496230 string characters out of 5704335
- 890632 words of memory out of 5000000
- 47646 multiletter control sequences out of 15000+600000
+ 25119 strings out of 473190
+ 495184 string characters out of 5704335
+ 892901 words of memory out of 5000000
+ 47638 multiletter control sequences out of 15000+600000
  573123 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,20n,87p,1623b,842s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,20n,87p,1623b,871s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbx10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmbx12.pfb></opt/homebrew/Cellar/texlive/20250
@@ -1968,10 +1477,10 @@ fonts/type1/public/amsfonts/symbols/msbm10.pfb></opt/homebrew/Cellar/texlive/20
 250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebr
 ew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sftt1
 200.pfb>
-Output written on literature_review.pdf (79 pages, 1151572 bytes).
+Output written on literature_review.pdf (59 pages, 1085524 bytes).
 PDF statistics:
- 1382 PDF objects out of 1440 (max. 8388607)
- 1230 compressed objects within 13 object streams
- 366 named destinations out of 1000 (max. 500000)
- 971 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1104 PDF objects out of 1200 (max. 8388607)
+ 975 compressed objects within 10 object streams
+ 296 named destinations out of 1000 (max. 500000)
+ 739 words of extra memory for PDF output out of 10000 (max. 10000000)
 

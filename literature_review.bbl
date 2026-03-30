@@ -1,30 +1,62 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{supermarket2025}
-A.~Author and B.~Others, ``Machine learning approach to consumer behavior in
-  supermarket analytics,'' {\em Journal of Retailing and Consumer Services},
-  2025.
-\newblock Source: 1-s2.0-S2772662225000566-main.pdf.
+\bibitem{box2015}
+G.~E.~P. Box, G.~M. Jenkins, G.~C. Reinsel, and G.~M. Ljung, {\em Time Series
+  Analysis: Forecasting and Control}.
+\newblock Hoboken, NJ: Wiley, 5th~ed., 2015.
 
-\bibitem{machinefailure2024}
-D.~Yadav {\em et~al.}, ``Predicting machine failures using machine learning and
-  deep learning algorithms,'' {\em Sustainable Manufacturing and Service
-  Economics}, vol.~3, p.~100029, 2024.
-\newblock Source: 1-s2.0-S2667344424000124-main.pdf.
+\bibitem{engle1982}
+R.~F. Engle, ``Autoregressive conditional heteroscedasticity with estimates of
+  the variance of united kingdom inflation,'' {\em Econometrica}, vol.~50,
+  no.~4, pp.~987--1007, 1982.
 
-\bibitem{vader2014}
-C.~J. Hutto and E.~Gilbert, ``Vader: A parsimonious rule-based model for
-  sentiment analysis of social media text,'' in {\em Proceedings of the 8th
-  International AAAI Conference on Weblogs and Social Media (ICWSM)}, 2014.
+\bibitem{bollerslev1986}
+T.~Bollerslev, ``Generalized autoregressive conditional heteroskedasticity,''
+  {\em Journal of Econometrics}, vol.~31, no.~3, pp.~307--327, 1986.
 
-\bibitem{devlin2019}
-J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``Bert: Pre-training of deep
-  bidirectional transformers for language understanding,'' in {\em Proceedings
-  of NAACL-HLT}, pp.~4171--4186, 2019.
+\bibitem{kim2003}
+K.-j. Kim, ``Financial time series forecasting using support vector machines,''
+  {\em Neurocomputing}, vol.~55, no.~1--2, pp.~307--319, 2003.
 
-\bibitem{araci2019}
-D.~Araci, ``Finbert: Financial sentiment analysis with pre-trained language
-  models,'' {\em arXiv preprint arXiv:1908.10063}, 2019.
+\bibitem{patel2015}
+J.~Patel, S.~Shah, P.~Thakkar, and K.~Kotecha, ``Predicting stock and stock
+  price index movement using trend deterministic data preparation and machine
+  learning techniques,'' {\em Expert Systems with Applications}, vol.~42,
+  no.~1, pp.~259--268, 2015.
+
+\bibitem{nti2020review}
+I.~K. Nti, A.~F. Adekoya, and B.~A. Weyori, ``A systematic review of
+  fundamental and technical analysis of stock market predictions,'' {\em
+  Artificial Intelligence Review}, vol.~53, no.~4, pp.~3007--3057, 2020.
+
+\bibitem{hochreiter1997}
+S.~Hochreiter and J.~Schmidhuber, ``Long short-term memory,'' {\em Neural
+  Computation}, vol.~9, no.~8, pp.~1735--1780, 1997.
+
+\bibitem{fischer2018}
+T.~Fischer and C.~Krauss, ``Deep learning with long short-term memory networks
+  for financial market predictions,'' {\em European Journal of Operational
+  Research}, vol.~270, no.~2, pp.~654--669, 2018.
+
+\bibitem{sezer2020}
+O.~B. Sezer, M.~U. Gudelek, and A.~M. Ozbayoglu, ``Financial time series
+  forecasting with deep learning: A systematic literature review: 2005--2019,''
+  {\em Applied Soft Computing}, vol.~90, p.~106181, 2020.
+
+\bibitem{vaswani2017}
+A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez,
+  {\L}.~Kaiser, and I.~Polosukhin, ``Attention is all you need,'' in {\em
+  Advances in Neural Information Processing Systems}, vol.~30, 2017.
+
+\bibitem{ding2015}
+X.~Ding, Y.~Zhang, T.~Liu, and J.~Duan, ``Deep learning for event-driven stock
+  prediction,'' in {\em Proceedings of the Twenty-Fourth International Joint
+  Conference on Artificial Intelligence (IJCAI)}, pp.~2327--2333, 2015.
+
+\bibitem{loughran2011}
+T.~Loughran and B.~McDonald, ``When is a liability not a liability? textual
+  analysis, dictionaries, and 10-{K}s,'' {\em The Journal of Finance}, vol.~66,
+  no.~1, pp.~35--65, 2011.
 
 \bibitem{malo2014}
 P.~Malo, A.~Sinha, P.~Korhonen, J.~Wallenius, and P.~Takala, ``Good debt or bad
@@ -32,15 +64,17 @@ P.~Malo, A.~Sinha, P.~Korhonen, J.~Wallenius, and P.~Takala, ``Good debt or bad
   the American Society for Information Science and Technology}, vol.~65, no.~4,
   pp.~782--796, 2014.
 
-\bibitem{liu2019}
-Y.~Liu, M.~Ott, N.~Goyal, J.~Du, M.~Joshi, D.~Chen, O.~Levy, M.~Lewis,
-  L.~Zettlemoyer, and V.~Stoyanov, ``Roberta: A robustly optimized bert
-  pretraining approach,'' {\em arXiv preprint arXiv:1907.11692}, 2019.
+\bibitem{bollen2011}
+J.~Bollen, H.~Mao, and X.~Zeng, ``Twitter mood predicts the stock market,''
+  {\em Journal of Computational Science}, vol.~2, no.~1, pp.~1--8, 2011.
 
-\bibitem{eda2023}
-J.~Llanes-Jurado {\em et~al.}, ``Automatic artifact recognition and correction
-  for electrodermal activity based on lstm-cnn models,'' {\em Expert Systems
-  With Applications}, vol.~230, p.~120581, 2023.
-\newblock Source: 1-s2.0-S0957417423010837-main.pdf.
+\bibitem{araci2019}
+D.~Araci, ``Finbert: Financial sentiment analysis with pre-trained language
+  models,'' {\em arXiv preprint arXiv:1908.10063}, 2019.
+
+\bibitem{devlin2019}
+J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``Bert: Pre-training of deep
+  bidirectional transformers for language understanding,'' in {\em Proceedings
+  of NAACL-HLT}, pp.~4171--4186, 2019.
 
 \end{thebibliography}
