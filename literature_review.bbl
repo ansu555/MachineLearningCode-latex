@@ -7,8 +7,7 @@
 \providecommand{\BIBentrySTDinterwordspacing}{\spaceskip=0pt\relax}
 \providecommand{\BIBentryALTinterwordstretchfactor}{4}
 \providecommand{\BIBentryALTinterwordspacing}{\spaceskip=\fontdimen2\font plus
-\BIBentryALTinterwordstretchfactor\fontdimen3\font minus
-  \fontdimen4\font\relax}
+\BIBentryALTinterwordstretchfactor\fontdimen3\font minus \fontdimen4\font\relax}
 \providecommand{\BIBforeignlanguage}[2]{{%
 \expandafter\ifx\csname l@#1\endcsname\relax
 \typeout{** WARNING: IEEEtran.bst: No hyphenation pattern has been}%
@@ -23,128 +22,82 @@
 
 \bibitem{box2015}
 \BIBentryALTinterwordspacing
-G.~E.~P. Box, G.~M. Jenkins, G.~C. Reinsel, and G.~M. Ljung, \emph{Time Series
-  Analysis: Forecasting and Control}, 5th~ed.\hskip 1em plus 0.5em minus
-  0.4em\relax Hoboken, NJ: Wiley, 2015. [Online]. Available:
-  \url{https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021}
+G.~E.~P. Box, G.~M. Jenkins, G.~C. Reinsel, and G.~M. Ljung, \emph{Time Series Analysis: Forecasting and Control}, 5th~ed.\hskip 1em plus 0.5em minus 0.4em\relax Hoboken, NJ: Wiley, 2015. [Online]. Available: \url{https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021}
 \BIBentrySTDinterwordspacing
 
 \bibitem{engle1982}
 \BIBentryALTinterwordspacing
-R.~F. Engle, ``Autoregressive conditional heteroscedasticity with estimates of
-  the variance of united kingdom inflation,'' \emph{Econometrica}, vol.~50,
-  no.~4, pp. 987--1007, 1982. [Online]. Available:
-  \url{https://doi.org/10.2307/1912773}
+R.~F. Engle, ``Autoregressive conditional heteroscedasticity with estimates of the variance of united kingdom inflation,'' \emph{Econometrica}, vol.~50, no.~4, pp. 987--1007, 1982. [Online]. Available: \url{https://doi.org/10.2307/1912773}
 \BIBentrySTDinterwordspacing
 
 \bibitem{bollerslev1986}
 \BIBentryALTinterwordspacing
-T.~Bollerslev, ``Generalized autoregressive conditional heteroskedasticity,''
-  \emph{Journal of Econometrics}, vol.~31, no.~3, pp. 307--327, 1986. [Online].
-  Available: \url{https://doi.org/10.1016/0304-4076(86)90063-1}
+T.~Bollerslev, ``Generalized autoregressive conditional heteroskedasticity,'' \emph{Journal of Econometrics}, vol.~31, no.~3, pp. 307--327, 1986. [Online]. Available: \url{https://doi.org/10.1016/0304-4076(86)90063-1}
 \BIBentrySTDinterwordspacing
 
 \bibitem{kim2003}
 \BIBentryALTinterwordspacing
-K.-j. Kim, ``Financial time series forecasting using support vector machines,''
-  \emph{Neurocomputing}, vol.~55, no. 1--2, pp. 307--319, 2003. [Online].
-  Available: \url{https://doi.org/10.1016/S0925-2312(03)00372-2}
+K.-j. Kim, ``Financial time series forecasting using support vector machines,'' \emph{Neurocomputing}, vol.~55, no. 1--2, pp. 307--319, 2003. [Online]. Available: \url{https://doi.org/10.1016/S0925-2312(03)00372-2}
 \BIBentrySTDinterwordspacing
 
 \bibitem{patel2015}
 \BIBentryALTinterwordspacing
-J.~Patel, S.~Shah, P.~Thakkar, and K.~Kotecha, ``Predicting stock and stock
-  price index movement using trend deterministic data preparation and machine
-  learning techniques,'' \emph{Expert Systems with Applications}, vol.~42,
-  no.~1, pp. 259--268, 2015. [Online]. Available:
-  \url{https://doi.org/10.1016/j.eswa.2014.07.040}
+J.~Patel, S.~Shah, P.~Thakkar, and K.~Kotecha, ``Predicting stock and stock price index movement using trend deterministic data preparation and machine learning techniques,'' \emph{Expert Systems with Applications}, vol.~42, no.~1, pp. 259--268, 2015. [Online]. Available: \url{https://doi.org/10.1016/j.eswa.2014.07.040}
 \BIBentrySTDinterwordspacing
 
 \bibitem{nti2020review}
 \BIBentryALTinterwordspacing
-I.~K. Nti, A.~F. Adekoya, and B.~A. Weyori, ``A systematic review of
-  fundamental and technical analysis of stock market predictions,''
-  \emph{Artificial Intelligence Review}, vol.~53, no.~4, pp. 3007--3057, 2020.
-  [Online]. Available: \url{https://doi.org/10.1007/s10462-019-09754-z}
+I.~K. Nti, A.~F. Adekoya, and B.~A. Weyori, ``A systematic review of fundamental and technical analysis of stock market predictions,'' \emph{Artificial Intelligence Review}, vol.~53, no.~4, pp. 3007--3057, 2020. [Online]. Available: \url{https://doi.org/10.1007/s10462-019-09754-z}
 \BIBentrySTDinterwordspacing
 
 \bibitem{hochreiter1997}
 \BIBentryALTinterwordspacing
-S.~Hochreiter and J.~Schmidhuber, ``Long short-term memory,'' \emph{Neural
-  Computation}, vol.~9, no.~8, pp. 1735--1780, 1997. [Online]. Available:
-  \url{https://doi.org/10.1162/neco.1997.9.8.1735}
+S.~Hochreiter and J.~Schmidhuber, ``Long short-term memory,'' \emph{Neural Computation}, vol.~9, no.~8, pp. 1735--1780, 1997. [Online]. Available: \url{https://doi.org/10.1162/neco.1997.9.8.1735}
 \BIBentrySTDinterwordspacing
 
 \bibitem{fischer2018}
 \BIBentryALTinterwordspacing
-T.~Fischer and C.~Krauss, ``Deep learning with long short-term memory networks
-  for financial market predictions,'' \emph{European Journal of Operational
-  Research}, vol. 270, no.~2, pp. 654--669, 2018. [Online]. Available:
-  \url{https://doi.org/10.1016/j.ejor.2017.11.054}
+T.~Fischer and C.~Krauss, ``Deep learning with long short-term memory networks for financial market predictions,'' \emph{European Journal of Operational Research}, vol. 270, no.~2, pp. 654--669, 2018. [Online]. Available: \url{https://doi.org/10.1016/j.ejor.2017.11.054}
 \BIBentrySTDinterwordspacing
 
 \bibitem{sezer2020}
 \BIBentryALTinterwordspacing
-O.~B. Sezer, M.~U. Gudelek, and A.~M. Ozbayoglu, ``Financial time series
-  forecasting with deep learning: A systematic literature review: 2005--2019,''
-  \emph{Applied Soft Computing}, vol.~90, p. 106181, 2020. [Online]. Available:
-  \url{https://doi.org/10.1016/j.asoc.2020.106181}
+O.~B. Sezer, M.~U. Gudelek, and A.~M. Ozbayoglu, ``Financial time series forecasting with deep learning: A systematic literature review: 2005--2019,'' \emph{Applied Soft Computing}, vol.~90, p. 106181, 2020. [Online]. Available: \url{https://doi.org/10.1016/j.asoc.2020.106181}
 \BIBentrySTDinterwordspacing
 
 \bibitem{vaswani2017}
 \BIBentryALTinterwordspacing
-A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez,
-  {\L}.~Kaiser, and I.~Polosukhin, ``Attention is all you need,'' in
-  \emph{Advances in Neural Information Processing Systems}, vol.~30, 2017.
-  [Online]. Available: \url{https://arxiv.org/abs/1706.03762}
+A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez, {\L}.~Kaiser, and I.~Polosukhin, ``Attention is all you need,'' in \emph{Advances in Neural Information Processing Systems}, vol.~30, 2017. [Online]. Available: \url{https://arxiv.org/abs/1706.03762}
 \BIBentrySTDinterwordspacing
 
 \bibitem{ding2015}
 \BIBentryALTinterwordspacing
-X.~Ding, Y.~Zhang, T.~Liu, and J.~Duan, ``Deep learning for event-driven stock
-  prediction,'' in \emph{Proceedings of the Twenty-Fourth International Joint
-  Conference on Artificial Intelligence (IJCAI)}, 2015, pp. 2327--2333.
-  [Online]. Available:
-  \url{https://www.ijcai.org/Proceedings/15/Papers/329.pdf}
+X.~Ding, Y.~Zhang, T.~Liu, and J.~Duan, ``Deep learning for event-driven stock prediction,'' in \emph{Proceedings of the Twenty-Fourth International Joint Conference on Artificial Intelligence (IJCAI)}, 2015, pp. 2327--2333. [Online]. Available: \url{https://www.ijcai.org/Proceedings/15/Papers/329.pdf}
 \BIBentrySTDinterwordspacing
 
 \bibitem{loughran2011}
 \BIBentryALTinterwordspacing
-T.~Loughran and B.~McDonald, ``When is a liability not a liability? textual
-  analysis, dictionaries, and 10-{K}s,'' \emph{The Journal of Finance},
-  vol.~66, no.~1, pp. 35--65, 2011. [Online]. Available:
-  \url{https://doi.org/10.1111/j.1540-6261.2010.01625.x}
+T.~Loughran and B.~McDonald, ``When is a liability not a liability? textual analysis, dictionaries, and 10-{K}s,'' \emph{The Journal of Finance}, vol.~66, no.~1, pp. 35--65, 2011. [Online]. Available: \url{https://doi.org/10.1111/j.1540-6261.2010.01625.x}
 \BIBentrySTDinterwordspacing
 
 \bibitem{malo2014}
 \BIBentryALTinterwordspacing
-P.~Malo, A.~Sinha, P.~Korhonen, J.~Wallenius, and P.~Takala, ``Good debt or bad
-  debt: Detecting semantic orientations in economic texts,'' \emph{Journal of
-  the American Society for Information Science and Technology}, vol.~65, no.~4,
-  pp. 782--796, 2014. [Online]. Available:
-  \url{https://doi.org/10.1002/asi.23062}
+P.~Malo, A.~Sinha, P.~Korhonen, J.~Wallenius, and P.~Takala, ``Good debt or bad debt: Detecting semantic orientations in economic texts,'' \emph{Journal of the American Society for Information Science and Technology}, vol.~65, no.~4, pp. 782--796, 2014. [Online]. Available: \url{https://doi.org/10.1002/asi.23062}
 \BIBentrySTDinterwordspacing
 
 \bibitem{bollen2011}
 \BIBentryALTinterwordspacing
-J.~Bollen, H.~Mao, and X.~Zeng, ``Twitter mood predicts the stock market,''
-  \emph{Journal of Computational Science}, vol.~2, no.~1, pp. 1--8, 2011.
-  [Online]. Available: \url{https://doi.org/10.1016/j.jocs.2010.12.007}
+J.~Bollen, H.~Mao, and X.~Zeng, ``Twitter mood predicts the stock market,'' \emph{Journal of Computational Science}, vol.~2, no.~1, pp. 1--8, 2011. [Online]. Available: \url{https://doi.org/10.1016/j.jocs.2010.12.007}
 \BIBentrySTDinterwordspacing
 
 \bibitem{araci2019}
 \BIBentryALTinterwordspacing
-D.~Araci, ``Finbert: Financial sentiment analysis with pre-trained language
-  models,'' \emph{arXiv preprint arXiv:1908.10063}, 2019. [Online]. Available:
-  \url{https://arxiv.org/abs/1908.10063}
+D.~Araci, ``Finbert: Financial sentiment analysis with pre-trained language models,'' \emph{arXiv preprint arXiv:1908.10063}, 2019. [Online]. Available: \url{https://arxiv.org/abs/1908.10063}
 \BIBentrySTDinterwordspacing
 
 \bibitem{devlin2019}
 \BIBentryALTinterwordspacing
-J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``Bert: Pre-training of deep
-  bidirectional transformers for language understanding,'' in \emph{Proceedings
-  of NAACL-HLT}, 2019, pp. 4171--4186. [Online]. Available:
-  \url{https://doi.org/10.18653/v1/N19-1423}
+J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``Bert: Pre-training of deep bidirectional transformers for language understanding,'' in \emph{Proceedings of NAACL-HLT}, 2019, pp. 4171--4186. [Online]. Available: \url{https://doi.org/10.18653/v1/N19-1423}
 \BIBentrySTDinterwordspacing
 
 \end{thebibliography}

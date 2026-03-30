@@ -1,0 +1,37 @@
+\section{Introduction}
+
+\subsection{Context of the Study}
+The stock market is a core component of modern financial systems and a major channel for capital allocation. Predicting stock prices is difficult because market behavior is non-linear, noisy, and regime-dependent. Price dynamics usually reflect many interacting factors, including company performance, macroeconomic conditions, major events, liquidity, and investor behavior.
+
+Traditional statistical models are easy to interpret and have strong theoretical foundations, but they often struggle when markets change quickly or when patterns become highly non-linear. Machine learning and deep learning models improved pattern discovery, but many price-only systems still miss important external signals.
+
+Even advanced price-based models---whether statistical, machine learning, or deep learning---share a basic limitation: they rely only on historical OHLCV data and technical indicators. They cannot react immediately to sudden information shocks, such as earnings surprises, leadership changes, or policy announcements, until that information is already reflected in prices. In practice, markets are driven by information flow, including news, earnings reports, analyst commentary, and public sentiment. A model that can extract and quantify sentiment from financial news can therefore gain useful signal that price-only models do not capture directly.
+
+Integrating sentiment analysis into financial forecasting is not straightforward. Financial text contains domain-specific jargon, hedged expressions, and sarcasm that general-purpose sentiment models often misread. News timestamps do not always align cleanly with trading-day boundaries, creating temporal mismatch. Many pipelines produce point estimates without uncertainty, and models trained on general text can suffer tokenization drift in finance-specific language. This work is motivated by these combined challenges: building sentiment-aware trading models and making sentiment analysis robust, domain-aware, and time-consistent.
+
+\subsection{Objectives}
+This literature review aims to:
+\begin{itemize}
+    \item Study the evolution of stock prediction techniques from traditional statistical approaches to modern hybrid deep learning models.
+    \item Compare statistical, machine learning, deep learning, and hybrid systems using stock-domain evidence.
+    \item Identify research gaps, especially in sentiment integration, temporal alignment, and robust out-of-sample evaluation.
+    \item Define a clear methodological basis for a hybrid SARIMA-XGBoost framework.
+    \item Position a sentiment-augmented extension as a research direction for improving directional forecasting.
+\end{itemize}
+
+\subsection{Scope and Organization}
+This report is organized into five chapters. Chapter~2 presents a critical stock-domain literature review. Chapter~3 defines the precise research gap and study objectives. Chapter~4 details the end-to-end methodology, including sentiment feature construction and model design. Chapter~5 reports implemented results for the baseline system and clearly separates proposed sentiment-extension evaluation from completed experiments.
+
+\subsection{Contributions}
+
+The contributions of this work are summarized as follows:
+
+\begin{enumerate}
+    \item \textbf{Stock-Focused Literature Review.} The literature review is organized around stock-market evidence, with detailed comparison by model family, evaluation protocol, and deployment limitations.
+    \item \textbf{Hybrid Forecasting Approach.} The method uses a residual-learning hybrid pipeline that models trends with SARIMA and captures non-linear patterns with XGBoost.
+    \item \textbf{Sentiment Integration Blueprint.} A structured plan is provided for sentiment augmentation through domain-adapted scoring, sarcasm handling, and leakage-safe temporal assignment.
+    \item \textbf{Reproducible Evaluation Design.} The report specifies temporal splits, walk-forward principles, and both error-based and trading-relevant metrics for fair comparison.
+\end{enumerate}
+
+\newpage
+

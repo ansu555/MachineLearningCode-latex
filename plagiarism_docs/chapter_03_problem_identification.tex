@@ -1,0 +1,42 @@
+\section{Problem Identification}
+
+\subsection{Problem Statement}
+Despite substantial progress in stock forecasting, reliable next-day prediction remains difficult because financial markets are non-stationary, noisy, and highly sensitive to exogenous information shocks. Price-only pipelines can model historical structure, but they remain reactive to new information and therefore lag event-driven moves.
+
+\subsection{Research Gap to be Solved}
+From Chapter~2, the core unresolved gap is not the absence of powerful models, but the absence of a consistent, leakage-safe integration strategy for combining:
+\begin{itemize}
+    \item linear and seasonal price structure,
+    \item non-linear residual behavior,
+    \item and temporally aligned sentiment signals.
+\end{itemize}
+Existing work often addresses one or two of these elements, but rarely all three in a reproducible, deployment-oriented pipeline.
+
+\subsection{Why Existing Methods Are Insufficient}
+Current single-model systems underperform during regime shifts or event-heavy periods. Many hybrid systems improve accuracy but still rely on weak sentiment alignment, static weighting, and limited uncertainty reporting. As a result, published gains may not transfer reliably to realistic out-of-sample trading workflows.
+
+\subsection{Research Objectives and Hypotheses}
+\textbf{Objectives:}
+\begin{enumerate}
+    \item Build a hybrid forecasting workflow that separates linear trend/seasonal structure from non-linear residual learning.
+    \item Integrate domain-adapted sentiment features into residual learning using leakage-safe temporal assignment.
+    \item Evaluate whether sentiment features improve directional and error-based performance relative to a price-only baseline.
+\end{enumerate}
+
+\textbf{Hypotheses:}
+\begin{itemize}
+    \item H1: Residual-based hybrid modeling outperforms standalone statistical and standalone ML baselines.
+    \item H2: Sentiment-augmented residual features improve directional performance over the price-only hybrid baseline.
+    \item H3: Leakage-safe temporal alignment of news to trading days yields more reliable out-of-sample behavior than naive same-date matching.
+\end{itemize}
+
+\subsection{Expected Challenges}
+\begin{itemize}
+    \item \textbf{Data alignment}: matching asynchronous news events to tradable time windows without look-ahead leakage.
+    \item \textbf{Regime sensitivity}: maintaining stability when sentiment-price coupling changes across market conditions.
+    \item \textbf{Feature reliability}: controlling multicollinearity and preserving interpretability in expanded feature spaces.
+    \item \textbf{Evaluation realism}: prioritizing walk-forward, out-of-sample validation over single split optimism.
+\end{itemize}
+
+\newpage
+

@@ -1,13 +1,14 @@
 # Fdb version 4
-["bibtex literature_review"] 1774853858.46192 "literature_review.aux" "literature_review.bbl" "literature_review" 1774853864.95317 0
+["bibtex literature_review"] 1774859677.46336 "literature_review.aux" "literature_review.bbl" "literature_review" 1774859936.22544 0
   "./references.bib" 1774853853.60146 9470 1cbf93afe0c39f1cb2dfe57c94beac4e ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1741388039 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "literature_review.aux" 1774853864.05641 16711 7f1413f99865ab4794706310dac8c363 "pdflatex"
+  "literature_review.aux" 1774859935.84043 16711 7f1413f99865ab4794706310dac8c363 "pdflatex"
   (generated)
   "literature_review.bbl"
   "literature_review.blg"
   (rewritten before read)
-["pdflatex"] 1774853858.61594 "literature_review.tex" "literature_review.pdf" "literature_review" 1774853864.95382 0
+["pdflatex"] 1774859932.92157 "/Users/engineering_faliure/Desktop/Projects/MachineLearningCode-latex/literature_review.tex" "literature_review.pdf" "literature_review" 1774859936.22569 0
+  "/Users/engineering_faliure/Desktop/Projects/MachineLearningCode-latex/literature_review.tex" 1774859934.71766 85364 eafa10c6f151d78db3a16d06032c11c1 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1741388039 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/fontname/texfonts.map" 1741388039 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map" 1741388039 5466553 2748998d7db8078826afa1f272036265 ""
@@ -219,13 +220,13 @@
   "images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_10.png" 1774782671.66592 382258 d9a4657bf8c8d1087e12938b36a9a4d5 ""
   "images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_7.png" 1774782671.67032 133302 028e7364b33a2fca6152e9e5a6d5ca7c ""
   "images/results/Stock_Price_Prediction_Forecasting(Next_Day's_Price)_img_9.png" 1774782671.67199 189999 6a8cc59cfcc831f2df873b76929af89c ""
-  "literature_review.aux" 1774853864.05641 16711 7f1413f99865ab4794706310dac8c363 "pdflatex"
-  "literature_review.bbl" 1774853858.60145 6411 45648d11b9d8cde62419a523aedcaf3f "bibtex literature_review"
-  "literature_review.lof" 1774853864.06303 1092 286a1ef7ece555fed83843ce69076e08 "pdflatex"
-  "literature_review.lot" 1774853864.06312 385 3ba15a40c12550915f85eadccccc35ed "pdflatex"
-  "literature_review.out" 1774853864.06165 16357 d7b645ace8d948ad43e758aeaf594bbc "pdflatex"
-  "literature_review.tex" 1774853766.382 85554 5e45c24d4a26ce68003d66724f950796 ""
-  "literature_review.toc" 1774853864.06246 8323 94a863cea972521c0696e5d03f051311 "pdflatex"
+  "literature_review.aux" 1774859935.84043 16711 7f1413f99865ab4794706310dac8c363 "pdflatex"
+  "literature_review.bbl" 1774859677.5634 6317 6927b21c1db204b00093884861daa64d "bibtex literature_review"
+  "literature_review.lof" 1774859935.84665 1092 286a1ef7ece555fed83843ce69076e08 "pdflatex"
+  "literature_review.lot" 1774859935.84681 385 3ba15a40c12550915f85eadccccc35ed "pdflatex"
+  "literature_review.out" 1774859935.84619 16357 d7b645ace8d948ad43e758aeaf594bbc "pdflatex"
+  "literature_review.tex" 1774859934.71766 85364 eafa10c6f151d78db3a16d06032c11c1 ""
+  "literature_review.toc" 1774859935.84657 8323 94a863cea972521c0696e5d03f051311 "pdflatex"
   "pdfs/extract_text copy.png" 1774782671.68414 29536 759c9a2e14deb491320aaff5c6c4babf ""
   (generated)
   "literature_review.aux"

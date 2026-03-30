@@ -1,0 +1,1087 @@
+Methodology
+
+This chapter details the implemented forecasting pipeline, from data collection and preprocessing to feature engineering, model development, and evaluation.
+
+System Architecture Overview
+
+The stock prediction system uses a layered architecture that combines statistical and machine-learning components to model both linear and non-linear behavior in prices. Figure fig:system_architecture shows the complete data flow from raw market/news inputs to preprocessing, feature engineering, model training, and prediction output.
+
+figure[htbp]
+        0.98!
+    tikzpicture[
+        node distance=2cm,
+        auto,
+        block/.style=rectangle, draw, fill=white, text width=10em, text centered, rounded corners, minimum height=2.8em, line width=0.8pt,
+        datablock/.style=rectangle, draw, fill=white, text width=7em, text centered, minimum height=2.5em, line width=0.8pt,
+        modelblock/.style=rectangle, draw, fill=white, text width=6.5em, text centered, minimum height=2.5em, line width=0.8pt,
+        cloud/.style=draw, ellipse, fill=white, text width=8em, text centered, minimum height=2.5em, line width=0.8pt,
+        line/.style=draw, -latex', line width=0.8pt,
+        annotation/.style=text width=9em, scale=0.75, align=left
+    ]
+    
+    
+    [cloud] (csv) Equity Price Data
+(Current Study: AAPL);
+    [cloud, right=7cm of csv] (news) Financial News
+Data;
+    
+    
+    [block, below=1.5cm of csv] (load) Data Loading  Filtering;
+    [annotation, left=0.3cm of load] Select target ticker
+(AAPL for experiments);
+    
+    [block, below=1.5cm of load] (clean) Data Cleaning;
+    [annotation, left=0.3cm of clean] Missing values
+Outlier detection
+Normalization;
+    
+    
+    [block, below=1.5cm of news] (sentpipe) Sentiment Analysis
+Pipeline;
+    [annotation, right=0.3cm of sentpipe] FinBERT scoring
+Sarcasm correction
+Temporal alignment;
+    
+    
+    [block, below=1.5cm of clean] (features) Feature Engineering;
+    [annotation, left=0.3cm of features] Technical indicators
+Lag features (1,2,3)
+Temporal + sentiment features;
+    
+    
+    [modelblock, below=2cm of features, xshift=-9cm] (sarima) SARIMA
+Model;
+    [modelblock, right=0.8cm of sarima] (prophet) Prophet
+Model;
+    [modelblock, right=0.8cm of prophet] (xgb) XGBoost
+Model;
+    [modelblock, right=0.8cm of xgb] (bilstm) BiLSTM+
+Attention;
+    
+    
+    [block, below=2cm of xgb] (hybrid) Hybrid Ensemble
+(SARIMA + XGBoost
++ Sentiment);
+    
+    
+    [cloud, below=1.5cm of hybrid] (output) Stock Price
+Predictions;
+    
+    
+    [line] (csv) - (load);
+    [line] (news) - (sentpipe);
+    [line] (load) - (clean);
+    [line] (clean) - (features);
+    [line] (sentpipe) - (features);
+    
+    
+    [line] (features) - ++(0,-1.2) - (sarima);
+    [line] (features) - ++(0,-1.2) - (prophet);
+    [line] (features) - ++(0,-1.2) - (xgb);
+    [line] (features) - ++(0,-1.2) - (bilstm);
+    
+    
+    [line] (sarima) - (hybrid);
+    [line] (xgb) - (hybrid);
+    
+    
+    [line] (prophet) - () - ();
+    [line] (bilstm) - () - ();
+    
+    
+    [line] (hybrid) - (output);
+    
+    tikzpicture
+    
+    Complete System Architecture for Sentiment-Augmented Hybrid Stock Prediction
+    fig:system_architecture
+figure
+
+The architecture consists of seven primary components:
+
+enumerate
+    Data Source: Historical equity price data from Yahoo Finance and financial news from multiple sources (current experiments use AAPL)
+    Data Collection  Preprocessing: Data cleaning, missing value handling, and train-test splitting
+    Feature Engineering: Creation of technical indicators, temporal features, and lag variables
+    Sentiment Analysis Pipeline: Domain-adapted FinBERT sentiment scoring with dual-head sarcasm correction, temporal alignment, and confidence-weighted aggregation
+    Model Development: Implementation of multiple prediction models (SARIMA, Prophet, XGBoost, BiLSTM+Attention)
+    Hybrid Ensemble: Combination of SARIMA for trend capture and XGBoost for sentiment-augmented residual learning
+    Prediction Output: Price forecasts with model comparison and evaluation metrics
+enumerate
+
+Such a multi-model strategy enables us to use the advantages of each methodology and counterbalance the weakness of the other. The integration of a dedicated sentiment analysis pipeline provides the system with information about exogenous market-moving events that price-only features cannot capture.
+
+Data Collection and Preprocessing
+
+Data Source and Characteristics
+
+We use the yfinance Python library to retrieve historical market data. The framework supports multi-stock experiments (e.g., SP 500 constituents), but the implemented experiments in this report are single-stock (AAPL). We collect:
+
+itemize
+    OHLCV Data: Open, High, Low, Close prices, and trading Volume
+    Temporal Range: Multi-year historical data to capture various market conditions
+    Frequency: Daily stock prices with timestamps
+itemize
+
+The raw data has the following major attributes:
+itemize
+    Date: Trading date (index)
+    Open: Opening price for the trading day
+    High: Highest price during the trading day
+    Low: Lowest price during the trading day
+    Close: Closing price (primary target variable)
+    Volume: Number of shares traded
+    Adj Close: Adjusted closing price accounting for corporate actions
+itemize
+
+Data Cleaning
+
+The preprocessing pipeline contains three key choices with explicit rationale:
+
+Missing Value Handling:
+Missing values may arise from market holidays, suspensions, or source-side gaps. We use:
+itemize
+    Forward Fill: for isolated gaps where carrying the previous level is a reasonable local approximation.
+    Interpolation: for short multi-day gaps to avoid discontinuities in derived indicators.
+    Removal: for series with missingness 5%, where imputation risk outweighs retention benefit.
+itemize
+
+Outlier Detection and Treatment:
+Radical price changes may cause model training to be inaccurate. We implement:
+equation
+Outlier = x_t -  > 3equation
+where  represents the rolling mean and  represents the rolling standard deviation over a 20-day window.
+
+Normalization:
+For feature-space consistency across indicators with different scales, we apply Min-Max scaling:
+equation
+x_scaled = x - x_x_ - x_
+equation
+
+News Data Collection
+
+Financial news articles are collected from publicly available sources to serve as input for the sentiment analysis pipeline. Sources include Yahoo Finance News, Reuters financial RSS feeds, and the Financial Modeling Prep news API. For each article, we collect the following data fields:
+
+itemize
+    Headline: Title of the article
+    Body: Full article text where available; headline-only for paywalled sources
+    Publication Timestamp: Exact datetime of publication in UTC
+    Source: Publisher identifier (e.g., Reuters, Bloomberg, Yahoo Finance)
+    Ticker Mention: Binary indicator of whether the article explicitly mentions the target stock ticker (e.g., AAPL)
+itemize
+
+The news corpus spans the same temporal range as the price data (2010-2025). Article volume varies considerably over time: high-profile earnings announcements or market-moving events may generate dozens of articles per day, while quiet trading periods may produce none. This variation is explicitly captured through normalized news volume features in the sentiment pipeline. Articles are stored with their original UTC timestamps to enable the principled temporal alignment procedure described in Section sec:sentiment_pipeline.
+
+Train-Test Split
+
+We use a temporal split strategy in order to preserve the sequence of time-series information:
+itemize
+    Training Set: First 80% of the chronological data
+    Testing Set: Final 20% for out-of-sample evaluation
+    Validation: Time-series cross-validation with expanding window
+itemize
+
+This will eliminate data leakage and allow realistic evaluation which is a realistic representation of actual trading situations where the future data is unknown.
+
+Feature Engineering
+
+The so-called feature engineering is where the domain knowledge is coded to the model. The features we implement generate three classes of features that profiled various facets of marketing behavior.
+
+Technical Indicators
+
+Technical analysis indicators are used to measure momentum, trend, volatility and volume. Some of the indicators that we apply are as follows with the help of the Python library of technical analysis:
+
+1. Moving Average Convergence Divergence (MACD):
+align
+MACD &= EMA_12(Close) - EMA_26(Close) 
+
+Signal Line &= EMA_9(MACD) 
+
+MACD Histogram &= MACD - Signal Line
+align
+
+MACD shows the direction of the trend and momentum through comparisons of the short-term average and the long-term average which are exponential moving averages.
+
+2. Relative Strength Index (RSI):
+equation
+RSI = 100 - 1001 + Avg Gain_14Avg Loss_14
+equation
+
+RSI is a momentum scale ranging between 0 and 100, where scores of above 70 signal overbought markets and those of below 30 signal oversold markets.
+
+3. Bollinger Bands:
+align
+Middle Band &= SMA_20(Close) 
+
+Upper Band &= Middle Band + 2 _20 
+
+Lower Band &= Middle Band - 2 _20
+align
+
+Bollinger Bands are used to gauge the price volatility based on the 20 days moving average.
+
+4. Simple Moving Averages (SMA):
+equation
+SMA_n = 1n _i=0^n-1 Close_t-i
+equation
+
+We calculate SMAs for multiple windows () to capture different trend timescales.
+
+5. Exponential Moving Average (EMA):
+align
+EMA_t &= Close_t + (1-) EMA_t-1 
+
+where  &= 2n+1
+align
+
+EMA also places more emphasis on the current prices; hence it is more sensitive to new information than SMA.
+
+Additional Technical Indicators:
+itemize
+    Stochastic Oscillator: Measures momentum by comparing closing price to price range
+    Average True Range (ATR): Quantifies volatility
+    On-Balance Volume (OBV): Cumulative volume indicator for price trend confirmation
+    Commodity Channel Index (CCI): Identifies cyclical trends
+itemize
+
+Temporal Features
+
+There are high calendar effects in market behavior. We derive time characteristics to reflect such patterns:
+
+itemize
+    Day of Week: One-hot encoded (Monday=0, ..., Friday=4)
+    Month: One-hot encoded (January=1, ..., December=12)
+    Quarter: Business quarters (Q1, Q2, Q3, Q4)
+    Is Month End: Binary indicator for month-end trading effects
+    Is Quarter End: Binary indicator for quarter-end rebalancing
+itemize
+
+These features enable models to learn the "January effect," "weekend effect," and other calendar-based anomalies documented in financial literature.
+
+Lag Features
+
+Time-series prediction depends on short- and medium-memory effects. Lag features are defined on the closing price:
+
+equation
+Lag_k = Close_t-k for  k 1, 2, 3, 5, 10
+equation
+
+These lag choices balance short-horizon reaction effects (1-3 days) and slightly longer carryover structure (5, 10 days), while keeping dimensionality manageable for tree-based learners.
+
+Feature Selection and Dimensionality
+
+Once we have feature engineered, we have about 25-30 price-derived features in our data. With the addition of 8 sentiment features (described in Section sec:sentiment_features), the total feature space expands to approximately - dimensions. In order to avoid multicollinearity and overfitting:
+
+itemize
+    Correlation Analysis: Remove features with pairwise correlation 
+    Feature Importance: Use XGBoost feature importance (ranked by gain) to identify top predictive features
+    Domain Filtering: Retain features with established financial theory support
+    Variance Inflation Factor (VIF): Remove features with VIF  to control multicollinearity in the expanded feature space
+itemize
+
+Sentiment Analysis Pipeline
+sec:sentiment_pipeline
+
+The sentiment analysis pipeline transforms raw financial news articles into structured, quantitative sentiment signals suitable for integration into the prediction model. The pipeline addresses the critical gaps identified in the literature review-sarcasm detection, tokenization drift, domain sensitivity, temporal alignment, and uncertainty quantification-through a four-stage process. Figure fig:sentiment_pipeline illustrates the complete end-to-end data flow from raw news articles to the final sentiment feature vector.
+
+figure[htbp]
+        tikzpicture[
+        node distance=1.2cm,
+        process/.style=rectangle, draw, fill=white, text width=14em, text centered, rounded corners, minimum height=2.5em, line width=0.8pt,
+        data/.style=rectangle, draw, fill=white, text width=12em, text centered, minimum height=2.2em, line width=0.8pt,
+        arrow/.style=draw, -latex', line width=0.8pt,
+        note/.style=text width=11em, scale=0.7, align=left
+    ]
+    
+    [data] (input) Raw Financial News
+Articles ;
+    
+    [process, below=of input] (preproc) Stage 1: Text Preprocessing
+Vocabulary Extension;
+    [note, right=0.5cm of preproc] Tokenize with 
+Normalize tickers
+Segment sentences;
+    
+    [process, below=of preproc] (finbert) Stage 2: FinBERT Dual-Head
+Sentiment + Sarcasm Scoring;
+    [note, right=0.5cm of finbert] : sentiment score
+: sarcasm probability
+: confidence
+;
+    
+    [process, below=of finbert] (temporal) Stage 3: Temporal Alignment
+ Trading Day;
+    [note, right=0.5cm of temporal] Map publication time
+to next actionable
+trading day in ;
+    
+    [process, below=of temporal] (aggregate) Stage 4: Daily Aggregation
+Confidence-Weighted;
+    [note, right=0.5cm of aggregate] 
+Normalized volume ;
+    
+    [data, below=of aggregate] (features) Sentiment Feature Vector
+;
+    
+    [process, below=of features] (xgboost) Concatenate with Price Features
+ XGBoost Residual Learner;
+    
+    [arrow] (input) - (preproc);
+    [arrow] (preproc) - (finbert);
+    [arrow] (finbert) - (temporal);
+    [arrow] (temporal) - (aggregate);
+    [arrow] (aggregate) - (features);
+    [arrow] (features) - (xgboost);
+    
+    tikzpicture
+    Sentiment Analysis Pipeline: End-to-End Data Flow from Raw News to XGBoost Integration
+    fig:sentiment_pipeline
+figure
+
+Base Model: FinBERT
+
+The sentiment scoring component is built on FinBERT, a domain-adapted variant of BERT (Bidirectional Encoder Representations from Transformers). BERT is a transformer-based neural network that uses multi-head self-attention to learn contextualized word representations. Unlike static word embeddings that assign a fixed vector to each word regardless of context, BERT produces context-dependent representations: the word "crash" receives a different embedding in "stock market crash" than in "application crash."
+
+FinBERT inherits BERT's 12-layer, 768-dimensional transformer encoder architecture (approximately 110 million parameters) and is further pre-trained on a large corpus of financial communications including financial news articles, earnings call transcripts, and analyst reports. This domain-specific pre-training allows FinBERT to correctly interpret financial expressions that general-purpose BERT misclassifies-for example, FinBERT understands that "the company beat earnings expectations" carries positive sentiment, whereas general BERT may be uncertain about the polarity of "beat" in a financial context.
+
+The sentiment classification head maps the [CLS] token embedding-a 768-dimensional vector that summarizes the entire input sequence-to a three-class probability distribution (Positive, Negative, Neutral) via a fully connected layer and softmax activation. In our dual-head architecture, a second fully connected layer branches from the same [CLS] embedding to produce a binary sarcasm probability via sigmoid activation. Both heads share the same transformer backbone, so financial language understanding learned by the sentiment head also benefits sarcasm detection.
+
+Training Data and Fine-Tuning Procedure
+
+The dual-head model is fine-tuned on two labeled datasets:
+enumerate
+    Sentiment Labels: The Financial Phrasebank dataset provides approximately 4,840 English financial news sentences labeled by 16 financial experts as Positive, Negative, or Neutral. We use the subset with  annotator agreement to ensure label quality.
+    Sarcasm Labels: A curated financial sarcasm dataset containing approximately 3,000 labeled examples, constructed by collecting financial headlines with confirmed sarcastic intent (marked by expert annotators) and augmenting with non-sarcastic financial headlines as negative examples.
+enumerate
+
+Fine-tuning proceeds in two phases to prevent catastrophic forgetting of the pre-trained representations:
+enumerate
+    Phase 1 - Frozen Backbone: The FinBERT transformer weights are frozen. Only the two classification heads (sentiment and sarcasm) are trained for 5 epochs with a learning rate of . This allows the heads to initialize without corrupting the pre-trained language representations.
+    Phase 2 - Joint Fine-Tuning: All model weights (backbone + both heads) are unfrozen, and the entire model is trained end-to-end for 3 additional epochs with a reduced learning rate of . The combined training objective is:
+    equation
+    L_total = L_sentiment + (1 - ) L_sarcasm
+    equation
+    where  prioritizes the primary sentiment task,  is categorical cross-entropy over three classes, and  is binary cross-entropy. Training uses the AdamW optimizer with a batch size of 32 and linear learning rate warmup over the first 10% of training steps.
+enumerate
+
+The four processing stages of the pipeline are described below.
+
+Stage 1: Text Preprocessing with Vocabulary Extension
+
+Before sentiment scoring, each article undergoes domain-aware preprocessing. The standard FinBERT tokenizer is extended with a custom financial vocabulary containing common ticker symbols, financial ratios, and regulatory terms to address the tokenization drift gap. Given the original FinBERT vocabulary , the extended vocabulary is:
+equation
+V_ext = V_FinBERT V_fin
+equation
+
+where  is a curated set of financial domain tokens including ticker symbols, financial ratios (P/E, EV/EBITDA), and regulatory terminology (Form 10-K, material adverse change). Ticker symbols in the format TICKER are normalized to a canonical form TICKERREF to prevent subword fragmentation. URLs, HTML entities, and boilerplate disclosure text are removed, while numerical values are retained as they carry information about financial magnitudes.
+
+Long articles are segmented into individual sentences, and each sentence is scored independently before aggregation at the document level. This preserves local sentiment nuance that document-level scoring would otherwise lose.
+
+Stage 2: Dual-Head Sentiment Scoring
+
+The core of the pipeline is a dual-head classification model built on the FinBERT transformer backbone. The model has two output heads sharing the same encoder:
+itemize
+    Head 1 (Sentiment Head): A three-class classifier (Positive, Negative, Neutral) producing a probability distribution  for article .
+    Head 2 (Sarcasm Head): A binary classifier producing the probability of sarcasm .
+itemize
+
+The raw sentiment score is converted to a continuous scale:
+equation
+s_i^raw = P_sent(Positive a_i) - P_sent(Negative a_i) [-1, 1]
+equation
+
+The sarcasm-corrected sentiment score inverts the raw score in proportion to the estimated probability of sarcasm:
+equation
+s_i^final = (1 - 2_i) s_i^raw
+equation
+
+where . When  (no sarcasm), the raw score is preserved; when  (definite sarcasm), the sentiment polarity is fully inverted. The confidence of the prediction is defined as:
+equation
+c_i = _k Pos, Neg, Neu P_sent(k a_i) [13, 1]
+equation
+
+Stage 3: Temporal Alignment
+
+Let  denote the UTC publication timestamp of article . The trading-day assignment function  maps each article to the appropriate trading day:
+equation
+(_i) = t T : MarketOpen(t) > _i
+equation
+
+where  is the set of valid NYSE trading days. This formal assignment ensures:
+itemize
+    Articles published during or after market hours on day  are assigned to the next trading day .
+    Articles published after market close on Friday are assigned to Monday (or the next valid trading day if Monday is a holiday).
+    No future information leaks into the training set.
+itemize
+
+Stage 4: Daily Sentiment Aggregation
+
+For trading day , let  be the set of articles assigned to that day. The confidence-weighted daily sentiment score is:
+equation
+S_t = _a_i A_t c_i s_i^final_a_i A_t c_i
+equation
+
+If  (no news on trading day ), then  (neutral). The daily news volume, normalized over the dataset, is:
+equation
+N_t = A_t - _N_N
+equation
+
+where  and  are the mean and standard deviation of daily article counts over the training period.
+
+End-to-End Daily Processing Loop
+
+The complete pipeline operates as a daily batch process executed after market close. For each trading day , the system performs the following sequence:
+
+enumerate
+    Collect: Retrieve all news articles  published since the last processing run from the configured news sources (Yahoo Finance, Reuters RSS, Financial Modeling Prep API).
+    Preprocess: For each article , apply vocabulary-extended tokenization, ticker normalization, boilerplate removal, and sentence segmentation (Stage 1).
+    Score: Pass each preprocessed sentence through the dual-head FinBERT model. The sentiment head produces the raw score  and confidence ; the sarcasm head produces . Compute the sarcasm-corrected score  (Stage 2). For multi-sentence articles, aggregate sentence-level scores to a single document-level score weighted by sentence confidence.
+    Align: Apply the temporal assignment function  to each article's UTC timestamp to determine the correct target trading day. Articles published after today's market close are assigned to the next trading day (Stage 3).
+    Aggregate: For the target trading day , compute the confidence-weighted daily sentiment  and the normalized news volume  from all articles in . If , set  and flag  (Stage 4).
+    Derive Features: Using the aggregated  and the historical sentiment values , compute the full 8-dimensional sentiment feature vector .
+    Integrate: Concatenate  with the price-derived feature vector  to form , which is passed to the XGBoost residual learner alongside the SARIMA baseline prediction.
+enumerate
+
+This daily loop ensures strict temporal causality: sentiment features for trading day  are computed exclusively from articles published before day 's market open, preventing any form of information leakage. The entire processing cycle (collection, scoring, feature computation) takes approximately 2-5 minutes on standard CPU hardware depending on news volume, making it feasible as an overnight batch process.
+
+Sentiment Feature Engineering
+sec:sentiment_features
+
+From the raw daily sentiment signal  and the news volume  produced by the sentiment pipeline, we derive a structured set of eight features that capture different aspects of the sentiment dynamics.
+
+1. Daily Aggregated Sentiment ():
+The confidence-weighted, sarcasm-corrected daily sentiment score as defined in Section sec:sentiment_pipeline.
+
+2. Sentiment Momentum ():
+equation
+S_t = S_t - S_t-1
+equation
+Captures sudden shifts in news sentiment that may precede price movements.
+
+3. Rolling Sentiment Volatility ():
+equation
+_S,t = 1k _j=0^k-1 (S_t-j - S_t,k)^2
+equation
+where  (one trading week) and . High sentiment volatility indicates an unstable news environment and may signal increased price volatility.
+
+4. Normalized News Volume ():
+Z-score normalized daily article count, capturing the intensity of news coverage. Abnormally high news volume often accompanies significant price-moving events.
+
+5. Sentiment-Price Divergence ():
+equation
+D_t = S_t-1 - sign(Close_t-1 - Close_t-2)
+equation
+Measures the alignment between the prior day's sentiment and price movement. A large positive divergence (positive sentiment but negative return) may signal a mean-reversion opportunity.
+
+6-8. Lagged Sentiment Features ():
+equation
+S_t-k for  k 1, 2, 3
+equation
+Capture the delayed reaction of prices to news sentiment over a three-day horizon.
+
+
+The full sentiment feature vector for day  is:
+equation
+S_t = [S_t, S_t, _S,t, N_t, D_t, S_t-1, S_t-2, S_t-3] R^8
+equation
+
+This structured representation provides the downstream XGBoost model with richer and more reliable sentiment signals than raw point estimates, addressing the uncertainty quantification gap identified in the literature review.
+
+Model Development
+
+There are five types of prediction models that we apply and each of them reflects various features of the stock prices dynamics.
+
+SARIMA Model
+
+Model Overview:
+Seasonal AutoRegressive Integrated Moving Average (SARIMA) extends ARIMA by explicitly modeling seasonal patterns. The model is specified as SARIMA where:
+
+itemize
+    : Non-seasonal AR order, differencing, MA order
+    : Seasonal AR order, differencing, MA order
+    : Seasonality period (e.g., 5 for weekly patterns in daily data)
+itemize
+
+Mathematical Formulation:
+equation
+_p(B)_P(B^s)(1-B)^d(1-B^s)^D y_t = _q(B)_Q(B^s)_t
+equation
+
+where:
+itemize
+    : Backward shift operator ()
+    : Non-seasonal AR polynomial
+    : Seasonal AR polynomial
+    : Non-seasonal MA polynomial
+    : Seasonal MA polynomial
+    : White noise error term
+itemize
+
+Implementation Details:
+We use the pmdarima library's autoarima function for automated parameter selection:
+
+itemize
+    Order Selection: Auto-ARIMA searches over parameter space to minimize AIC/BIC
+    Stationarity Testing: Augmented Dickey-Fuller test for unit roots
+    Seasonality Detection: Automatic identification of seasonal patterns
+    Final Configuration: SARIMA (identified by auto-fitting)
+itemize
+
+Training Process:
+enumerate
+    Test for stationarity using ADF test
+    Apply differencing if necessary to achieve stationarity
+    Fit SARIMA model using maximum likelihood estimation
+    Validate residuals for white noise properties (Ljung-Box test)
+    Generate forecasts for test period
+enumerate
+
+Prophet Model
+
+Model Overview:
+Prophet, developed by Facebook (Meta), employs an additive model framework particularly suited for business time-series with strong seasonal effects and multiple trend changes.
+
+Mathematical Formulation:
+equation
+y(t) = g(t) + s(t) + h(t) + _t
+equation
+
+where:
+itemize
+    : Piecewise linear or logistic growth trend
+    : Periodic component (daily, weekly, yearly seasonality)
+    : Holiday/event effects
+    : Idiosyncratic error term
+itemize
+
+Trend Component:
+Prophet determines non-linear trends with the help of changepoint:
+equation
+g(t) = (k + a(t)^T)t + (m + a(t)^T)
+equation
+
+where the value of delta is rate changes at changepoints that are automatically identified.
+
+Seasonality Component:
+Fourier series is used to model seasonality:
+equation
+s(t) = _n=1^N ( a_n (2ntP) + b_n (2ntP) )
+equation
+
+where  is the period (365.25 for yearly, 7 for weekly).
+
+Implementation Details:
+itemize
+    Library: fbprophet Python package
+    Changepoint Prior: 0.05 (controls flexibility of trend)
+    Seasonality Mode: Multiplicative (appropriate for percentage changes)
+    Weekly Seasonality: Enabled to capture weekday effects
+    Uncertainty Intervals: 95% prediction intervals via MCMC sampling
+itemize
+
+XGBoost Model
+
+Model Overview:
+XGBoost (eXtreme Gradient Boosting) is a system that adopts optimized gradient boosting decision trees. Compared to other statistical models, XGBoost is able to automatically formulate non-linear interactions between features and can work effectively with mixed data types.
+
+Mathematical Formulation:
+XGBoost creates an additive regression of the weak decision trees learners:
+equation
+y_i = _k=1^K f_k(x_i), f_k F
+equation
+
+where  represents the space of regression trees, and each tree  is learned to minimize the objective:
+equation
+L^(t) = _i=1^n l(y_i, y_i^(t-1) + f_t(x_i)) + (f_t)
+equation
+
+The overfitting is avoided by the regularization term:
+equation
+(f) = T + 12w^2
+equation
+
+where  is the number of leaves and  represents leaf weights.
+
+Implementation Details:
+itemize
+    Library: xgboost Python package
+    Objective Function: reg:squarederror (regression)
+    Number of Estimators: 100 trees
+    Learning Rate: 0.1 (step size shrinkage)
+    Max Depth: 5 (maximum tree depth)
+    Subsample: 0.8 (row sampling ratio)
+    Colsample by Tree: 0.8 (column sampling ratio)
+    Early Stopping: Monitor validation RMSE with patience=10
+itemize
+
+Feature Set:
+XGBoost makes use of the entire engineered set that consists of:
+itemize
+    All technical indicators (MACD, RSI, Bollinger Bands, etc.)
+    Temporal features (day of week, month, quarter)
+    Lag features (1, 2, 3, 5, 10 days)
+    Volume-derived features
+itemize
+
+Hyperparameter Optimization:
+We use grid search and time-series cross-validation to optimize hyperparameters in the search space:
+itemize
+    Learning rate: 
+    Max depth: 
+    Number of estimators: 
+itemize
+
+BiLSTM + Attention Model
+
+Model Overview:
+The Bidirectional Long Short-Term Memory (BiLSTM) networks are coupled with a modification of the attention process in our deep learning architecture. The architecture offers better results than vanilla LSTMs because it takes into account the constraints of processing sequences in both time directions and selectively concentrating on the most informative time steps.
+
+figure[htbp]
+        tikzpicture[
+        node distance=1.8cm,
+        auto,
+        layer/.style=rectangle, draw, fill=white, text width=10em, text centered, rounded corners, minimum height=2.8em, line width=0.8pt,
+        arrow/.style=draw, -latex', line width=0.8pt,
+        annotation/.style=text width=10em, scale=0.75, align=left,
+        dashedarrow/.style=draw, dashed, -latex', line width=0.6pt
+    ]
+    
+    
+    [layer] (input) Input Layer;
+    [annotation, right=0.3cm of input] Shape: (batch, 10, 4)
+4 features per timestep;
+    
+    
+    [layer, below=of input] (bilstm) Bidirectional LSTM
+(100 units each direction);
+    [annotation, right=0.3cm of bilstm] Forward  Backward
+Output: 200 features
+Returns sequences;
+    
+    
+    [layer, below=of bilstm] (dropout) Dropout Layer
+(Rate: 0.2);
+    [annotation, right=0.3cm of dropout] Prevents overfitting
+Randomly drops 20%;
+    
+    
+    [layer, below=of dropout] (attention) Attention Mechanism;
+    [annotation, right=0.3cm of attention] Learns importance
+weights for timesteps
+Creates context vector;
+    
+    
+    [layer, below=of attention] (dense) Dense Output Layer
+(1 unit, linear);
+    [annotation, right=0.3cm of dense] Maps context to
+single prediction;
+    
+    
+    [layer, below=of dense] (output) Prediction
+(Next Day Close Price);
+    
+    
+    [arrow] (input) - (bilstm);
+    [arrow] (bilstm) - (dropout);
+    [arrow] (dropout) - (attention);
+    [arrow] (attention) - (dense);
+    [arrow] (dense) - (output);
+    
+    
+    [left=1.5cm of bilstm, text width=6em, scale=0.7, align=center] (fwd) Forward
+LSTM
+(→);
+    [below=0.3cm of fwd, text width=6em, scale=0.7, align=center] (bwd) Backward
+LSTM
+(←);
+    [dashedarrow] (fwd) - (bilstm);
+    [dashedarrow] (bwd) - (bilstm);
+    
+    tikzpicture
+    BiLSTM with Attention Mechanism Architecture
+    fig:bilstm_attention
+figure
+
+Architecture Components:
+
+1. Input Layer:
+itemize
+    Shape: 
+    Configuration:  - 10 historical days, 4 features (Open, High, Low, Close)
+itemize
+
+2. Bidirectional LSTM Layer:
+
+The BiLSTM works off of the input sequence in both directions:
+align
+h_t &= LSTM_forward(x_t, h_t-1) 
+
+h_t &= LSTM_backward(x_t, h_t+1) 
+
+h_t &= [h_t; h_t]
+align
+
+Both LSTM cells have gating mechanisms:
+align
+f_t &= (W_f [h_t-1, x_t] + b_f) (Forget gate) 
+
+i_t &= (W_i [h_t-1, x_t] + b_i) (Input gate) 
+
+C_t &= (W_C [h_t-1, x_t] + b_C) (Candidate values) 
+
+C_t &= f_t C_t-1 + i_t C_t (Cell state) 
+
+o_t &= (W_o [h_t-1, x_t] + b_o) (Output gate) 
+
+h_t &= o_t (C_t) (Hidden state)
+align
+
+itemize
+    Units: 100 (50 forward + 50 backward)
+    Return Sequences: True (outputs sequence for attention layer)
+    Activation: tanh (cell state), sigmoid (gates)
+itemize
+
+3. Dropout Layer:
+itemize
+    Dropout Rate: 0.2
+    Purpose: Prevent overfitting by randomly zeroing 20% of outputs
+itemize
+
+4. Custom Attention Mechanism:
+
+Our layer of attention is trained to give the weight of various time steps:
+
+align
+e_t &= (W_a h_t + b_a) (Attention scores) 
+
+_t &= (e_t)_i=1^T (e_i) (Normalized weights) 
+
+c &= _t=1^T _t h_t (Context vector)
+align
+
+where:
+itemize
+    : Trainable attention parameters
+    : Attention weights (sum to 1)
+    : Weighted sum of hidden states (context vector)
+itemize
+
+The attention mechanism helps the model to concentrate on important patterns (e.g. recent volatility spikes, trend reversals) and on less informative periods gives less weight.
+
+5. Dense Output Layer:
+itemize
+    Units: 1 (scalar price prediction)
+    Activation: Linear (for regression)
+itemize
+
+Model Compilation:
+itemize
+    Optimizer: Adam with learning rate = 0.001
+    Loss Function: Mean Squared Error (MSE)
+    Metrics: MAE, RMSE
+itemize
+
+Training Configuration:
+itemize
+    Epochs: 50 with early stopping (patience=10)
+    Batch Size: 32
+    Validation Split: 20% of training data for validation
+    Callbacks: ModelCheckpoint (save best model), EarlyStopping, ReduceLROnPlateau
+itemize
+
+Data Preparation for BiLSTM:
+We take sliding windows on the time series:
+itemize
+    Sequence Length: 10 days
+    Prediction Horizon: 1 day ahead (next closing price)
+    Stride: 1 day (overlapping windows)
+itemize
+
+For a dataset with  days, we generate  training samples, each containing 10 consecutive days of features and the following day's close price as the target.
+
+Hybrid SARIMA-XGBoost Model
+
+Model Overview:
+The hybrid model incorporates the complementary power of SARIMA and XGBoost with the help of a two-stage residual learning structure. SARIMA takes in linear trends and seasonality, and XGBoost trains the non-linear residual trends which SARIMA is unable to capture.
+
+figure[htbp]
+        tikzpicture[
+        node distance=1.3cm and 2.5cm,
+        process/.style=rectangle, draw, fill=white, text width=6.8em, text centered, rounded corners, minimum height=2.4em, line width=0.8pt,
+        data/.style=rectangle, draw, fill=white, text width=5.8em, text centered, minimum height=2.2em, line width=0.8pt,
+        equation/.style=rectangle, draw, dashed, fill=white, text width=9.5em, text centered, minimum height=2.2em, line width=0.7pt,
+        arrow/.style=draw, -latex', line width=0.8pt,
+        stage/.style=text width=5.2em, scale=0.8, align=center
+    ]
+    
+    
+    [process] (input) Historical
+Stock Data;
+
+    [process, below left=1.9cm and 2.6cm of input] (sarima) SARIMA
+Model;
+    [data, below=1.3cm of sarima] (linear) Linear
+;
+
+    [process, below right=1.9cm and 2.6cm of input] (features) Feature
+Engineering;
+    [data, below=1.3cm of features] (residuals) Residuals
+;
+    [process, below=1.3cm of residuals] (xgboost) XGBoost;
+    [data, below=1.3cm of xgboost] (nonlinear) Non-linear
+;
+
+    [equation] (fusion) at () ;
+    [process, below=0.95cm of fusion] (output) Final
+Prediction;
+
+    
+    [arrow] (input.south) - (sarima.north);
+    [arrow] (input.south) - (features.north);
+    [arrow] (sarima) - (linear);
+    [arrow] (features) - (residuals);
+    [arrow] (residuals) - (xgboost);
+    [arrow] (xgboost) - (nonlinear);
+
+    
+    [arrow, dashed] (linear.east) - ++(0.65,0) - (residuals.west);
+    [arrow] (linear.south) - ++(0,-0.7) - (fusion.west);
+    [arrow] (nonlinear.west) - ++(-0.65,0) - (fusion.east);
+    [arrow] (fusion) - (output);
+
+    
+    [stage, left=0.9cm of linear] Stage 1
+Baseline;
+    [stage, left=0.9cm of xgboost] Stage 2
+Correction;
+    [stage, left=0.9cm of output] Stage 3
+Fusion;
+
+    tikzpicture
+    Hybrid SARIMA-XGBoost Workflow
+    fig:hybrid_workflow
+figure
+
+Hybrid Architecture Rationale:
+
+Financial time series are a two sided phenomenon:
+equation
+y_t = L_t + N_t + _t
+equation
+
+where:
+itemize
+    : Linear component (trends, seasonality, autocorrelation)
+    : Non-linear component (regime shifts, volatility clustering, feature interactions)
+    : Random noise
+itemize
+
+SARIMA excels at modeling  through its ARMA structure, while XGBoost captures  through its decision tree ensemble.
+
+Implementation Pipeline:
+
+Stage 1: SARIMA Baseline
+enumerate
+    Train SARIMA on training data
+    Generate forecasts: 
+    Calculate residuals: 
+enumerate
+
+Stage 2: XGBoost Residual Modeling
+enumerate
+    Engineer features from original data (lag features, technical indicators)
+    Train XGBoost to predict residuals: 
+    Generate residual predictions: 
+enumerate
+
+Stage 3: Hybrid Fusion
+equation
+y_t^Hybrid = y_t^SARIMA + r_t^XGBoost
+equation
+
+Mathematical Justification:
+
+Assuming that SARIMA is able to capture the linear component, the residual of SARIMA will only have the non-linear component and noise:
+equation
+r_t = y_t - y_t^SARIMA N_t + _t
+equation
+
+XGBoost then approximates:
+equation
+r_t^XGBoost N_t
+equation
+
+The hybrid prediction is the last one, it is:
+equation
+y_t^Hybrid L_t + N_t
+equation
+
+assuming .
+
+Error Decomposition:
+
+The overall error in prediction may be broken down:
+align
+Error^Hybrid &= y_t - y_t^Hybrid 
+
+&= (L_t + N_t + _t) - (L_t + N_t) 
+
+&= (L_t - L_t) + (N_t - N_t) + _t
+align
+
+Through specialization of each component we reduce the linear and non-linear errors separately resulting in reduced overall error compared to single-model methods.
+
+Implementation Advantages:
+itemize
+    Robustness: SARIMA provides stable baseline; XGBoost adds adaptive corrections
+    Interpretability: Decomposition reveals linear vs. non-linear contributions
+    Complementarity: Each model addresses the other's weaknesses
+    Generalization: Reduces overfitting risk compared to single complex model
+itemize
+
+Sentiment-Augmented Extension:
+
+The baseline hybrid decomposes financial time series into linear and non-linear components. However, this two-component formulation is structurally blind to exogenous information shocks-such as earnings surprises, macroeconomic announcements, and shifts in public sentiment-that drive price movements independently of historical patterns. We extend the decomposition to a three-component model:
+equation
+y_t = L_t + N_t + E_t + _t
+equation
+
+where  represents the sentiment-driven component of price dynamics that is not captured by either the linear trend () or the non-linear residual patterns ().
+
+Extended Feature Vector:
+
+The XGBoost residual learner in Stage 2 now operates on an extended feature vector that concatenates price-derived and sentiment features:
+equation
+X_t^ext = [X_t^price, S_t] R^d_p + 8
+equation
+
+where  contains all price-derived features (lag features, technical indicators, temporal features) with -, and  is the structured sentiment feature vector defined in Section sec:sentiment_features.
+
+Sentiment-Augmented Residual Modeling:
+
+XGBoost learns to predict the SARIMA residual using the extended feature vector:
+equation
+r_t = f(X_t^ext) = _k=1^K f_k(X_t^ext), f_k F
+equation
+
+The sentiment-augmented hybrid prediction is:
+equation
+y_t^Hybrid+Sent = y_t^SARIMA + f(X_t^ext)
+equation
+
+Under the three-component decomposition, SARIMA captures  and XGBoost (now with sentiment features) captures both  and :
+equation
+y_t^Hybrid+Sent L_t + N_t + E_t
+equation
+
+The total prediction error decomposes as:
+align
+Error_t &= y_t - y_t^Hybrid+Sent 
+
+&= (L_t - L_t) + (N_t + E_t - N_t - E_t) + _t
+align
+
+By providing XGBoost with sentiment features, we reduce the  term-the portion of the residual attributable to sentiment-driven price movements-leading to lower overall prediction error compared to the baseline hybrid.
+
+Sarcasm Detector Training:
+
+The dual-head model's complete training procedure-including datasets, the two-phase fine-tuning schedule, and the combined loss function-is detailed in Section sec:sentiment_pipeline. In summary, the model is fine-tuned first with a frozen FinBERT backbone to initialize the classification heads, then end-to-end with the joint objective  where . The sentiment head is supervised by the Financial Phrasebank ( expert-labeled sentences) and the sarcasm head by a curated financial sarcasm corpus ( labeled examples).
+
+Handling Missing Sentiment Days:
+
+On trading days with no news articles (),  is set to 0 (neutral) and  is set to the normalized value corresponding to zero articles. A binary indicator feature  is added to the feature vector to allow XGBoost to distinguish genuinely neutral sentiment from absent sentiment:
+equation
+X_t^ext = [X_t^price, S_t, I_t^nonews]
+equation
+
+Evaluation Metrics
+
+We use several evaluation measures to fully evaluate the performance of the models and to measure the various components of prediction quality.
+
+Regression Metrics
+
+1. Mean Absolute Error (MAE):
+equation
+MAE = 1n _i=1^n y_i - y_i
+equation
+
+MAE directly translates in the same units as the variable of interest (dollars), and it is therefore intuitive.
+
+2. Root Mean Squared Error (RMSE):
+equation
+RMSE = 1n _i=1^n (y_i - y_i)^2
+equation
+
+The squaring operation of RMSE punishes large errors more than MAE thus being sensitive to outliers.
+
+3. Mean Absolute Percentage Error (MAPE):
+equation
+MAPE = 100%n _i=1^n y_i - y_iy_i
+equation
+
+MAPE has scale-free during measurement of errors, which means that it can be compared across stocks of varying price levels.
+
+4. R-squared ():
+equation
+R^2 = 1 - _i=1^n(y_i - y_i)^2_i=1^n(y_i - y)^2
+equation
+
+ measures the percentage of variance that a model has explained, the closer it is to 1, the more it has been explained.
+
+Directional Accuracy
+
+Direction Accuracy:
+equation
+DA = 1n _i=1^n 1_sign(y_i - y_i-1) = sign(y_i - y_i-1)
+equation
+
+DA is used to assess the frequency of the model giving correct predictions of the price direction (up/down) which can often be very useful in trading as compared to absolute price accuracy.
+
+Trading Performance Metrics
+
+Sharpe Ratio:
+equation
+SR = E[R_p - R_f]_p
+equation
+
+where  is the portfolio (strategy) return,  is the risk-free rate, and  is the standard deviation of excess returns. The Sharpe Ratio measures the risk-adjusted return of a trading strategy derived from the model's predictions. A higher Sharpe Ratio indicates better risk-adjusted performance, bridging the gap between statistical prediction accuracy and practical trading viability.
+
+Model Comparison
+
+We evaluate each of the five models (SARIMA, Prophet, XGBoost, BiLSTM+Attention, Hybrid) in terms of the following metrics to determine:
+itemize
+    Best Overall Performer: Model with lowest RMSE/MAE
+    Most Stable: Model with lowest variance across cross-validation folds
+    Best Directional: Model with highest direction accuracy
+    Computational Efficiency: Training time and prediction latency
+itemize
+
+Implementation Details
+
+Development Environment
+The system was implemented using Python 3.8+ with core libraries including pandas and numpy for data manipulation, scikit-learn and xgboost for machine learning, tensorflow/keras for deep learning, and statsmodels/pmdarima for statistical forecasting.
+
+Computational Resources
+Training of models was done on a conventional processor-based (Intel core i7 equivalent) environment. The time to train statistical models (SARIMA, Prophet) took between 1-3 minutes, whereas the deep learning models (BiLSTM+Attention) took between 10-20 minutes.
+
+Reproducibility
+In order to be reproducible, we have used fixed random seeds of all stochastic operations, versioned data snapshots, and a specified dependency environment.
+
+Summary
+
+The chapter provided a complete approach to predicting hybrid stock prices which included:
+
+enumerate
+    System Architecture: Multi-model pipeline from data collection to prediction, incorporating both price and news data inputs
+    Data Processing: Collection of OHLCV price data and financial news articles, cleaning, and train-test splitting strategies
+    Feature Engineering: Technical indicators, temporal features, lag variables, and structured sentiment features
+    Sentiment Analysis Pipeline: Domain-adapted FinBERT sentiment scoring with dual-head sarcasm correction, principled temporal alignment, confidence-weighted aggregation, and an 8-dimensional structured sentiment feature vector
+    Model Development: Five complementary approaches (SARIMA, Prophet, XGBoost, BiLSTM+Attention, Hybrid) with the hybrid model extended to incorporate sentiment features through a three-component decomposition 
+    Evaluation: Comprehensive metrics for regression accuracy, directional accuracy, and risk-adjusted trading performance (Sharpe Ratio)
+    Implementation: Practical details for reproducibility
+enumerate
+
+The approach is an amalgamation of theoretical and practical application of the strengths of statistical paradigm, machine learning, deep learning, and natural language processing. The three-component decomposition of financial time series is specifically resolved in the sentiment-augmented hybrid architecture, which breaks down predictions into linear trends (), non-linear residual patterns (), and sentiment-driven dynamics (), each addressed by specialized components.
+
+

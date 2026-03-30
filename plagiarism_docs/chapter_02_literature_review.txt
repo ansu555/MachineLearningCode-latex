@@ -1,0 +1,91 @@
+Literature Review
+
+Introduction to Literature Survey
+This chapter reviews stock-market forecasting literature across statistical, machine learning, deep learning, and sentiment-aware hybrid methods. The review prioritizes studies that evaluate stock indices or listed equities directly, and reports evidence by market, dataset scope, evaluation metrics, and practical limitations. The objective is not to restate model definitions, but to identify what has been shown to work, where results conflict, and which gaps remain unresolved for real deployment.
+
+Historical Approaches
+
+Statistical Foundations
+Early stock-forecasting studies relied on linear time-series modeling. ARIMA-style modeling remains a standard baseline because of interpretability and transparent diagnosticsbox2015. Volatility-focused modeling evolved through ARCH and GARCH, which are still foundational in risk and variance forecasting for financial seriesengle1982,bollerslev1986. These methods are valuable as reference models, but their assumptions limit performance under abrupt structural breaks and strong non-linearity.
+
+Transition to Machine Learning
+Machine learning introduced non-linear decision boundaries and feature interactions beyond linear econometric assumptions. SVM-based forecastingkim2003 and later ensemble/tree methods in equity-index settingspatel2015,nti2020review showed that technical features and robust preprocessing can outperform basic linear baselines in direction classification tasks. However, performance varies by market regime, horizon, and feature construction, making reproducibility and protocol design central concerns.
+
+Deep Learning Era
+Sequence models such as LSTM became prominent because they model temporal dependencies without fully manual lag engineeringhochreiter1997. In stock-domain evaluations, LSTM-class models frequently improve directional performance relative to shallow baselines, especially when feature windows are tuned and leakage is controlledfischer2018,sezer2020. At the same time, gains are not uniform across assets: data quality, horizon choice, and market regime materially affect results.
+
+From Sequence Models to Attention and Multimodal Systems
+Attention-based architectures, motivated by transformer modelingvaswani2017, enabled richer long-context learning and multimodal fusion strategies. In financial prediction, event-driven text-price modeling demonstrated measurable improvements when textual events were aligned with market movementsding2015. This shift established a key design principle: financial forecasting quality depends on both temporal modeling and information-source alignment.
+
+Existing Systems / Related Work
+
+Traditional Statistical Methods
+ARIMA/SARIMA remain strong baselines for trend and seasonality decomposition when assumptions are approximately satisfiedbox2015. Their strengths are interpretability, low compute cost, and stable diagnostics. Their limitations are well-known in equity forecasting: weak handling of non-linear cross-feature effects, sensitivity to structural breaks, and reduced adaptability under rapid regime transition.
+
+Machine Learning Approaches
+SVM, random forests, and gradient-boosting systems are widely used for stock direction prediction and residual correction taskskim2003,patel2015,nti2020review. Across studies, model quality is heavily conditioned on feature design (lags, technical indicators, macro context) and temporal validation protocol. A recurring finding is that strong preprocessing and feature engineering can narrow or exceed the gap to more complex deep models in certain horizons.
+
+Deep Learning-Based Approaches
+LSTM/GRU/BiLSTM families are the most common deep architectures in financial forecasting benchmarkssezer2020. In stock-specific tests, LSTM-based systems often provide better sequence modeling than static learners, especially for short-horizon direction tasksfischer2018. Still, deep models can overfit in non-stationary markets and require careful walk-forward evaluation, retraining policy, and latency-aware deployment constraints.
+
+Sentiment-Based Methods
+Sentiment modeling evolved from dictionary approaches (e.g., domain lexicons) to transformer-based contextual models. Financial-domain language resourcesloughran2011,malo2014 and social-media market-signal studiesbollen2011 established that textual information can carry predictive value under specific settings. Domain-adapted transformers such as FinBERTaraci2019, built on BERTdevlin2019, improved finance-text polarity classification; however, production use still depends on timestamp alignment, confidence handling, and drift control.
+
+Hybrid Architectures
+
+Rationale for Hybrid Design
+Financial series exhibit mixed structure: a partly linear backbone plus non-linear residual behavior. Hybrid pipelines use this decomposition operationally by assigning trend/seasonal structure to statistical models and residual non-linearity to machine-learning learners.
+
+Price-Only Hybrid Systems
+ARIMA/SARIMA plus tree-boosting or neural residual correction is a common design pattern in stock prediction studies and industrial prototypes. Survey evidence indicates that hybrid and ensemble families are frequently more robust than single-model pipelines under heterogeneous market conditionsnti2020review,sezer2020. Practical success depends on leakage-safe residual construction and consistent out-of-sample testing.
+
+Price + Sentiment Hybrid Systems
+Recent systems extend hybrid pipelines with sentiment features from financial news and event streams. Event-driven deep modelsding2015 and sentiment-market evidencebollen2011 motivate this integration, while financial-domain NLP resourcesloughran2011,araci2019 improve feature quality. The key unresolved engineering issue is not only sentiment scoring accuracy, but robust alignment between asynchronous text events and tradable market time.
+
+Comparative Evidence from Literature
+
+table[htbp]
+Representative Evidence in Stock-Market Forecasting Literature
+tab:literature_matrix
+tabular@p3cmp2.2cmp2.6cmp2.5cmp3cm@
+Study & Market / Data & Method Family & Typical Metrics & Main Limitation 
+ Kim (2003)kim2003 & Equity index direction data & SVM classifier & Directional accuracy & Sensitive to feature specification and regime shifts 
+
+Patel et al. (2015)patel2015 & Indian equities + indices & ML comparison (ANN/SVM/RF/NB) & Accuracy, precision/recall & Preprocessing-dependent gains 
+
+Fischer  Krauss (2018)fischer2018 & SP 500 constituents & LSTM vs classical baselines & Accuracy, return simulation & Stability across regimes remains challenging 
+
+Sezer et al. (2020)sezer2020 & Multi-study review (2005-2019) & Deep-learning survey & Cross-study comparison & Strong protocol heterogeneity 
+
+Nti et al. (2020)nti2020review & Cross-market stock studies & Ensemble evaluation & Accuracy-based measures & Limited risk-aware reporting 
+
+Ding et al. (2015)ding2015 & SP 500 + event text & Event-driven deep model & Direction + simulation uplift & Event extraction and alignment complexity 
+
+tabular
+table
+
+Table tab:literature_matrix highlights two consistent observations. First, reported gains are highly protocol-sensitive (split strategy, feature engineering, horizon definition, and market choice). Second, literature still under-reports risk-adjusted and deployment-relevant outcomes compared with raw accuracy metrics.
+
+Limitations of Existing Systems
+
+General Modeling Limitations
+Across method families, three recurring weaknesses appear: (1) regime instability, where relationships learned in one period degrade in another; (2) over-reliance on point forecasts without calibrated uncertainty; and (3) heavy dependence on handcrafted features or expensive tuning for transfer across assets and markets.
+
+Sentiment Analysis and Integration Gaps
+sec:sentiment_gaps
+Even when sentiment is included, integration quality remains the bottleneck:
+itemize
+    Temporal mismatch: text arrives asynchronously, while price labels are market-clock dependent.
+    Domain drift: financial language, ticker conventions, and event vocabulary evolve rapidly.
+    Confidence blindness: many pipelines use polarity scores without reliability weighting.
+    Aggregation mismatch: document-level polarity may hide aspect-level conflict (e.g., positive revenue, negative guidance).
+    Evaluation mismatch: many studies optimize RMSE/MAE but under-report trading-risk metrics.
+itemize
+
+Comparative Study / Gap Analysis
+The literature supports hybrid design, but not a single universally dominant architecture. The unresolved gap is a leakage-safe, sentiment-aware hybrid workflow that simultaneously addresses temporal alignment, domain adaptation, uncertainty handling, and robust out-of-sample evaluation under changing regimes. This directly motivates a methodology that separates linear and non-linear structure, then injects sentiment as an explicitly engineered exogenous signal instead of an opaque black-box add-on.
+
+Summary of Literature Review
+The review establishes five conclusions. First, stock forecasting has evolved from interpretable statistical baselines to ML, deep learning, and hybrid systems. Second, evidence quality depends strongly on protocol quality, not only model class. Third, hybrid models are usually more robust than single-model systems across heterogeneous conditions. Fourth, sentiment can add predictive signal, but only when domain adaptation and time alignment are handled carefully. Fifth, current literature still leaves a practical deployment gap around risk-aware evaluation, uncertainty quantification, and regime adaptation. These gaps define the problem addressed in the next chapter.
+
+

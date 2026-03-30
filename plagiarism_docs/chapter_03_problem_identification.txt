@@ -1,0 +1,41 @@
+Problem Identification
+
+Problem Statement
+Despite substantial progress in stock forecasting, reliable next-day prediction remains difficult because financial markets are non-stationary, noisy, and highly sensitive to exogenous information shocks. Price-only pipelines can model historical structure, but they remain reactive to new information and therefore lag event-driven moves.
+
+Research Gap to be Solved
+From Chapter 2, the core unresolved gap is not the absence of powerful models, but the absence of a consistent, leakage-safe integration strategy for combining:
+itemize
+    linear and seasonal price structure,
+    non-linear residual behavior,
+    and temporally aligned sentiment signals.
+itemize
+Existing work often addresses one or two of these elements, but rarely all three in a reproducible, deployment-oriented pipeline.
+
+Why Existing Methods Are Insufficient
+Current single-model systems underperform during regime shifts or event-heavy periods. Many hybrid systems improve accuracy but still rely on weak sentiment alignment, static weighting, and limited uncertainty reporting. As a result, published gains may not transfer reliably to realistic out-of-sample trading workflows.
+
+Research Objectives and Hypotheses
+Objectives:
+enumerate
+    Build a hybrid forecasting workflow that separates linear trend/seasonal structure from non-linear residual learning.
+    Integrate domain-adapted sentiment features into residual learning using leakage-safe temporal assignment.
+    Evaluate whether sentiment features improve directional and error-based performance relative to a price-only baseline.
+enumerate
+
+Hypotheses:
+itemize
+    H1: Residual-based hybrid modeling outperforms standalone statistical and standalone ML baselines.
+    H2: Sentiment-augmented residual features improve directional performance over the price-only hybrid baseline.
+    H3: Leakage-safe temporal alignment of news to trading days yields more reliable out-of-sample behavior than naive same-date matching.
+itemize
+
+Expected Challenges
+itemize
+    Data alignment: matching asynchronous news events to tradable time windows without look-ahead leakage.
+    Regime sensitivity: maintaining stability when sentiment-price coupling changes across market conditions.
+    Feature reliability: controlling multicollinearity and preserving interpretability in expanded feature spaces.
+    Evaluation realism: prioritizing walk-forward, out-of-sample validation over single split optimism.
+itemize
+
+

@@ -1,7 +1,7 @@
 PWD /Users/engineering_faliure/Desktop/Projects/MachineLearningCode-latex
 INPUT /opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/web2c/texmf.cnf
 INPUT /opt/homebrew/Cellar/texlive/20250308_2/share/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT literature_review.tex
+INPUT /Users/engineering_faliure/Desktop/Projects/MachineLearningCode-latex/literature_review.tex
 OUTPUT literature_review.log
 INPUT /opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/article.cls
 INPUT /opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/article.cls
