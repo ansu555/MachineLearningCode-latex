@@ -1,0 +1,443 @@
+Literature Review
+
+Introduction to Literature Survey
+Stock price prediction has evolved through technological progress during the last fifty years because computational intelligence combined with financial market analysis. The combination of statistical modeling with machine learning algorithms and deep learning architectures allows developers to create advanced forecasting systems at unprecedented levels. The traditional methods based on linear assumptions and stationary conditions failed to detect the intricate financial market patterns. The current data-driven learning system detects patterns automatically through its own processes without needing human-made feature development.
+
+
+The review investigates current stock price prediction methods which include statistical approaches and machine learning methods and deep learning systems and hybrid prediction systems. In addition, the review covers sentiment analysis techniques-from lexicon-based methods to domain-adapted transformers such as FinBERT-and examines how sentiment signals have been integrated into trading systems, along with the critical gaps that remain in this integration. The research follows the development of stock price prediction from initial random walk theories to present-day transformer-based, sentiment-aware, and multimodal prediction systems.
+
+Historical Approaches
+
+Stock prediction methods have undergone substantial development since the 1960s through successive periods which brought fundamental changes to modeling strategies.
+
+Evolution of Stock Prediction Methods
+
+
+Historical Evolution of Stock Prediction Methods
+
+
+From Early Statistical Tools to Advanced Time-Series Models
+
+The first stage of stock prediction needed me to use fundamental concepts which included random walk theory and basic moving average calculations. The trading methods helped traders find market directions yet they did not work for detecting intricate market patterns and unanticipated price fluctuations. The efficient market hypothesis ruled this period by stating that stock prices behave randomly and investors lack ability to forecast market movements.
+
+The following period brought better results through the implementation of ARIMA and GARCH models which served as structured mathematical frameworks. The new methods delivered better statistical power which allowed researchers to study market patterns and seasonal market behavior and volatility changes through systematic approaches that earlier tools failed to provide. The market transition from random behavior to statistical pattern detection occurred during this period.
+
+From ARIMA/GARCH to Machine Learning Models
+
+The models ARIMA and GARCH proved useful but they required data to follow linear patterns. Real market behavior shows complex non-linear patterns because multiple variables create intricate relationships which linear models fail to detect.
+
+Machine learning models advanced the field by learning non-linear data relationships directly from the input information. The prediction models SVM and Random Forest and boosting algorithms detected multiple feature relationships between price and volume and technical indicators. The models achieved superior prediction results than statistical methods because they identified complex patterns between features through automated processes that did not need predefined mathematical models.
+
+From Machine Learning to Deep Learning
+
+Machine learning models were effective, and their main limitation was that it was ineffective in the comprehension of sequences across long periods of time. However, stock prices are determined by trends that are carried out over days, weeks or even months. ML algorithms in the past kept the time points independent, necessitating the need to manually feature engineer time-varying variables.
+
+This was enhanced with deep learning through sequence-based models, such as RNNs, LSTMs, and GRUs. These models were able to store long term dependencies, and to learn directly using raw price sequences without extensive feature engineering. The CNN-based time-series models introduced the capability of identifying short-term local trends like volatility clusters and momentum shifts. They combined automatic feature learning with time-varying modeling together, which formed a more robust base than the classical methods of machine learning.
+
+From Deep Learning to Modern Transformer and Advanced Models
+
+LSTMs and RNNs were also not efficient with very long sequences, slow to train, and information decayed over time because of the sequential nature of the processing.
+
+The next major improvement was introduced with the help of transformers that made use of attention mechanisms. Transformers do not read data sequentially and instead consider all the time points at the same time and determine which ones are the most important. This enables them to work with long sequences more efficiently, parallelize more quickly, and offer a more interpretable representation with attention weight visualization.
+
+Graph Neural Networks (GNNs) made another step forward and attempted to model the effects of stocks on each other- industry correlations, supply chain relationships and market contagion effect, previously absent in other models. Reinforcement learning took the field a step further by changing the focus of simple forecasting to complete decision making, trading strategies optimized not only by predicting prices.
+
+Lastly, the latest icyte of price data with news, social media, and market sentiment is called multimodal models, which enables the system to learn on several kinds of information rather than historical price. This holistic theory appreciates that markets are motivated by the flow of information over various channels.
+
+Existing Systems / Related Work
+
+Traditional Statistical Methods
+
+The earliest methods of stock price prediction were based mainly on statistical time-series model. These approaches have formed the basis of time-dependent dependence and stochastic processes in financial data.
+
+ARIMA Models:
+The AutoRegressive Integrated Moving Average (ARIMA) model has been a staple in time-series forecasting since the 1970s. The model is valued for its ability to capture linear trends, seasonality, and autocorrelation structures in data. As demonstrated by in retail analytics, ARIMA effectively predicts consumer demand and optimizes inventory management. The model is mathematically expressed as:
+
+where  represents the backward shift operator,  denotes the degree of differencing required to achieve stationarity,  represents the autoregressive polynomial, and  represents the moving average polynomial.
+
+The study by demonstrates ARIMA's capability in identifying "temporal shopping behaviors" and "restocking trends" after weekends. In the context of stock prediction, this translates to detecting cyclic trading patterns, mean-reversion tendencies, and seasonal effects in stock prices. The model's strength lies in its interpretability and solid theoretical foundation rooted in econometric theory.
+
+However, ARIMA's fundamental limitation is its linear assumption. As noted in, the model requires careful "differencing" to handle non-stationary data-a characteristic shared by volatile stock indices. When financial markets experience regime changes, structural breaks, or extreme volatility, ARIMA's linear framework becomes inadequate. The model cannot capture non-linear interactions between features, sudden jumps in prices, or complex dependencies that characterize modern financial markets.
+
+GARCH Models:
+Generalized AutoRegressive Conditional Heteroskedasticity (GARCH) models are an addition to ARIMA that deal with volatility clustering, i.e. the period of high volatility is succeeded by a period of high volatility, and the period of low volatility is followed by a period of low volatility. Although the ARIMA is a model of the conditional mean of the series, GARCH is a model of the conditional variance as it is especially applied in risk management and option pricing. But, similar to ARIMA, GARCH has parametric assumptions and is poor at extreme market regimes.
+
+Machine Learning Approaches
+
+Machine learning brought a big change in comparison to the traditional statistics algorithms with this feature of non-linear modelling with no rigid distributional assumptions.
+
+Support Vector Machines (SVM):
+SVM became popular in stock prediction because it has the ability to establish the best decision boundaries in high dimensional feature spaces. Through kernel functions, the data can implicitly be mapped by SVM to higher dimensions where linear separation can be done. This can help in the capture of non-linear relationships between the technical indicator, fundamental factor and price movement.
+
+Random Forests and Ensemble Methods:
+Gradient boosting algorithms (XGBoost, LightGBM) and random forests proved to be highly effective with the combination of various decision trees. XGBoost Classifier was superior to other conventional machine learning algorithms in predictive maintenance machines as shown in the article by. These ensemble techniques are ideal in dealing with mixed data types, dealing with missing values, and rank ranking the features of importance- features that can prove useful in stock prediction when the features are continuous price data to discrete market regime indicators.
+
+The weakness of these machine learning models is that they do not have the capability to discern temporal sequence naturally. Stock prices are based on trends over days, weeks, or even months, yet conventional ML algorithms consider them separately, unless lagged features are manually added. This involves massive feature engineering and domain knowledge.
+
+Deep Learning-Based Approaches
+
+Deep learning has effectively changed the concept of stock prediction by making it possible to automatically learn hierarchical representations on raw sequential data.
+
+Recurrent Neural Networks (RNN) and Long Short-Term Memory (LSTM):
+RNNs brought about the idea of hidden states which store information on a time basis. Nevertheless, conventional RNNs experience vanishing as well as exploding gradient issues in the context of long sequences. Hochreiter and Schmidhuber proposed LSTM networks which overcome this limitation by using complex gating mechanisms.
+
+A comprehensive study on predictive maintenance by established that LSTM significantly outperforms Artificial Neural Networks (ANN), achieving an accuracy of 96.5% compared to ANN's 64.9%. This dramatic improvement demonstrates LSTM's superiority in handling "sequential, time-series data with dependencies that last a long time".
+
+The LSTM cell architecture consists of three gates:
+
+
+These gates allow the network to selectively forget other irrelevant information, update its memory with other information, and generate outputs according to filtered memory states. This ability is essential in stock prediction where price fluctuations are modulated by the historical trends in various time scales, including intraday trends and patterns of several months long.
+
+
+Importantly, notes that "increasing layers in ANN model could not help in improving accuracy" compared to LSTM. This serves as a cautionary insight for financial modeling: simply adding depth without the temporal memory mechanisms of LSTM is often futile. The paper also demonstrates that LSTM can effectively "identify trends and produce forecasts" when combined with anomaly detectors-a strategy directly applicable to detecting market crashes or sudden regime shifts analogous to machine "failures."
+
+Bidirectional LSTM (BiLSTM):
+BiLSTM builds on LSTM by working with sequences in either direction and enables the network to simultaneously capture both future and past contexts. This implies that in stock prediction, the model can be trained using the trends before and after a given point in time, and thus provide more accurate reversals and changes in trends.
+
+
+Gated Recurrent Units (GRU):
+GRU offers a simpler version of LSTM that utilizes a single update gate that combines both forget and input gates. GRU is computationally simpler to use; however, it tends to have similar performance on most financial forecasting problems to LSTM.
+
+Advanced Neural Network Architectures
+
+Convolutional Neural Networks (CNN) for Time Series:
+Although it was initially used to process images, 1D-CNNs have been found to be useful in time-series data by identifying temporal patterns in the neighborhood. The convolutional filters employed in CNNs extract characteristics like peaks, dips as well as clusters of short-term volatility. The sequences are processed by the architecture as:
+
+where the convolution window  captures neighborhood information.
+
+Attention Mechanisms and Transformers:
+Transformer architectures, introduced through the "Attention Is All You Need" paper, revolutionized sequence modeling by replacing recurrence with self-attention mechanisms. The attention mechanism computes:
+
+
+Transformers analyze all time points simultaneously, as opposed to LSTMs that process the sequence step-by-step, and learn the historical periods that are most applicable to prediction. This makes very long sequences easier to handle, enables parallel training to run much more quickly, and the visualization of attention weights enables much better interpretability.
+
+
+Graph Neural Networks (GNN):
+GNNs model the relationship between stocks, the effect of companies in the same industry or supply chain on each other. GNNs can spread information throughout the network structure to learn patterns across the sector and have correlation dynamics since they represent stocks as nodes, and relationships as edges.
+
+Sentiment-Based Methods
+
+Sentiment analysis has emerged as a complementary approach to purely price-based prediction, motivated by the recognition that financial markets are fundamentally information-processing systems. Sentiment methods attempt to quantify the polarity and intensity of opinions expressed in financial text-including news articles, earnings call transcripts, analyst reports, and social media posts-and use these quantified signals as predictive features.
+
+Lexicon-Based Methods:
+The earliest approaches to financial sentiment analysis relied on manually constructed sentiment lexicons. VADER (Valence Aware Dictionary and sEntiment Reasoner) uses a rule-based system with a human-validated sentiment dictionary to produce compound polarity scores for text. SentimentWordNet extends WordNet with positivity, negativity, and objectivity scores for each synset. These lexicon-based methods are computationally efficient and fully interpretable, but they suffer from critical limitations in financial contexts: they cannot handle context-dependent polarity shifts (e.g., "high" is positive for revenue but negative for debt), domain-specific jargon, negation scope, or complex linguistic constructions such as hedging and sarcasm.
+
+Transformer-Based Models (BERT):
+The introduction of BERT (Bidirectional Encoder Representations from Transformers) marked a paradigm shift in sentiment analysis. BERT's pre-training on large general corpora via masked language modeling and next-sentence prediction produces deep contextualized representations that capture semantic nuance far beyond lexicon matching. Fine-tuned BERT models achieve state-of-the-art performance on general sentiment benchmarks. However, general-purpose BERT models trained on Wikipedia and BookCorpus perform poorly on financial text because financial language has a fundamentally different vocabulary, semantic structure, and pragmatic register compared to general English.
+
+Domain-Adapted Models (FinBERT):
+FinBERT addresses the domain sensitivity gap by further pre-training BERT on financial corpora including financial news, earnings call transcripts, and analyst reports. This domain adaptation significantly improves sentiment classification accuracy on financial text by exposing the model to domain-specific vocabulary and semantic patterns. FinBERT produces three-class sentiment predictions (positive, negative, neutral) and has become the de facto standard for transformer-based financial sentiment analysis. The Financial Phrasebank dataset provides a widely used benchmark of 4,840 sentences annotated by financial domain experts for training and evaluation.
+
+Other Specialized Models:
+RoBERTa improves upon BERT through optimized pre-training with dynamic masking, larger batches, and longer training. While not financial-domain-specific, RoBERTa's stronger baseline performance makes it a competitive starting point for domain-adapted financial models. Ensemble approaches that combine lexicon-based scores with transformer-based predictions have also been explored, leveraging the complementary strengths of rule-based interpretability and neural contextual understanding.
+
+Despite the progress in sentiment modeling, several critical gaps remain-including sarcasm detection, tokenization drift in financial language, temporal alignment with trading days, and uncertainty quantification-which are discussed in detail in Section .
+
+Hybrid Architectures
+
+The hybrid model came about after it was realized that financial markets cannot be viewed under one lens. Stock prices are the result of the linear behavior, non-linear behavior, market noise, market shocks, and sentiment-based behavior. The complexity of the market cannot be fully captured using either traditional statistical tools or pure deep learning ones.
+
+ARIMA-LSTM Hybrid Models
+
+The combination of ARIMA and LSTM networks is one of the first and the most powerful hybrid structures. The reasoning behind this is simple, ARIMA is the best at reflecting linear autocorrelation structures and LSTM is the best at non-linear residual patterns.
+
+The modeling pipeline typically follows:
+
+    ARIMA predicts the linear component: 
+    Compute residuals: 
+    LSTM learns the residual component: 
+    Final prediction: 
+
+The decomposition can usually result in more solid and understandable forecasts. The ARIMA component will give a baseline trend and LSTM will record deviations in a complex manner than the baseline trend.
+
+CNN-LSTM Hybrid Models
+
+Another widely studied direction combines Convolutional Neural Networks (CNNs) with LSTMs. A pivotal study by explores this architecture in the context of biomedical signal processing, comparing a "Raw signal and LSTM-1D CNN" approach against a "Spectrogram and 2D CNN" method for artifact detection in electrodermal activity signals.
+
+The study yields a profound insight directly applicable to financial data representation: the 1D-CNN model applied to raw signals outperformed the 2D-CNN applied to visual spectrograms (Kappa 0.49 vs 0.42). The authors attribute this to the fact that "CNNs base their knowledge on the local information," which was better preserved in the raw 1D signal than in the global structure of the spectrogram.
+
+This finding challenges a common trend in financial machine learning where stock price charts are converted into images for computer vision models. Instead, the research suggests that a hybrid model using 1D-CNNs to extract local volatility features from raw price series, coupled with LSTM for temporal trend analysis, represents a superior architectural choice. 
+
+The specific configuration validated in-using a kernel size of  and dropout of 0.05-provides a robust blueprint. The architecture demonstrated the best performance with:
+
+    TPR (True Positive Rate): 0.65
+    Kappa: 0.49
+    AUC: 0.76
+
+After post-processing to merge artifacts separated by under 2 seconds (analogous to smoothing in financial data), performance improved to TPR of 0.72 and Kappa of 0.50.
+
+For stock prediction, the CNN component extracts local features such as:
+
+    Short-term price momentum patterns
+    Intraday volatility clusters
+    Support and resistance level formations
+
+The LSTM component then models how these extracted features evolve through time, capturing:
+
+    Multi-day trend persistence
+    Volume-price relationships over time
+    Regime transitions from bullish to bearish markets
+
+Attention-Enhanced Hybrid Models
+
+Contemporary hybrid architectures use attention mechanisms to enable the model to concentrate on the best historical periods which are significant. The most typical implementation is based on CNN or LSTM blocks to extract initial features and then Transformer blocks:
+
+
+
+Instead of the traditional approach to predicting future prices (directly learning to predict future price) the attention mechanism is trained to predict future price by considering previous time steps that are most predictive which gives better predictive accuracy and more interpretable attention weights.
+
+
+Multimodal Hybrid Models
+
+The most recent advancement involves integrating multiple data sources:
+
+    Numerical: Historical prices, trading volumes, technical indicators
+    Textual: Financial news, earnings reports, social media sentiment
+    Graph-based: Inter-stock correlations, sector relationships
+
+These models involve the encoding of each modality into separate encoding pathways and then combination of the representations to make final prediction. As an example, the BERT or GPT models work with text, the GNN with graph structures, and CNN-LSTM with time-series, and all the outputs are fused using attention-based layers.
+
+
+Feature-Level Hybridization
+
+Hybridization at the feature level is not necessarily paired-off with architecture. The modern forecasting systems tend to combine various types of features:
+
+    Technical Indicators: MACD, RSI, Bollinger Bands, moving averages
+    Volatility Measures: VIX, GARCH-based volatility estimates
+    Macroeconomic Signals: Inflation rates, interest rates, GDP growth
+    Sector-Level Dependencies: Industry performance indices, supply chain relationships
+
+The system is taught to learn relationships, which cannot be detected solely by price, to the given richer feature set in the model. It is particularly helpful in the emerging markets where the stock movement is more affected by macroeconomic announcements compared to the developed ones.
+
+Price + Sentiment Hybrid Models
+
+A growing body of work integrates sentiment signals from financial text into price prediction models, creating hybrid systems that combine numerical and textual information. These systems recognize that price-only models, regardless of architectural sophistication, are structurally blind to exogenous information shocks until those shocks are already reflected in historical prices.
+
+LSTM + Sentiment Models:
+Early sentiment-trading integration work combined LSTM networks with sentiment features derived from news headlines or social media posts. In these approaches, sentiment scores-typically produced by VADER or a fine-tuned BERT model-are concatenated with OHLCV features and fed into an LSTM network. While these systems demonstrate improvements over price-only LSTMs, particularly in directional accuracy, they suffer from the limitations of their constituent components: LSTM's sequential processing bottleneck, naive sentiment scoring without sarcasm correction, and simple timestamp matching without principled temporal alignment.
+
+FinBERT + Gradient Boosting Integration:
+More recent work combines domain-adapted sentiment from FinBERT with gradient boosting models such as XGBoost. The advantage of this approach is that XGBoost naturally handles mixed feature types (continuous price features alongside continuous or categorical sentiment features) and provides built-in feature importance rankings that reveal the relative contribution of sentiment signals versus price-based features. However, most existing implementations use raw sentiment scores without uncertainty quantification, ignore the temporal alignment problem between news publication times and trading day boundaries, and do not address sarcasm or irony in financial text.
+
+End-to-End Multimodal Architectures:
+The most recent approaches use end-to-end deep learning architectures that jointly encode text (via BERT or GPT-based models) and price series (via LSTM or Transformer encoders), fusing the representations through attention-based layers before producing a final prediction. While architecturally elegant, these models are computationally expensive, difficult to interpret, and often require large amounts of paired text-price training data that may not be available for all stocks or markets. The opacity of end-to-end approaches also makes it difficult to diagnose whether sentiment signals are genuinely contributing to prediction quality.
+
+Common Deficiencies in Sentiment-Trading Hybrids:
+Despite the growing interest, existing sentiment-trading hybrid models share several deficiencies: (1) sarcasm detection is rarely addressed, despite its prevalence in financial commentary; (2) temporal alignment between news publication timestamps and trading day boundaries is handled naively, often introducing data leakage; (3) sentiment features are typically raw point estimates without confidence weighting or uncertainty quantification; (4) the frequency mismatch between irregularly arriving news and regularly spaced price data is not formally resolved; and (5) evaluation focuses on price accuracy metrics rather than risk-adjusted trading performance metrics such as the Sharpe ratio.
+
+Comparative Analysis of Hybrid Models
+
+Understanding the trade-offs between different hybrid architectures is crucial for selecting the appropriate model for specific forecasting tasks. Table  provides a comprehensive comparison of major hybrid approaches.
+
+
+Comprehensive Comparison of Hybrid Models
+
+
+Why Hybrid Models Represent the Future
+
+Hybrid models are becoming increasingly important for several fundamental reasons:
+
+1. Financial Data is Multi-Scale:
+Short-term noise, medium-term trends, and long-term cycles all exist simultaneously in financial markets. A single model architecture rarely captures all three timescales effectively. Hybrid models can assign different components to handle different temporal resolutions.
+
+2. Markets are Influenced by Many Types of Signals:
+Price, volume, news, sentiment, global indices, and sector relationships all play roles in price formation. Hybrid models are naturally suited to merge these diverse information sources through multi-modal learning architectures.
+
+3. Market Behavior is Partly Linear and Partly Chaotic:
+Linear components (trends, seasonality) are efficiently handled by statistical models like ARIMA, whereas chaotic and non-linear dependencies (sudden jumps, regime changes) require deep learning architectures. Hybrid models leverage both paradigms.
+
+4. Hybrid Models Reduce Risk of Model Bias:
+When one component fails under specific market conditions, other components can compensate. This ensemble-like behavior builds robustness during volatile events or structural breaks.
+
+5. Theoretical Justification-Error Decomposition:
+If the true data-generating process follows:
+
+where  represents linear structure,  represents non-linear behavior, and  represents noise, no single model can perfectly learn both  and  simultaneously. Hybrid architectures allow:
+
+    ARIMA  learns 
+    LSTM/CNN  learns 
+    Transformer  learns long-range dependencies across both
+
+This decomposition creates a more complete representation of the underlying data generation process. In most recent studies (2021-2024), hybrid CNN-LSTM-Transformer models have consistently outperformed single-model approaches in accuracy, stability, and robustness across diverse market conditions.
+
+Limitations of Existing Systems
+
+Statistical Model Constraints
+
+Linearity Assumptions:
+As noted in the ARIMA analysis, statistical models require strict stationarity achieved through differencing. This often results in the loss of valuable long-term trend information. In highly volatile stock markets characterized by regime changes and structural breaks, the linear framework becomes fundamentally inadequate.
+
+Feature Independence:
+Traditional models like ARIMA assume independence of explanatory variables when extended to multivariate forms (VARIMA, VAR). In reality, stock market features exhibit complex interactions-volume changes affect momentum, which influences volatility, creating feedback loops that linear models cannot capture.
+
+Machine Learning Limitations
+
+Temporal Ignorance:
+As highlighted earlier, classical ML algorithms (SVM, Random Forest, XGBoost) treat each time point independently unless manually provided with engineered lagged features. This requires extensive domain expertise and may miss complex temporal dependencies.
+
+Inadequacy of Single Deep Learning Models:
+As evidenced by, while LSTM outperforms ANN (96.5% vs 64.9% accuracy), reliance on a single architecture limits the model's ability to capture both local feature variations and global trends simultaneously. Pure LSTM models may struggle with:
+
+    Very long sequences leading to gradient degradation
+    Inability to capture multi-scale temporal patterns efficiently
+    Lack of explicit mechanisms for feature extraction at different resolutions
+
+Feature Representation Challenges
+
+Data Representation Fallacy:
+A major gap exists in how financial data is encoded for neural networks. The finding by that 1D-CNNs on raw signals outperform 2D-CNNs on spectrograms (Kappa 0.49 vs 0.42) highlights a flaw in approaches that convert stock charts into images. Many systems attempt to use computer vision techniques on candlestick chart images, but this introduces:
+
+    Loss of numerical precision through image quantization
+    Artificial spatial correlations not present in the original data
+    Increased computational complexity without performance gains
+
+There is a clear lack of models that properly leverage 1D-CNNs for local volatility extraction directly from raw price sequences.
+
+Computational and Real-Time Constraints
+
+Deep learning models, particularly complex hybrid architectures, demand significant computational resources. The study by used early stopping with a threshold of 30 epochs and careful hyperparameter tuning, yet still required substantial training time. For high-frequency trading or real-time prediction systems, latency becomes a critical constraint that many sophisticated models cannot satisfy.
+
+Overfitting and Generalization Issues
+
+Financial markets are non-stationary-patterns that work in one market regime may fail in another. Models trained on historical bull markets often perform poorly during bear markets or crisis periods. The COVID-19 pandemic illustrated this dramatically, as many prediction systems trained on pre-2020 data failed catastrophically when market dynamics shifted.
+
+Sentiment Analysis and Integration Gaps
+
+Beyond the limitations of purely price-based systems, the application of sentiment analysis to financial prediction introduces its own set of well-documented gaps:
+
+Sarcasm and Irony Detection:
+Financial commentary-particularly in analyst reports, financial blogs, and social media-frequently employs sarcasm and irony. Standard sentiment models classify sarcastic positive statements as genuinely positive, inverting the true polarity. For example, the headline "Oh great, another revenue miss" would be classified as positive by a naive model, directly misleading the downstream prediction system. Dual-head architectures combining a primary sentiment head with a secondary sarcasm detection head have been proposed in the NLP literature but are not yet standard practice in financial sentiment pipelines.
+
+Tokenization Drift:
+Pre-trained transformer models use tokenizers trained on general text corpora. When applied to financial text, these tokenizers fragment domain-specific tokens-ticker symbols (AAPL), financial ratios (P/E, EV/EBITDA), regulatory language (Form 10-K, material adverse change)-into meaningless subword units. This tokenization drift degrades the model's ability to represent financial entities accurately and requires custom vocabulary extensions or domain-specific tokenizer fine-tuning to resolve.
+
+Domain Sensitivity:
+General-purpose language models trained on Wikipedia and BookCorpus assign different semantic distributions to words than financial contexts require. For instance, "volatility" carries negative sentiment in general text but is a neutral technical descriptor in finance, while "aggressive" describes a negative behavior in general text but a positive growth strategy in business contexts. Domain-adapted models such as FinBERT mitigate this gap but do not fully eliminate it, particularly for rapidly evolving financial terminology and novel financial instruments.
+
+Temporal Alignment:
+News articles are published at irregular timestamps-often after market hours, on weekends, or during trading sessions. Naively aligning news timestamps with the same calendar date introduces data leakage: a news article published at 11PM EST on Friday should influence Monday's trading, not Friday's. Most existing systems use naive timestamp matching without accounting for market calendar effects, leading to artificially inflated training performance that does not generalize to real-time deployment.
+
+Uncertainty Quantification:
+Standard neural sentiment models output deterministic point estimates with no associated confidence measure. In a trading context, a sentiment score of  with 95% model confidence is fundamentally different from a score of  with 55% confidence. Ignoring prediction uncertainty leads to overconfident trading signals and inappropriate position sizing in downstream trading strategies.
+
+Aspect-Based Sentiment Analysis (ABSA):
+A single news article may simultaneously carry positive sentiment about revenue growth and negative sentiment about regulatory risk. Standard sentiment models produce a single document-level score that collapses these distinct aspect-level signals into a single number, losing actionable information. Aspect-Based Sentiment Analysis with dependency parsing can extract aspect-sentiment pairs, but its integration into trading systems remains underdeveloped.
+
+Comparative Study / Gap Analysis
+
+Method Comparison: Statistical vs. Machine Learning vs. Deep Learning
+
+
+Comparative Analysis of Stock Prediction Approaches
+
+
+Performance Comparison from Literature
+
+Based on the analyzed studies:
+
+    LSTM vs. ANN: LSTM achieved 96.5% accuracy compared to ANN's 64.9%, demonstrating the critical importance of temporal modeling mechanisms.
+    1D-CNN-LSTM vs. 2D-CNN: Raw signal processing with 1D-CNN-LSTM achieved Kappa 0.49 vs. 0.42 for spectrogram-based 2D-CNN, highlighting the importance of proper data representation.
+    ARIMA applicability: Effective for linear trend and seasonality detection but requires stationarity and fails under regime changes.
+
+Integration Gaps and Research Deficiencies
+
+Although the modern stock prediction methods have come a long way, the contemporary studies have a number of critical flaws that restrict the feasibility and real-world performance:
+
+
+1. Difficulty Incorporating Multiple Data Types Efficiently
+
+Even though numerous hybrid models purport to combine sentiment analysis, the existing approaches continue to encounter basic multimodal issues:
+
+    Pipeline Integration: Combining news, social media, macroeconomic data, and price data into a single coherent pipeline remains problematic. Most approaches process these modalities separately and perform late fusion, losing valuable inter-modal interactions.
+    
+    Frequency Mismatch: Handling different data frequencies poses significant technical challenges. News and social media arrive irregularly and asynchronously, while price data is continuous and regular. Current architectures lack robust mechanisms for temporal alignment across these disparate frequencies.
+    
+    Semantic-Temporal Alignment: Aligning textual signals (news sentiment) with time-series signals (price movements) is non-trivial. The time lag between news publication and market reaction is variable and context-dependent, and most models use naive timestamp matching rather than learned alignment strategies.
+
+2. Absence of Adaptive Learning
+
+Financial markets are non-stationary by nature - a model that has been trained on the data of the previous month may go haywire on the data of the current month because of regime changes, changes in policies, or even events in the world. Limitations The main limitations are:
+
+    Static Training Paradigm: Most hybrid models follow a train-once-deploy-forever approach. They cannot update themselves incrementally without full retraining, making them vulnerable to concept drift.
+    
+    Regime Change Blindness: Markets transition between bullish, bearish, and volatile regimes. Current models lack explicit mechanisms to detect regime shifts and adapt their behavior accordingly.
+    
+    Computational Overhead: Even when researchers acknowledge the need for adaptation, the computational cost of retraining complex hybrid models (especially those involving Transformers or multi-modal fusion) makes continuous learning impractical for production systems.
+
+3. Lack of Risk-Aware Prediction
+
+The majority of hybrid models are concerned only with the direction of the prices or their values, but they do not take into account the uncertainty and risk of their predictions:
+
+    Point Predictions Only: Standard neural networks output deterministic point estimates without confidence intervals or probabilistic distributions. This makes it impossible for traders to assess prediction reliability.
+    
+    No Risk Quantification: Critical risk metrics-drawdown potential, Value-at-Risk (VaR), conditional volatility, tail risk-are absent from model outputs. Deep learning architectures are not inherently designed to quantify uncertainty.
+    
+    Architectural Complexity: Hybrid models are already complex. Adding risk prediction requires separate architectural components (e.g., Bayesian layers, dropout-based uncertainty estimation, or ensemble variance), further increasing training difficulty and computational requirements.
+    
+    Volatility-Return Decoupling: Financial risk fundamentally depends on future volatility, which is highly unpredictable and influenced by different factors than price movements. Very few papers attempt to jointly model volatility forecasting and price forecasting within a single hybrid architecture.
+    
+    Evaluation Metric Bias: Most research optimizes for accuracy-based metrics (MAE, RMSE, directional accuracy) rather than risk-adjusted metrics (Sharpe ratio, information ratio, maximum drawdown). This creates a mismatch between research objectives and practical trading requirements.
+
+4. Sentiment-Trading Integration Deficiencies
+
+Beyond the gaps internal to sentiment models (Section ), there are additional deficiencies specific to the integration of sentiment analysis into trading pipelines:
+
+    Frequency Mismatch: Price data arrives at regular daily (or intraday) intervals, while news arrives asynchronously and at irregular frequencies. Robust temporal aggregation strategies-such as confidence-weighted daily averaging with formal trading-day assignment-are required but rarely implemented in existing work.
+    
+    Feature Redundancy: Naively concatenating raw sentiment scores with technical indicators risks introducing correlated features that degrade model performance through multicollinearity. Systematic feature selection with Variance Inflation Factor (VIF  removal) is rarely applied in sentiment-trading systems.
+    
+    Regime Sensitivity: The relationship between sentiment and price movement is not stationary. In a strongly trending bull market, negative sentiment may have less impact than in a volatile or bearish regime. Current models assume a fixed sentiment-price relationship, ignoring regime-dependent dynamics that require adaptive weighting.
+    
+    Risk-Aware Evaluation: Most sentiment-trading systems optimize for accuracy-based metrics (MAE, RMSE, directional accuracy) rather than risk-adjusted trading metrics (Sharpe ratio, maximum drawdown, Value-at-Risk). This creates a fundamental gap between research objectives and practical trading requirements.
+
+
+Formal Summary of Identified Research Gaps in Stock Prediction and Sentiment Analysis
+
+
+Summary of Critical Gaps:
+
+    Statistical models (ARIMA, GARCH) are well-understood but limited in capability
+    Deep learning models (LSTM, CNN) are powerful but often used in isolation
+    Hybrid approaches exist but lack standardization in architecture design
+    True multimodal integration across heterogeneous data sources remains under-developed
+    Adaptive learning mechanisms for handling concept drift are largely absent
+    Risk-aware prediction with uncertainty quantification is critically missing
+    Sentiment models suffer from sarcasm blindness, tokenization drift, domain sensitivity, and lack of confidence estimation
+    Sentiment-trading integration is hampered by temporal misalignment, frequency mismatch, feature redundancy, and regime-insensitive weighting
+
+Summary of Literature Review
+
+Key Findings
+
+
+    Evolution of Methodology: Stock prediction has progressed from simple statistical models (ARIMA, GARCH) through machine learning (SVM, RF) to sophisticated deep learning (LSTM, CNN, Transformers) and hybrid architectures.
+    
+    Temporal Modeling is Critical: As demonstrated by, models with explicit temporal mechanisms (LSTM) dramatically outperform those without (ANN), highlighting that sequence modeling is non-negotiable for financial forecasting.
+    
+    Proper Data Representation Matters: The insight from that 1D-CNN on raw signals outperforms 2D-CNN on transformed representations challenges common practices and suggests that raw time-series processing should be preferred over image-based approaches.
+    
+    Hybrid Models Show Promise: Combining complementary strengths-ARIMA's linearity with LSTM's non-linearity, CNN's feature extraction with LSTM's sequence modeling-consistently yields better performance than single-method approaches.
+    
+    Significant Gaps Remain: Issues of non-stationarity, regime changes, proper feature representation, computational efficiency, and multimodal integration remain largely unsolved.
+
+    Sentiment Analysis Extends the Frontier: Sentiment analysis methods have evolved from lexicon-based approaches (VADER) to domain-adapted transformers (FinBERT), enabling quantification of the informational environment that drives market behavior. When integrated into hybrid models, sentiment features provide complementary signals that price-only models structurally cannot capture-particularly around earnings surprises, macroeconomic announcements, and shifts in public opinion.
+
+    Critical Gaps in Sentiment Integration Persist: Despite the promise of sentiment-aware models, the literature reveals six major gaps in sentiment analysis (sarcasm detection, tokenization drift, domain sensitivity, temporal alignment, uncertainty quantification, and aspect-based analysis) and four integration-level deficiencies (frequency mismatch, feature redundancy, regime sensitivity, and risk-aware evaluation). These gaps represent the most significant obstacles to deploying robust sentiment-augmented trading systems, as summarized in Table .
+
+Conclusion
+
+The literature demonstrates definitive advancement in hybrid, multimodal, and attention-based stock prediction architectures, while simultaneously revealing that sentiment-aware models represent a critical and under-explored frontier. Nevertheless, there are still substantial gaps in research, especially in:
+
+    Developing standardized hybrid architectures that optimally combine statistical rigor with deep learning flexibility
+    Creating adaptive systems that recognize and adjust to market regime changes
+    Properly leveraging 1D-CNN for local feature extraction as suggested by    Integrating diverse data modalities (numerical, textual, graph-based) in a principled manner
+    Balancing model complexity with interpretability for practical deployment
+    Addressing sarcasm, tokenization drift, and domain sensitivity in financial sentiment pipelines to produce reliable sentiment signals
+    Designing principled temporal alignment mechanisms that map news publication timestamps to actionable trading days without information leakage
+    Incorporating uncertainty quantification into sentiment features so that downstream models can distinguish confident signals from noisy ones
+    Moving evaluation beyond accuracy-based metrics toward risk-adjusted trading metrics that reflect practical deployment requirements
+
+These identified gaps-spanning both price-based and sentiment-based methodologies-motivate the development of a sentiment-aware hybrid model that addresses the most critical deficiencies documented in this review, particularly around sarcasm-corrected sentiment scoring, principled temporal alignment, and structured sentiment feature engineering.
+
+
+
